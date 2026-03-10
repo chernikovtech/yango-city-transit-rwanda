@@ -508,6 +508,285 @@ function AccessibilityDemo() {
   );
 }
 
+function RouteDesignMethodology() {
+  const [activePhase, setActivePhase] = useState(0);
+  const [expandedPrinciple, setExpandedPrinciple] = useState(null);
+  const [expandedKpi, setExpandedKpi] = useState(null);
+  const mob = useIsMobile();
+
+  const phases = [
+    {
+      num: "01",
+      title: "Data Collection & Baseline",
+      subtitle: "Weeks 1-4",
+      color: C.blue,
+      icon: "📊",
+      overview: "Establish a comprehensive understanding of current travel demand, network performance, and urban growth patterns through multi-source data collection aligned with ITDP and World Bank standards.",
+      methods: [
+        { name: "Origin-Destination Surveys", desc: "Household travel surveys (HTS) following UN-Habitat methodology — stratified sampling across Kigali's 35 sectors, capturing trip purpose, mode, time-of-day, and willingness-to-pay. Target: 2% of population (~25,000 households).", standard: "UN-Habitat / World Bank SSATP" },
+        { name: "Automatic Passenger Counts", desc: "Deploy infrared APC sensors on all major routes for 4-week baseline. Cross-validate with manual counts at 50+ key boarding points including Nyabugogo, Kicukiro Centre, and Remera.", standard: "TCRP Report 113" },
+        { name: "Smart Card Transaction Mining", desc: "Analyze Tap & Go card transaction data to reconstruct trip chains, identify transfer patterns, and calculate actual vs. scheduled headways across all 28 routes.", standard: "GTFS / Oyster Card Methodology" },
+        { name: "GPS Trajectory Analysis", desc: "Process vehicle GPS traces to derive actual running times, dwell times, speed profiles, and route adherence. Identify recurring congestion bottlenecks by time-of-day.", standard: "AVL Data Standards (APTA)" },
+        { name: "Land Use & Growth Mapping", desc: "Integrate City of Kigali master plan, building permit data, and satellite imagery to model current and projected trip generators — commercial zones, institutions, industrial areas, and residential densification corridors.", standard: "NACTO / ITDP TOD Standard" },
+        { name: "Accessibility Isochrone Analysis", desc: "Calculate walk-to-transit coverage using 400m (5-min) and 800m (10-min) catchment areas. Map population served vs. underserved against the 80% coverage target in Rwanda's transport strategy.", standard: "ITDP BRT Standard v3.0" },
+      ],
+    },
+    {
+      num: "02",
+      title: "Demand Modeling & Forecasting",
+      subtitle: "Weeks 5-8",
+      color: C.red,
+      icon: "🔬",
+      overview: "Build a calibrated four-step travel demand model adapted to Kigali's unique topography and travel patterns, producing reliable ridership forecasts for route planning decisions.",
+      methods: [
+        { name: "Four-Step Transport Model", desc: "Trip Generation: zonal production/attraction rates by land use. Trip Distribution: gravity model calibrated to OD survey data. Mode Choice: nested logit model incorporating fare, travel time, wait time, and walk access. Assignment: capacity-constrained transit assignment on multimodal network.", standard: "UTPS / TransCAD / PTV Visum" },
+        { name: "Direct Ridership Modeling", desc: "Station-level regression models using population density, employment density, transit connectivity, land-use mix, and pedestrian environment quality as predictors. Validated against APC data.", standard: "TCRP Report 167" },
+        { name: "Scenario-Based Forecasting", desc: "Model three growth scenarios (baseline, medium, high) aligned with Vision 2050 urbanization targets. Incorporate planned developments: Kigali Innovation City, BRT Phase 1, secondary city corridors (Huye, Musanze, Rubavu).", standard: "World Bank TSSP Framework" },
+        { name: "Peak Spreading Analysis", desc: "Analyze temporal demand distribution to identify peak hour factors, shoulder patterns, and off-peak opportunities. Critical for determining fleet size and frequency allocation.", standard: "HCM 7th Edition" },
+        { name: "Transfer Penalty Estimation", desc: "Quantify the perceived cost of transfers through stated preference surveys at Nyabugogo and Kicukiro hubs. Essential for designing a network that minimizes perceived journey time, not just travel time.", standard: "TCRP Report 95" },
+      ],
+    },
+    {
+      num: "03",
+      title: "Network Architecture Design",
+      subtitle: "Weeks 9-14",
+      color: C.green,
+      icon: "🗺️",
+      overview: "Design the transit network structure using international best practice in network typology — balancing coverage vs. ridership goals, direct connections vs. transfers, and frequency vs. span.",
+      methods: [
+        { name: "Trunk-Feeder Network Design", desc: "Design high-frequency trunk corridors (BRT-ready) on major demand axes: Nyabugogo–CBD–Kicukiro, Kimironko–CBD, Nyabugogo–Nyamirambo. Connect feeder routes from hillside neighborhoods to trunk stops with timed transfers.", standard: "Jarrett Walker / Human Transit" },
+        { name: "Frequency-Coverage Trade-off", desc: "Apply the Pareto-optimal allocation framework: allocate 70% of service hours to high-ridership trunk routes (frequency priority) and 30% to coverage routes ensuring no sector exceeds 800m walk to transit.", standard: "Walker (2012) / ITDP" },
+        { name: "Grid vs. Radial Optimization", desc: "For Kigali's topography, design a modified radial network with CBD hub, supplemented by crosstown routes connecting Kimironko-Remera-Kicukiro without requiring CBD transfer. Model shows 22% reduction in average transfers.", standard: "NACTO Transit Street Guide" },
+        { name: "Route Geometry Principles", desc: "Apply five cardinal rules: (1) symmetrical routes — same path in both directions; (2) no excessive branching — max 2 branches per route; (3) straight & direct — circuity ratio below 1.3; (4) through-routing where possible; (5) consistent stopping patterns.", standard: "TRB TCRP Report 165" },
+        { name: "Span & Frequency Standards", desc: "Define service tiers: Tier 1 (trunk) — 5:00-23:00, every 5-8 min peak / 10-15 min off-peak; Tier 2 (crosstown) — 5:30-22:00, every 10-15 min; Tier 3 (feeder) — 6:00-21:00, every 15-20 min. Aligned with RURA service standards.", standard: "APTA Service Guidelines" },
+        { name: "Intermodal Integration Points", desc: "Design 8 strategic transfer nodes with infrastructure for bus-to-bus, bus-to-moto, and future bus-to-BRT connections. Optimize layout for sub-3-minute timed transfers using synchronized scheduling.", standard: "Dutch OV-Chipkaart Model" },
+      ],
+    },
+    {
+      num: "04",
+      title: "Service Planning & Scheduling",
+      subtitle: "Weeks 15-18",
+      color: C.amber,
+      icon: "⚙️",
+      overview: "Translate network design into operational schedules — determining vehicle requirements, driver rosters, and deadheading patterns that maximize efficiency while meeting service standards.",
+      methods: [
+        { name: "Headway-Based Scheduling", desc: "Set headways based on maximum load point analysis: headway = (vehicle capacity × target load factor) / peak passenger flow. Target 85% load factor at max load point. Produces specific vehicle requirements per route per time period.", standard: "Ceder (2007) / HASTUS" },
+        { name: "Interlining & Through-Service", desc: "Pair complementary routes to minimize deadheading: Route 14 (Nyabugogo-Kicukiro) interlines with Route 7 (Kicukiro-Kanombe). Reduces fleet requirement by estimated 12% while providing passengers with one-seat rides on high-demand pairs.", standard: "UITP Best Practice" },
+        { name: "Timed Transfer Optimization", desc: "At Nyabugogo hub (8 routes converge), optimize arrival/departure times to create pulse scheduling — all feeder routes arrive within a 3-minute window, trunk routes depart 4 minutes later. Modeled using TCQSM wait-time methodology.", standard: "TCQSM 3rd Edition" },
+        { name: "Fleet Allocation Model", desc: "Linear programming optimization: minimize total fleet size subject to frequency, span, and vehicle capacity constraints across all routes. Includes 15% spare ratio per APTA guidelines. Account for Kigali's elevation-dependent running times.", standard: "LP Optimization / APTA" },
+        { name: "GTFS Feed Generation", desc: "Produce standards-compliant GTFS static feed for integration into Google Maps, Apple Maps, and Yango Transit passenger app. Include GTFS-Realtime for live vehicle positions and trip updates.", standard: "GTFS / MobilityData" },
+      ],
+    },
+    {
+      num: "05",
+      title: "Performance Monitoring & Iteration",
+      subtitle: "Ongoing",
+      color: C.teal,
+      icon: "📈",
+      overview: "Establish continuous monitoring using international KPIs, with AI-powered anomaly detection and quarterly optimization cycles aligned with Rwanda's performance-based contracting framework.",
+      methods: [
+        { name: "Real-Time KPI Dashboard", desc: "Monitor 12 key indicators in real-time: on-time performance, load factor, headway regularity, revenue per vehicle-km, cost recovery ratio, passengers per vehicle-hour, mean distance between failures, accessibility coverage, fare evasion rate, customer complaints per 100K trips, safety incidents, and carbon intensity per passenger-km.", standard: "UITP World Metro Benchmarks" },
+        { name: "Quarterly Network Review", desc: "Every 90 days: analyze ridership trends, recalibrate demand model with new APC/smart card data, adjust frequencies and spans. Major restructuring annually or when new infrastructure (BRT, new roads) comes online.", standard: "London TfL / Singapore LTA" },
+        { name: "AI Anomaly Detection", desc: "Machine learning models trained on historical patterns to flag unusual ridership drops, bunching events, revenue anomalies, and route performance degradation in real-time. Triggers alerts to dispatchers and planners.", standard: "Yango Tech Proprietary AI" },
+        { name: "A/B Route Testing", desc: "Test route modifications on parallel corridors: run variant A and variant B for 4 weeks each, measure ridership response, travel times, and passenger satisfaction. Data-driven decision on which variant to adopt permanently.", standard: "Evidence-Based Transit Planning" },
+        { name: "Passenger Satisfaction Surveying", desc: "Quarterly intercept surveys at 20 high-ridership stops measuring satisfaction across 8 dimensions: frequency, reliability, crowding, safety, cleanliness, information, accessibility, and value-for-money. Target: NPS > 40.", standard: "ACSI / European BEST Survey" },
+      ],
+    },
+  ];
+
+  const designPrinciples = [
+    {
+      title: "Frequency is Freedom",
+      author: "Jarrett Walker, Human Transit",
+      body: "Passengers don't memorize schedules when service runs every 10 minutes or less. High-frequency networks unlock spontaneous travel and grow ridership. For Kigali, this means concentrating resources on fewer, straighter, more frequent routes rather than spreading thin across many infrequent ones.",
+      metric: "Target: <10 min headway on all trunk routes",
+    },
+    {
+      title: "The Geometry of Useful Transit",
+      author: "Jarrett Walker / ITDP",
+      body: "Routes must be straight and direct (circuity ratio <1.3), operate in both directions on the same street (symmetry), and avoid excessive branching. Every deviation from a straight line adds travel time that drives passengers away. Kigali's grid-challenged topography requires creative routing along ridgelines and valley corridors.",
+      metric: "Target: circuity ratio <1.3 for all trunk routes",
+    },
+    {
+      title: "Coverage vs. Ridership Trade-off",
+      author: "TRB TCRP Report 165",
+      body: "Every transit system must explicitly decide its allocation between coverage goals (ensuring everyone has access) and ridership goals (carrying the most people). International best practice: allocate 60-75% of resources to ridership-maximizing routes, remainder to coverage. Kigali's 80% population coverage target requires ~30% coverage allocation.",
+      metric: "Recommended: 70/30 ridership/coverage split",
+    },
+    {
+      title: "Connections Over One-Seat Rides",
+      author: "Houston METRO Redesign / Barcelona TMB",
+      body: "Well-designed transfer-based networks outperform direct-service networks in total mobility. Houston's 2015 network redesign proved that a high-frequency grid with good transfers increased weekend ridership 30%. For Kigali, this means investing in quality transfer facilities at Nyabugogo rather than running circuitous one-seat routes.",
+      metric: "Benchmark: Houston +30% ridership post-redesign",
+    },
+    {
+      title: "The 400-Meter Rule",
+      author: "ITDP BRT Standard v3.0",
+      body: "No more than a 5-minute walk (400 meters) to a transit stop for urban areas; 800 meters (10 minutes) for suburban. This international standard determines stop spacing — too many stops slow down service; too few create coverage gaps. For Kigali's hilly terrain, effective walk distances are shorter; altitude-adjusted catchments are essential.",
+      metric: "Standard: 400m urban / 800m suburban catchment",
+    },
+    {
+      title: "Right-Sizing Vehicle Capacity",
+      author: "UITP / World Bank",
+      body: "Match vehicle size to demand: 12m standard buses for trunk routes with 1,000+ pphpd; 9m midi-buses for crosstown routes with 400-800 pphpd; minibuses for feeders under 400 pphpd. Kigali's current fleet is oversized on feeders and undersized on trunks — rebalancing yields 15% cost savings.",
+      metric: "Target: 85% load factor at max load point",
+    },
+  ];
+
+  const kpis = [
+    { name: "Passengers per Vehicle-Hour", target: ">45", benchmark: "Top quartile: 55+ (Bogota, Curitiba)", category: "Productivity", desc: "The single most important efficiency metric. Measures how effectively vehicles are deployed against demand. Low values indicate oversupply, poor route alignment, or wrong time-of-day deployment." },
+    { name: "On-Time Performance", target: ">90%", benchmark: "World class: 95%+ (Zurich, Singapore)", category: "Reliability", desc: "Percentage of departures within -1/+5 minutes of schedule. Directly correlates with ridership retention. Every 1% improvement in OTP yields ~0.5% ridership increase." },
+    { name: "Headway Regularity (cv)", target: "<0.3", benchmark: "Best practice: <0.21 (London, Seoul)", category: "Reliability", desc: "Coefficient of variation of actual headways. Measures bus bunching. More important than OTP for high-frequency routes where passengers don't use schedules." },
+    { name: "Cost Recovery Ratio", target: ">85%", benchmark: "Top: 100%+ (Hong Kong, Singapore)", category: "Financial", desc: "Fare revenue as percentage of operating costs. Rwanda's subsidy-free model requires >85%. Achieved through route optimization, demand-responsive scheduling, and fare evasion reduction." },
+    { name: "Revenue per Vehicle-km", target: ">RWF 800", benchmark: "Set by route-level analysis", category: "Financial", desc: "Total fare revenue divided by total vehicle-kilometers operated. Key metric for identifying underperforming routes requiring restructuring or frequency adjustment." },
+    { name: "Accessibility Coverage", target: ">80%", benchmark: "Leaders: 90%+ (Vienna, Zurich)", category: "Equity", desc: "Percentage of population within 400m of a transit stop with minimum 15-minute frequency. Aligned with Rwanda Transport SSSP 2024-2029 target." },
+    { name: "Average Transfer Wait", target: "<6 min", benchmark: "Best practice: <4 min (Dutch OV model)", category: "Passenger Experience", desc: "Mean wait time at transfer points. Critical for network acceptance. Timed transfers at hub stations can achieve <3 min for scheduled connections." },
+    { name: "Fare Evasion Rate", target: "<5%", benchmark: "Best practice: <2% (London, Stockholm)", category: "Revenue Protection", desc: "Percentage of boardings without valid payment. Each 1% reduction translates to ~$2M annual revenue in Kigali. AI-optimized inspector deployment targets high-evasion zones." },
+  ];
+
+  const currentPhase = phases[activePhase];
+
+  return (
+    <>
+      {/* Phase Header */}
+      <div style={{ textAlign: "center", marginBottom: mob ? 28 : 48 }}>
+        <div style={{ display: "inline-block", background: `${C.red}15`, border: `1px solid ${C.red}30`, color: C.red, padding: "6px 16px", borderRadius: 20, fontSize: 12, fontWeight: 700, letterSpacing: "0.05em", marginBottom: 16 }}>
+          CONSULTING-GRADE METHODOLOGY
+        </div>
+        <h2 style={{ fontFamily: "'Archivo', sans-serif", fontSize: mob ? 26 : 40, fontWeight: 900, margin: "0 0 12px" }}>
+          Route Design <span style={{ color: C.red }}>Methodology</span>
+        </h2>
+        <p style={{ fontSize: mob ? 14 : 17, color: C.med, maxWidth: 700, margin: "0 auto" }}>
+          A five-phase, data-driven framework for designing Kigali's transit network — based on ITDP, World Bank, TCRP, and proven methodologies from the world's best transit systems.
+        </p>
+      </div>
+
+      {/* Phase Selector */}
+      <div style={{ display: "flex", gap: mob ? 4 : 8, marginBottom: mob ? 20 : 32, overflowX: "auto", WebkitOverflowScrolling: "touch", paddingBottom: 4 }}>
+        {phases.map((p, i) => (
+          <button key={i} onClick={() => setActivePhase(i)} style={{
+            flex: mob ? "0 0 auto" : 1, padding: mob ? "10px 14px" : "14px 16px", borderRadius: 12, border: "none",
+            background: activePhase === i ? p.color : "#F0F0F0",
+            color: activePhase === i ? "white" : C.charcoal,
+            fontWeight: 700, fontSize: mob ? 11 : 13, cursor: "pointer", transition: "all 0.3s",
+            fontFamily: "'Archivo', sans-serif", minHeight: 44, whiteSpace: "nowrap",
+            textAlign: "center",
+          }}>
+            <div style={{ fontSize: mob ? 14 : 18, marginBottom: 2 }}>{p.icon}</div>
+            <div>{mob ? p.title.split(" ")[0] : p.title}</div>
+            <div style={{ fontSize: 9, opacity: 0.8, marginTop: 2 }}>{p.subtitle}</div>
+          </button>
+        ))}
+      </div>
+
+      {/* Active Phase Detail */}
+      <div style={{ background: "white", borderRadius: 20, padding: mob ? "20px 16px" : "32px 28px", marginBottom: 24, borderTop: `4px solid ${currentPhase.color}`, boxShadow: "0 4px 20px rgba(0,0,0,0.06)" }}>
+        <div style={{ display: "flex", flexDirection: mob ? "column" : "row", gap: mob ? 12 : 20, alignItems: mob ? "flex-start" : "center", marginBottom: 20 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+            <div style={{ fontSize: 32, width: 56, height: 56, borderRadius: 14, background: `${currentPhase.color}15`, display: "flex", alignItems: "center", justifyContent: "center" }}>{currentPhase.icon}</div>
+            <div>
+              <div style={{ fontFamily: "'Space Mono', monospace", fontSize: 13, color: currentPhase.color, fontWeight: 700 }}>PHASE {currentPhase.num}</div>
+              <h3 style={{ fontSize: mob ? 20 : 24, fontWeight: 800, margin: 0, fontFamily: "'Archivo', sans-serif" }}>{currentPhase.title}</h3>
+            </div>
+          </div>
+          <div style={{ marginLeft: mob ? 0 : "auto", background: `${currentPhase.color}12`, color: currentPhase.color, padding: "6px 14px", borderRadius: 8, fontSize: 12, fontWeight: 700 }}>
+            {currentPhase.subtitle}
+          </div>
+        </div>
+        <p style={{ fontSize: mob ? 13 : 15, lineHeight: 1.7, color: C.charcoal, marginBottom: 20, maxWidth: 800 }}>{currentPhase.overview}</p>
+
+        <div style={{ display: "grid", gridTemplateColumns: mob ? "1fr" : "1fr 1fr", gap: 12 }}>
+          {currentPhase.methods.map((m, i) => (
+            <div key={i} style={{
+              background: "#FAFAFA", borderRadius: 14, padding: mob ? "14px" : "18px", border: "1px solid #EAEAEA",
+              transition: "all 0.2s",
+            }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 8 }}>
+                <h4 style={{ fontSize: mob ? 13 : 14, fontWeight: 800, margin: 0, fontFamily: "'Archivo', sans-serif", color: C.black, flex: 1 }}>{m.name}</h4>
+                <div style={{ background: `${currentPhase.color}15`, color: currentPhase.color, padding: "2px 8px", borderRadius: 4, fontSize: 9, fontWeight: 700, flexShrink: 0, marginLeft: 8 }}>
+                  {m.standard}
+                </div>
+              </div>
+              <p style={{ fontSize: 12, lineHeight: 1.6, color: C.charcoal, margin: 0 }}>{m.desc}</p>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* Design Principles */}
+      <div style={{ marginBottom: 24 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 16 }}>
+          <div style={{ width: 4, height: 28, background: C.red, borderRadius: 2 }} />
+          <h3 style={{ fontSize: mob ? 18 : 22, fontWeight: 800, margin: 0, fontFamily: "'Archivo', sans-serif" }}>Core Design Principles</h3>
+          <span style={{ fontSize: 11, color: C.med, fontWeight: 500 }}>International best practice</span>
+        </div>
+        <div style={{ display: "grid", gridTemplateColumns: mob ? "1fr" : "1fr 1fr", gap: 10 }}>
+          {designPrinciples.map((p, i) => (
+            <div key={i} onClick={() => setExpandedPrinciple(expandedPrinciple === i ? null : i)} style={{
+              background: expandedPrinciple === i ? "#FFF8F6" : "white", borderRadius: 14, padding: mob ? "14px" : "18px",
+              border: expandedPrinciple === i ? `2px solid ${C.red}` : "2px solid #EAEAEA",
+              cursor: "pointer", transition: "all 0.2s",
+            }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                <div style={{ flex: 1 }}>
+                  <div style={{ fontSize: mob ? 14 : 15, fontWeight: 800, fontFamily: "'Archivo', sans-serif", color: C.black }}>{p.title}</div>
+                  <div style={{ fontSize: 11, color: C.med, marginTop: 2 }}>{p.author}</div>
+                </div>
+                <span style={{ fontSize: 12, color: C.med, marginLeft: 8 }}>{expandedPrinciple === i ? "▲" : "▼"}</span>
+              </div>
+              {expandedPrinciple === i && (
+                <div style={{ marginTop: 12, paddingTop: 12, borderTop: "1px solid #F0F0F0" }}>
+                  <p style={{ fontSize: 13, lineHeight: 1.7, color: C.charcoal, margin: "0 0 10px" }}>{p.body}</p>
+                  <div style={{ background: `${C.red}10`, color: C.red, padding: "8px 12px", borderRadius: 8, fontSize: 12, fontWeight: 700 }}>
+                    {p.metric}
+                  </div>
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+
+      {/* KPI Framework */}
+      <div>
+        <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 16 }}>
+          <div style={{ width: 4, height: 28, background: C.blue, borderRadius: 2 }} />
+          <h3 style={{ fontSize: mob ? 18 : 22, fontWeight: 800, margin: 0, fontFamily: "'Archivo', sans-serif" }}>Performance KPI Framework</h3>
+          <span style={{ fontSize: 11, color: C.med, fontWeight: 500 }}>UITP / World Bank benchmarks</span>
+        </div>
+        <div style={{ display: "grid", gridTemplateColumns: mob ? "1fr" : "1fr 1fr", gap: 10 }}>
+          {kpis.map((k, i) => (
+            <div key={i} onClick={() => setExpandedKpi(expandedKpi === i ? null : i)} style={{
+              background: expandedKpi === i ? "#F0F4FF" : "white", borderRadius: 14, padding: mob ? "14px" : "18px",
+              border: expandedKpi === i ? `2px solid ${C.blue}` : "2px solid #EAEAEA",
+              cursor: "pointer", transition: "all 0.2s",
+            }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+                <div style={{ flex: 1 }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                    <div style={{ fontSize: mob ? 13 : 14, fontWeight: 800, fontFamily: "'Archivo', sans-serif" }}>{k.name}</div>
+                  </div>
+                  <div style={{ display: "flex", gap: 8, marginTop: 4, alignItems: "center", flexWrap: "wrap" }}>
+                    <span style={{ background: "#E8F0FE", color: C.blue, padding: "2px 8px", borderRadius: 4, fontSize: 10, fontWeight: 700 }}>{k.category}</span>
+                    <span style={{ fontSize: 11, fontWeight: 700, color: C.green }}>Target: {k.target}</span>
+                  </div>
+                </div>
+                <span style={{ fontSize: 12, color: C.med, marginLeft: 8 }}>{expandedKpi === i ? "▲" : "▼"}</span>
+              </div>
+              {expandedKpi === i && (
+                <div style={{ marginTop: 12, paddingTop: 12, borderTop: "1px solid #F0F0F0" }}>
+                  <p style={{ fontSize: 13, lineHeight: 1.7, color: C.charcoal, margin: "0 0 8px" }}>{k.desc}</p>
+                  <div style={{ fontSize: 11, color: C.med, fontStyle: "italic" }}>Benchmark: {k.benchmark}</div>
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+      </div>
+    </>
+  );
+}
+
 // ═══════════════════════════ MAIN ═══════════════════════════
 export default function YangoCityTransit() {
   const [activeTab, setActiveTab] = useState(0);
@@ -532,6 +811,7 @@ export default function YangoCityTransit() {
     { label: "For Passengers", href: "#passengers" },
     { label: "For Operators", href: "#operators" },
     { label: "For Government", href: "#government" },
+    { label: "Methodology", href: "#methodology" },
     { label: "Platform", href: "#platform" },
     { label: "Impact", href: "#impact" },
   ];
@@ -744,6 +1024,11 @@ export default function YangoCityTransit() {
         <SpeedMapDemo/>
         <FareEvasionDemo/>
         <AccessibilityDemo/>
+      </Section>
+
+      {/* ROUTE DESIGN METHODOLOGY */}
+      <Section bg={C.off} id="methodology">
+        <RouteDesignMethodology />
       </Section>
 
       {/* ANTI-FRAUD */}
