@@ -4,11 +4,34 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
     <meta name="description" content="Yango City Transit - Smart Mobility for Kigali & Rwanda" />
-    <title>Yango City Transit Rwanda</title>
+    <title>Yango City Transit Rwanda — Yango Tech</title>
+
+    <!-- Preload critical Yango fonts -->
+    <link rel="preload" as="font" href="https://yastatic.net/s3/distribution/lpc/fonts/YangoHeadline/YangoHeadline.woff2" crossorigin="anonymous" />
+    <link rel="preload" as="font" href="https://yastatic.net/s3/distribution/lpc/fonts/YangoGroupText/YangoGroupText-Regular.woff2" crossorigin="anonymous" />
+    <link rel="preload" as="font" href="https://yastatic.net/s3/distribution/lpc/fonts/YangoGroupText/YangoGroupText-Medium.woff2" crossorigin="anonymous" />
+    <link rel="preload" as="font" href="https://yastatic.net/s3/distribution/lpc/fonts/YangoGroupText/YangoGroupText-Bold.woff2" crossorigin="anonymous" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><rect fill='%23FF1A1A' width='100' height='100' rx='20'/></svg>" />
+
     <style>
+      /* === Yango Tech Font Faces === */
+      @font-face { font-family: "Yango Headline"; src: url("https://yastatic.net/s3/distribution/lpc/fonts/YangoHeadline/YangoHeadline.woff2") format("woff2"), url("https://yastatic.net/s3/distribution/lpc/fonts/YangoHeadline/YangoHeadline.woff") format("woff"); font-weight: 900; font-style: normal; font-display: swap; }
+      @font-face { font-family: "Yango Group Text"; src: url("https://yastatic.net/s3/distribution/lpc/fonts/YangoGroupText/YangoGroupText-Regular.woff2") format("woff2"), url("https://yastatic.net/s3/distribution/lpc/fonts/YangoGroupText/YangoGroupText-Regular.woff") format("woff"); font-weight: 400; font-style: normal; font-display: swap; }
+      @font-face { font-family: "Yango Group Text"; src: url("https://yastatic.net/s3/distribution/lpc/fonts/YangoGroupText/YangoGroupText-Medium.woff2") format("woff2"), url("https://yastatic.net/s3/distribution/lpc/fonts/YangoGroupText/YangoGroupText-Medium.woff") format("woff"); font-weight: 500; font-style: normal; font-display: swap; }
+      @font-face { font-family: "Yango Group Text"; src: url("https://yastatic.net/s3/distribution/lpc/fonts/YangoGroupText/YangoGroupText-Bold.woff2") format("woff2"), url("https://yastatic.net/s3/distribution/lpc/fonts/YangoGroupText/YangoGroupText-Bold.woff") format("woff"); font-weight: 600; font-style: normal; font-display: swap; }
+      @font-face { font-family: "Yango Group Text"; src: url("https://yastatic.net/s3/distribution/lpc/fonts/YangoGroupText/YangoGroupText-Black.woff2") format("woff2"); font-weight: 900; font-style: normal; font-display: swap; }
+      @font-face { font-family: "YS Text"; src: url("https://yastatic.net/s3/home/fonts/ys/4/text-regular.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
+      @font-face { font-family: "YS Text"; src: url("https://yastatic.net/s3/home/fonts/ys/4/text-medium.woff2") format("woff2"); font-weight: 500; font-style: normal; font-display: swap; }
+
+      /* === Base Reset & Yango Tokens === */
       *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-      html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
-      body { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+      html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; font-size: 16px; -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+      body { font-family: "Yango Group Text", "YS Text", Helvetica, Arial, sans-serif; font-weight: 400; font-size: 0.875rem; line-height: 1.5; color: #141414; background-color: #F5F5F5; letter-spacing: 0.05em; font-variant-numeric: proportional-nums; }
+      ::selection { background: #FF1A1A; color: white; }
+      a { color: inherit; text-decoration: none; transition: 0.2s ease-in-out; }
+      img { max-width: 100%; height: auto; display: block; }
     </style>
   </head>
   <body>
