@@ -111,13 +111,13 @@ function PassengerApp() {
           <defs><pattern id="pg" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0L0 0 0 40" fill="none" stroke="#cde0cd" strokeWidth="1"/></pattern></defs>
           <rect width="100%" height="100%" fill="url(#pg)"/>
           <path d="M30 140Q80 100 130 80T230 30" stroke={C.red} strokeWidth="3" fill="none" strokeDasharray="6,3"/>
-          <circle cx="75" cy="108" r="12" fill={C.red}/><text x="75" y="112" textAnchor="middle" fill="white" fontSize="11">🚌</text>
+          <circle cx="75" cy="108" r="12" fill={C.red}/><text x="75" y="113" textAnchor="middle" fill="white" fontSize="9" fontWeight="700">BUS</text>
           <circle cx="30" cy="140" r="6" fill={C.red} stroke="white" strokeWidth="2"/>
           <circle cx="130" cy="80" r="5" fill="#666" stroke="white" strokeWidth="2"/>
           <circle cx="230" cy="30" r="5" fill="#666" stroke="white" strokeWidth="2"/>
         </svg>
         <div style={{ position: "absolute", bottom: 8, left: 8, background: "rgba(255,255,255,0.95)", borderRadius: 8, padding: "5px 10px", fontSize: 11, fontWeight: 600 }}>
-          🔴 Route 14 — <span style={{ color: C.red }}>Live</span>
+          <span style={{ display: 'inline-block', width: 8, height: 8, borderRadius: '50%', background: C.red, marginRight: 6 }} />Route 14 — <span style={{ color: C.red }}>Live</span>
         </div>
       </div>
       <div style={{ padding: "10px 14px" }}>
@@ -150,11 +150,11 @@ function PassengerApp() {
                     <div onClick={(e) => { e.stopPropagation(); setPaid(i); }} style={{
                       flex: 1, background: C.red, color: "white", padding: "8px 0", borderRadius: 8,
                       textAlign: "center", fontWeight: 600, fontSize: 12, cursor: "pointer",
-                    }}>💳 Pay {s.fare}</div>
+                    }}>Pay {s.fare}</div>
                     <div onClick={(e) => e.stopPropagation()} style={{
                       flex: 1, background: C.black, color: "white", padding: "8px 0", borderRadius: 8,
                       textAlign: "center", fontWeight: 600, fontSize: 12, cursor: "pointer",
-                    }}>🔔 Set Alert</div>
+                    }}>Set Alert</div>
                   </div>
                 )}
               </div>
@@ -204,10 +204,10 @@ function DriverApp() {
         <div style={{ marginTop: 8, display: "flex", gap: 6 }}>
           <div onClick={() => { setAnnouncing(true); setTimeout(() => setAnnouncing(false), 2000); }}
             style={{ flex: 1, padding: "10px", borderRadius: '1.25rem', textAlign: "center", fontWeight: 600, fontSize: 12, background: announcing ? C.green : C.black, color: "white", cursor: "pointer", transition: "all 0.3s" }}>
-            {announcing ? "✓ Announced!" : "📢 Announce Stop"}
+            {announcing ? "Announced" : "Announce Stop"}
           </div>
           <div style={{ flex: 1, padding: "10px", borderRadius: '1.25rem', textAlign: "center", fontWeight: 600, fontSize: 12, background: "#F5F5F5", color: C.black, cursor: "pointer" }}>
-            🚨 Report Issue
+            Report Issue
           </div>
         </div>
       </div>
@@ -219,9 +219,9 @@ function OperatorDashboard() {
   const [aiTip, setAiTip] = useState(null);
   const [applied, setApplied] = useState({});
   const tips = [
-    { id: 0, route: "Route 7", insight: "Low ridership 10PM–6AM", suggestion: "Reduce frequency to 30-min intervals after 10PM", saving: "Save 2 vehicles nightly", icon: "📉" },
-    { id: 1, route: "Route 14", insight: "Overcrowding 7–9AM peak", suggestion: "Add 3 express buses during morning peak", saving: "+18% capacity", icon: "📈" },
-    { id: 2, route: "New Route", insight: "Underserved district detected", suggestion: "Create Route 31: Industrial Zone → Central Station via Market", saving: "Serve 12K residents", icon: "🆕" },
+    { id: 0, route: "Route 7", insight: "Low ridership 10PM–6AM", suggestion: "Reduce frequency to 30-min intervals after 10PM", saving: "Save 2 vehicles nightly", icon: "—" },
+    { id: 1, route: "Route 14", insight: "Overcrowding 7–9AM peak", suggestion: "Add 3 express buses during morning peak", saving: "+18% capacity", icon: "+" },
+    { id: 2, route: "New Route", insight: "Underserved district detected", suggestion: "Create Route 31: Industrial Zone → Central Station via Market", saving: "Serve 12K residents", icon: "*" },
   ];
   return (
     <div style={{ fontSize: 12, fontFamily: F.body }}>
@@ -258,7 +258,7 @@ function OperatorDashboard() {
           ))}
         </div>
         <div style={{ fontSize: 11, fontWeight: 700, marginBottom: 6, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-          <span>🤖 AI Route Insights</span>
+          <span>AI Route Insights</span>
           <span style={{ fontSize: 9, color: C.red, fontWeight: 600 }}>Real-time</span>
         </div>
         {tips.map((t) => (
@@ -404,8 +404,7 @@ function SpeedMapDemo() {
             </div>
           ) : (
             <div style={{ background: "white", borderRadius: '1.5rem', padding: "16px", textAlign: "center", color: C.muted }}>
-              <div style={{ fontSize: 24, marginBottom: 8 }}>👆</div>
-              <div style={{ fontSize: 12 }}>{mob ? "Tap a zone to see speed data" : "Hover a zone to see speed data & recommendations"}</div>
+              <div style={{ fontSize: 12 }}>{mob ? "Tap a zone to see speed data" : "Select a zone to see speed data"}</div>
             </div>
           )}
           <div style={{ marginTop: 12, display: "flex", gap: 4, flexWrap: "wrap" }}>
@@ -448,7 +447,7 @@ function FareEvasionDemo() {
             <div style={{ fontSize: 9, color: C.muted, marginTop: 1 }}>{d.area}</div>
             {sel === i && (
               <div style={{ marginTop: 8, paddingTop: 8, borderTop: "1px solid #E0E0E0", fontSize: 10, lineHeight: 1.4, color: C.black }}>
-                <div style={{ fontWeight: 700 }}>👮 {d.inspectors} inspectors</div>
+                <div style={{ fontWeight: 700 }}>{d.inspectors} inspectors assigned</div>
                 <div style={{ color: C.muted, marginTop: 2 }}>
                   {d.status === "critical" ? "AI: Increase patrols at peak" : d.status === "warning" ? "AI: Spot checks needed" : "AI: Coverage OK"}
                 </div>
@@ -526,7 +525,7 @@ function RouteDesignMethodology() {
       title: "Data Collection & Baseline",
       subtitle: "Weeks 1-4",
       color: C.blue,
-      icon: "📊",
+      icon: "01",
       overview: "Establish a comprehensive understanding of current travel demand, network performance, and urban growth patterns through multi-source data collection aligned with ITDP and World Bank standards.",
       methods: [
         { name: "Origin-Destination Surveys", desc: "Household travel surveys (HTS) following UN-Habitat methodology — stratified sampling across Kigali's 35 sectors, capturing trip purpose, mode, time-of-day, and willingness-to-pay. Target: 2% of population (~25,000 households).", standard: "UN-Habitat / World Bank SSATP" },
@@ -542,7 +541,7 @@ function RouteDesignMethodology() {
       title: "Demand Modeling & Forecasting",
       subtitle: "Weeks 5-8",
       color: C.red,
-      icon: "🔬",
+      icon: "02",
       overview: "Build a calibrated four-step travel demand model adapted to Kigali's unique topography and travel patterns, producing reliable ridership forecasts for route planning decisions.",
       methods: [
         { name: "Four-Step Transport Model", desc: "Trip Generation: zonal production/attraction rates by land use. Trip Distribution: gravity model calibrated to OD survey data. Mode Choice: nested logit model incorporating fare, travel time, wait time, and walk access. Assignment: capacity-constrained transit assignment on multimodal network.", standard: "UTPS / TransCAD / PTV Visum" },
@@ -557,7 +556,7 @@ function RouteDesignMethodology() {
       title: "Network Architecture Design",
       subtitle: "Weeks 9-14",
       color: C.green,
-      icon: "🗺️",
+      icon: "03",
       overview: "Design the transit network structure using international best practice in network typology — balancing coverage vs. ridership goals, direct connections vs. transfers, and frequency vs. span.",
       methods: [
         { name: "Trunk-Feeder Network Design", desc: "Design high-frequency trunk corridors (BRT-ready) on major demand axes: Nyabugogo–CBD–Kicukiro, Kimironko–CBD, Nyabugogo–Nyamirambo. Connect feeder routes from hillside neighborhoods to trunk stops with timed transfers.", standard: "Jarrett Walker / Human Transit" },
@@ -573,7 +572,7 @@ function RouteDesignMethodology() {
       title: "Service Planning & Scheduling",
       subtitle: "Weeks 15-18",
       color: C.amber,
-      icon: "⚙️",
+      icon: "04",
       overview: "Translate network design into operational schedules — determining vehicle requirements, driver rosters, and deadheading patterns that maximize efficiency while meeting service standards.",
       methods: [
         { name: "Headway-Based Scheduling", desc: "Set headways based on maximum load point analysis: headway = (vehicle capacity × target load factor) / peak passenger flow. Target 85% load factor at max load point. Produces specific vehicle requirements per route per time period.", standard: "Ceder (2007) / HASTUS" },
@@ -588,7 +587,7 @@ function RouteDesignMethodology() {
       title: "Performance Monitoring & Iteration",
       subtitle: "Ongoing",
       color: C.teal,
-      icon: "📈",
+      icon: "05",
       overview: "Establish continuous monitoring using international KPIs, with AI-powered anomaly detection and quarterly optimization cycles aligned with Rwanda's performance-based contracting framework.",
       methods: [
         { name: "Real-Time KPI Dashboard", desc: "Monitor 12 key indicators in real-time: on-time performance, load factor, headway regularity, revenue per vehicle-km, cost recovery ratio, passengers per vehicle-hour, mean distance between failures, accessibility coverage, fare evasion rate, customer complaints per 100K trips, safety incidents, and carbon intensity per passenger-km.", standard: "UITP World Metro Benchmarks" },
@@ -822,10 +821,10 @@ export default function YangoCityTransit() {
     { label: "Impact", href: "#impact" },
   ];
   const tabs = [
-    { title: "Passenger App", icon: "🚏" },
-    { title: "Driver Console", icon: "🚌" },
-    { title: "Operator Dashboard", icon: "⚙️" },
-    { title: "City Dashboard", icon: "🏛️" },
+    { title: "Passenger App", icon: "" },
+    { title: "Driver Console", icon: "" },
+    { title: "Operator Dashboard", icon: "" },
+    { title: "City Dashboard", icon: "" },
   ];
 
   // Close menu on resize to desktop
@@ -907,13 +906,12 @@ export default function YangoCityTransit() {
             <div style={{ flex: mob ? "unset" : 0.8, width: mob ? "100%" : "auto" }}>
               <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: mob ? 8 : 12 }}>
                 {[
-                  { val: "98%", label: "4G Population Coverage", icon: "📡" },
-                  { val: "500+", label: "Buses in Kigali", icon: "🚌" },
-                  { val: "180K", label: "Daily Passengers at Nyabugogo", icon: "👥" },
-                  { val: "30+", label: "Countries We Operate In", icon: "🌍" },
+                  { val: "98%", label: "4G Population Coverage" },
+                  { val: "500+", label: "Buses in Kigali" },
+                  { val: "180K", label: "Daily Passengers at Nyabugogo" },
+                  { val: "30+", label: "Countries We Operate In" },
                 ].map((s, i) => (
                   <div key={i} style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: mob ? 12 : 16, padding: mob ? "16px 14px" : "24px 20px" }}>
-                    <div style={{ fontSize: mob ? 22 : 28, marginBottom: mob ? 4 : 8 }}>{s.icon}</div>
                     <div style={{ fontSize: mob ? 22 : 28, fontWeight: 900, color: "white", fontFamily: F.headline }}>{s.val}</div>
                     <div style={{ fontSize: mob ? 11 : 13, color: "rgba(255,255,255,0.5)", marginTop: 4 }}>{s.label}</div>
                   </div>
@@ -932,12 +930,12 @@ export default function YangoCityTransit() {
         </div>
         <div style={{ display: "grid", gridTemplateColumns: mob ? "1fr" : "1fr 1fr 1fr", gap: 20 }}>
           {[
-            { title: "For Citizens", icon: "🚏", color: C.green, items: ["Upgrade from Tap & Go to full real-time tracking", "Pay via MTN MoMo, Airtel Money, or smart card", "Multi-modal trips: bus + moto-taxi + walking", "Know exactly when your bus arrives — no more waiting", "Seamless transfers at Nyabugogo & Kicukiro hubs"] },
-            { title: "For Carriers", icon: "🚌", color: C.blue, items: ["GPS navigation for Kigali's hilly terrain", "Digital fare collection replaces cash completely", "Real-time fleet monitoring for all 18+ operators", "RURA-ready compliance and reporting built in", "AI optimization ready for BRT dedicated lanes"] },
-            { title: "For the City", icon: "🏛️", color: C.red, items: ["Full analytics aligned with Vision 2050 targets", "Data-driven route planning for 80% coverage goal", "Subsidy-free operations supported by efficiency gains", "Real-time dashboards for City of Kigali & MININFRA", "Electric bus fleet integration & BRT corridor planning"] },
+            { title: "For Citizens", num: "01", color: C.green, items: ["Upgrade from Tap & Go to full real-time tracking", "Pay via MTN MoMo, Airtel Money, or smart card", "Multi-modal trips: bus + moto-taxi + walking", "Know exactly when your bus arrives — no more waiting", "Seamless transfers at Nyabugogo & Kicukiro hubs"] },
+            { title: "For Carriers", num: "02", color: C.blue, items: ["GPS navigation for Kigali's hilly terrain", "Digital fare collection replaces cash completely", "Real-time fleet monitoring for all 18+ operators", "RURA-ready compliance and reporting built in", "AI optimization ready for BRT dedicated lanes"] },
+            { title: "For the City", num: "03", color: C.red, items: ["Full analytics aligned with Vision 2050 targets", "Data-driven route planning for 80% coverage goal", "Subsidy-free operations supported by efficiency gains", "Real-time dashboards for City of Kigali & MININFRA", "Electric bus fleet integration & BRT corridor planning"] },
           ].map((p, i) => (
             <div key={i} style={{ background: "white", borderRadius: '1.875rem', padding: "36px 28px", borderTop: `4px solid ${p.color}` }}>
-              <div style={{ fontSize: 36, marginBottom: 16 }}>{p.icon}</div>
+              <div style={{ fontFamily: F.body, fontSize: 32, fontWeight: 900, color: p.color, opacity: 0.15, marginBottom: 8 }}>{p.num}</div>
               <h3 style={{ fontSize: 22, fontWeight: 800, margin: "0 0 16px", fontFamily: F.headline }}>{p.title}</h3>
               {p.items.map((item, j) => (
                 <div key={j} style={{ display: "flex", alignItems: "flex-start", gap: 10, marginBottom: 12, fontSize: 14, lineHeight: 1.5, color: C.black }}>
@@ -962,7 +960,7 @@ export default function YangoCityTransit() {
               background: activeTab === i ? C.black : "#F0F0F0", color: activeTab === i ? "white" : C.black,
               fontWeight: 700, fontSize: mob ? 12 : 14, cursor: "pointer", transition: "all 0.3s", fontFamily: F.headline,
               minHeight: 44,
-            }}>{t.icon} {t.title}</button>
+            }}>{t.title}</button>
           ))}
         </div>
         <div style={{ display: "flex", justifyContent: "center", alignItems: "flex-start", gap: mob ? 20 : 40 }}>
@@ -1047,16 +1045,15 @@ export default function YangoCityTransit() {
           <div style={{ flex: 1, width: "100%" }}>
             <div style={{ display: "grid", gridTemplateColumns: mob ? "1fr" : "1fr 1fr", gap: 12 }}>
               {[
-                { icon: "🔒", title: "Digital Fare Collection", desc: "Every payment logged with timestamp, route, vehicle ID." },
-                { icon: "📍", title: "GPS Fleet Tracking", desc: "Real-time location. No ghost buses, no route deviations." },
-                { icon: "📊", title: "Automated Reporting", desc: "Revenue reports generated for authorities and tax offices." },
-                { icon: "🔄", title: "Dynamic Routes", desc: "Adjust routes in real-time based on demand or events." },
-                { icon: "👁️", title: "Inspector Tools", desc: "AI-powered routing targets high-evasion areas automatically." },
-                { icon: "🛡️", title: "Fraud Prevention", desc: "Tamper-proof records. Cannot manipulate counts or fares." },
+                { title: "Digital Fare Collection", desc: "Every payment logged with timestamp, route, vehicle ID." },
+                { title: "GPS Fleet Tracking", desc: "Real-time location. No ghost buses, no route deviations." },
+                { title: "Automated Reporting", desc: "Revenue reports generated for authorities and tax offices." },
+                { title: "Dynamic Routes", desc: "Adjust routes in real-time based on demand or events." },
+                { title: "Inspector Tools", desc: "AI-powered routing targets high-evasion areas automatically." },
+                { title: "Fraud Prevention", desc: "Tamper-proof records. Cannot manipulate counts or fares." },
               ].map((f, i) => (
                 <div key={i} style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: '1.875rem', padding: "20px 16px" }}>
-                  <div style={{ fontSize: 24, marginBottom: 10 }}>{f.icon}</div>
-                  <div style={{ fontSize: 14, fontWeight: 700, color: "white", marginBottom: 6 }}>{f.title}</div>
+                  <div style={{ fontSize: 14, fontWeight: 600, color: "white", marginBottom: 6 }}>{f.title}</div>
                   <div style={{ fontSize: 12, lineHeight: 1.5, color: "rgba(255,255,255,0.5)" }}>{f.desc}</div>
                 </div>
               ))}
@@ -1173,7 +1170,7 @@ export default function YangoCityTransit() {
         </div>
         <div style={{ marginTop: mob ? 28 : 48, background: "white", borderRadius: '1.875rem', padding: mob ? "20px 16px" : "32px 36px", maxWidth: 800, margin: `${mob ? 28 : 48}px auto 0`, border: `2px solid ${C.red}20` }}>
           <div style={{ display: "flex", flexDirection: mob ? "column" : "row", gap: mob ? 16 : 32, alignItems: mob ? "flex-start" : "center" }}>
-            <div style={{ fontSize: mob ? 36 : 48, flexShrink: 0 }}>🤝</div>
+            <div style={{ fontFamily: F.headline, fontSize: mob ? 28 : 36, fontWeight: 900, color: C.red, flexShrink: 0 }}>PPP</div>
             <div>
               <div style={{ fontSize: 18, fontWeight: 800, color: C.black, marginBottom: 6, fontFamily: F.headline }}>Open to Public-Private Partnership Models</div>
               <p style={{ fontSize: 14, color: C.black, lineHeight: 1.7, margin: 0 }}>
@@ -1192,18 +1189,17 @@ export default function YangoCityTransit() {
         </div>
         <div style={{ display: "grid", gridTemplateColumns: mob ? "1fr" : "repeat(3, 1fr)", gap: 16 }}>
           {[
-            { icon: "🗺️", title: "Yango Maps", desc: "HD mapping with 25% better geocoding and 16% better routing than competitors. On-premise available.", stat: "~30% lower cost" },
-            { icon: "🚚", title: "RouteQ Dispatch", desc: "AI-powered route optimization handling 1M+ daily orders in peak. Proven 15% efficiency boost.", stat: "430+ clients" },
-            { icon: "🤖", title: "AI & ML Engine", desc: "60+ services powered by proprietary AI — computer vision, predictive analytics, demand forecasting.", stat: "10+ B2B products" },
-            { icon: "☁️", title: "Cloud Infrastructure", desc: "Full-stack cloud with on-premise options. ~30% TCO savings vs AWS/GCP. Data sovereignty guaranteed.", stat: "99.9% SLA" },
-            { icon: "📱", title: "White-Label Apps", desc: "Production-ready passenger, driver, and operator apps. Customizable branding. iOS, Android, web.", stat: "Rapid deployment" },
-            { icon: "🔐", title: "On-Premise Security", desc: "All systems deployable on-premise for full data sovereignty. No external cloud dependency.", stat: "Full control" },
+            { title: "Yango Maps", desc: "HD mapping with 25% better geocoding and 16% better routing than competitors. On-premise available.", stat: "~30% lower cost" },
+            { title: "RouteQ Dispatch", desc: "AI-powered route optimization handling 1M+ daily orders in peak. Proven 15% efficiency boost.", stat: "430+ clients" },
+            { title: "AI & ML Engine", desc: "60+ services powered by proprietary AI — computer vision, predictive analytics, demand forecasting.", stat: "10+ B2B products" },
+            { title: "Cloud Infrastructure", desc: "Full-stack cloud with on-premise options. ~30% TCO savings vs AWS/GCP. Data sovereignty guaranteed.", stat: "99.9% SLA" },
+            { title: "White-Label Apps", desc: "Production-ready passenger, driver, and operator apps. Customizable branding. iOS, Android, web.", stat: "Rapid deployment" },
+            { title: "On-Premise Security", desc: "All systems deployable on-premise for full data sovereignty. No external cloud dependency.", stat: "Full control" },
           ].map((t, i) => (
             <div key={i} style={{ background: C.body, borderRadius: '1.875rem', padding: "24px 20px", transition: "transform 0.2s, box-shadow 0.2s", cursor: "default" }}
               onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-4px)"; }}
               onMouseLeave={e => { e.currentTarget.style.transform = "translateY(0)"; }}>
-              <div style={{ fontSize: 28, marginBottom: 12 }}>{t.icon}</div>
-              <h4 style={{ fontSize: 17, fontWeight: 800, margin: "0 0 8px", fontFamily: F.headline }}>{t.title}</h4>
+              <h4 style={{ fontSize: 17, fontWeight: 900, margin: "0 0 8px", fontFamily: F.headline, textTransform: 'uppercase', letterSpacing: 'calc(1em / 50)' }}>{t.title}</h4>
               <p style={{ fontSize: 13, color: C.black, lineHeight: 1.5, margin: "0 0 12px" }}>{t.desc}</p>
               <div style={{ fontSize: 12, fontWeight: 700, color: C.red, background: "#FFF0ED", display: "inline-block", padding: "4px 10px", borderRadius: 6 }}>{t.stat}</div>
             </div>
