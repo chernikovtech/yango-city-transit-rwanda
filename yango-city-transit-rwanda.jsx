@@ -53,11 +53,11 @@ function Section({ children, bg = C.white, id, style = {} }) {
   }, []);
   return (
     <section ref={ref} id={id} style={{
-      background: bg, padding: mob ? "48px 0" : "80px 0", opacity: vis ? 1 : 0,
-      transform: vis ? "translateY(0)" : "translateY(30px)",
-      transition: "all 0.8s cubic-bezier(0.23,1,0.32,1)", ...style,
+      background: bg, padding: mob ? "3rem 0" : "6rem 0", opacity: vis ? 1 : 0,
+      transform: vis ? "translateY(0)" : "translateY(2rem)",
+      transition: "opacity 0.6s ease-out, transform 0.6s ease-out", ...style,
     }}>
-      <div style={{ maxWidth: 1200, margin: "0 auto", padding: mob ? "0 16px" : "0 24px" }}>{children}</div>
+      <div style={{ maxWidth: "116rem", margin: "0 auto", padding: mob ? "0 1.25rem" : "0 1.87rem" }}>{children}</div>
     </section>
   );
 }
@@ -373,9 +373,9 @@ function SpeedMapDemo() {
     { x: 55, y: 45, w: 30, h: 35, speed: "22-30", color: "#44BB44", label: "Nyabugogo Corridor", rec: "Express corridor to secondary cities" },
   ];
   return (
-    <div style={{ background: "#F8F8F8", borderRadius: '1.875rem', padding: mob ? "16px" : "24px", marginBottom: 20 }}>
-      <h4 style={{ fontSize: mob ? 16 : 18, fontWeight: 800, margin: "0 0 4px", fontFamily: F.headline }}>Public Transport Speed Mapping</h4>
-      <p style={{ fontSize: mob ? 12 : 13, color: C.muted, margin: "0 0 16px" }}>{mob ? "Tap zones to see speed data" : "Hover zones to see speed data and AI recommendations"}</p>
+    <div style={{ background: "white", borderRadius: '1.875rem', padding: mob ? "1.25rem" : "2rem", marginBottom: "1.25rem" }}>
+      <h4 style={{ fontFamily: F.headline, fontSize: mob ? "1rem" : "clamp(1rem, 1.5vw, 1.25rem)", fontWeight: 900, lineHeight: "90%", letterSpacing: "calc(1em / 50)", textTransform: "uppercase", margin: "0 0 0.5rem" }}>Public Transport Speed Mapping</h4>
+      <p style={{ fontFamily: F.body, fontSize: "0.875rem", letterSpacing: "0.05em", color: C.muted, margin: "0 0 1rem", lineHeight: 1.5 }}>{mob ? "Tap zones to see speed data" : "Hover zones to see speed data and AI recommendations"}</p>
       <div style={{ display: "flex", flexDirection: mob ? "column" : "row", gap: mob ? 12 : 24, alignItems: "flex-start" }}>
         <div style={{ flex: 1, width: "100%", position: "relative", background: "#E8F0E8", borderRadius: '1.5rem', height: mob ? 200 : 260, overflow: "hidden" }}>
           <svg width="100%" height="100%">
@@ -431,9 +431,9 @@ function FareEvasionDemo() {
     { name: "Remera", area: "West", evasion: 5, inspectors: 1, status: "good" },
   ];
   return (
-    <div style={{ background: "#F8F8F8", borderRadius: '1.875rem', padding: mob ? "16px" : "24px" }}>
-      <h4 style={{ fontSize: mob ? 16 : 18, fontWeight: 800, margin: "0 0 4px", fontFamily: F.headline }}>Fare Evasion Heatmap & Inspector Routing</h4>
-      <p style={{ fontSize: mob ? 12 : 13, color: C.muted, margin: "0 0 16px" }}>Tap districts to see AI-assigned inspector routes</p>
+    <div style={{ background: "white", borderRadius: '1.875rem', padding: mob ? "1.25rem" : "2rem" }}>
+      <h4 style={{ fontFamily: F.headline, fontSize: mob ? "1rem" : "clamp(1rem, 1.5vw, 1.25rem)", fontWeight: 900, lineHeight: "90%", letterSpacing: "calc(1em / 50)", textTransform: "uppercase", margin: "0 0 0.5rem" }}>Fare Evasion Heatmap & Inspector Routing</h4>
+      <p style={{ fontFamily: F.body, fontSize: "0.875rem", letterSpacing: "0.05em", color: C.muted, margin: "0 0 1rem", lineHeight: 1.5 }}>Tap districts to see AI-assigned inspector routes</p>
       <div style={{ display: "grid", gridTemplateColumns: mob ? "1fr 1fr" : "repeat(5, 1fr)", gap: 8 }}>
         {districts.map((d, i) => (
           <div key={i} onClick={() => setSel(sel === i ? null : i)} style={{
@@ -470,9 +470,9 @@ function AccessibilityDemo() {
     { name: "Masaka / Ndera", pop: "38K", coverage: 8, status: "underserved", rec: "Extend scheduled service to Masaka growth area" },
   ];
   return (
-    <div style={{ background: "#F8F8F8", borderRadius: '1.875rem', padding: mob ? "16px" : "24px", marginTop: 20 }}>
-      <h4 style={{ fontSize: mob ? 16 : 18, fontWeight: 800, margin: "0 0 4px", fontFamily: F.headline }}>Accessibility Analysis</h4>
-      <p style={{ fontSize: mob ? 12 : 13, color: C.muted, margin: "0 0 16px" }}>Identify underserved areas and get AI recommendations for new routes</p>
+    <div style={{ background: "white", borderRadius: '1.875rem', padding: mob ? "1.25rem" : "2rem", marginTop: "1.25rem" }}>
+      <h4 style={{ fontFamily: F.headline, fontSize: mob ? "1rem" : "clamp(1rem, 1.5vw, 1.25rem)", fontWeight: 900, lineHeight: "90%", letterSpacing: "calc(1em / 50)", textTransform: "uppercase", margin: "0 0 0.5rem" }}>Accessibility Analysis</h4>
+      <p style={{ fontFamily: F.body, fontSize: "0.875rem", letterSpacing: "0.05em", color: C.muted, margin: "0 0 1rem", lineHeight: 1.5 }}>Identify underserved areas and get AI recommendations for new routes</p>
       <div style={{ display: "grid", gridTemplateColumns: mob ? "1fr" : "1fr 1fr", gap: 10 }}>
         {areas.map((a, i) => (
           <div key={i} onClick={() => setExpanded(expanded === i ? null : i)} style={{
@@ -654,95 +654,94 @@ function RouteDesignMethodology() {
   return (
     <>
       {/* Phase Header */}
-      <div style={{ textAlign: "center", marginBottom: mob ? 28 : 48 }}>
-        <div style={{ display: "inline-block", background: `${C.red}15`, border: `1px solid ${C.red}30`, color: C.red, padding: "6px 16px", borderRadius: '1.875rem', fontSize: 12, fontWeight: 700, letterSpacing: "0.05em", marginBottom: 16 }}>
-          CONSULTING-GRADE METHODOLOGY
+      <div style={{ textAlign: "center", marginBottom: mob ? "1.75rem" : "4rem" }}>
+        <div style={{ display: "inline-block", background: "rgba(255,26,26,0.08)", border: "1px solid rgba(255,26,26,0.2)", color: C.red, padding: "0.6rem 1rem", borderRadius: '2rem', fontFamily: F.body, fontSize: '0.72rem', fontWeight: 500, letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: "1rem" }}>
+          Consulting-Grade Methodology
         </div>
-        <h2 style={{ fontFamily: F.headline, fontSize: mob ? 26 : 40, fontWeight: 900, margin: "0 0 12px" }}>
+        <h2 style={{ fontFamily: F.headline, fontSize: mob ? "clamp(1.5rem, 4vw, 2rem)" : "clamp(2rem, 3.5vw, 3.85rem)", fontWeight: 900, lineHeight: "90%", letterSpacing: "calc(1em / 50)", textTransform: "uppercase", margin: "0 0 1rem" }}>
           Route Design <span style={{ color: C.red }}>Methodology</span>
         </h2>
-        <p style={{ fontSize: mob ? 14 : 17, color: C.muted, maxWidth: 700, margin: "0 auto" }}>
+        <p style={{ fontFamily: F.body, fontSize: "0.875rem", letterSpacing: "0.05em", color: C.muted, maxWidth: "44rem", margin: "0 auto", lineHeight: 1.5 }}>
           A five-phase, data-driven framework for designing Kigali's transit network — based on ITDP, World Bank, TCRP, and proven methodologies from the world's best transit systems.
         </p>
       </div>
 
       {/* Phase Selector */}
-      <div style={{ display: "flex", gap: mob ? 4 : 8, marginBottom: mob ? 20 : 32, overflowX: "auto", WebkitOverflowScrolling: "touch", paddingBottom: 4 }}>
+      <div style={{ display: "flex", gap: mob ? "0.25rem" : "0.5rem", marginBottom: mob ? "1.25rem" : "2rem", overflowX: "auto", WebkitOverflowScrolling: "touch", paddingBottom: 4 }}>
         {phases.map((p, i) => (
           <button key={i} onClick={() => setActivePhase(i)} style={{
-            flex: mob ? "0 0 auto" : 1, padding: mob ? "10px 14px" : "14px 16px", borderRadius: '1.5rem', border: "none",
+            flex: mob ? "0 0 auto" : 1, padding: mob ? "0.75rem 1rem" : "1rem 1.25rem", borderRadius: '2rem', border: "none",
             background: activePhase === i ? p.color : "#F0F0F0",
             color: activePhase === i ? "white" : C.black,
-            fontWeight: 700, fontSize: mob ? 11 : 13, cursor: "pointer", transition: "all 0.3s",
-            fontFamily: F.headline, minHeight: 44, whiteSpace: "nowrap",
+            fontFamily: F.body, fontWeight: 500, fontSize: '0.72rem', letterSpacing: '0.12em', textTransform: 'uppercase',
+            cursor: "pointer", transition: "0.2s ease-in-out", minHeight: 44, whiteSpace: "nowrap",
             textAlign: "center",
           }}>
-            <div style={{ fontSize: mob ? 14 : 18, marginBottom: 2 }}>{p.icon}</div>
+            <div style={{ fontSize: mob ? "0.875rem" : "1.125rem", marginBottom: 2, fontFamily: F.headline, fontWeight: 900, letterSpacing: "calc(1em / 50)" }}>{p.icon}</div>
             <div>{mob ? p.title.split(" ")[0] : p.title}</div>
-            <div style={{ fontSize: 9, opacity: 0.8, marginTop: 2 }}>{p.subtitle}</div>
+            <div style={{ fontSize: "0.625rem", opacity: 0.8, marginTop: 2 }}>{p.subtitle}</div>
           </button>
         ))}
       </div>
 
       {/* Active Phase Detail */}
-      <div style={{ background: "white", borderRadius: '1.875rem', padding: mob ? "20px 16px" : "32px 28px", marginBottom: 24, borderTop: `4px solid ${currentPhase.color}` }}>
-        <div style={{ display: "flex", flexDirection: mob ? "column" : "row", gap: mob ? 12 : 20, alignItems: mob ? "flex-start" : "center", marginBottom: 20 }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
-            <div style={{ fontSize: 32, width: 56, height: 56, borderRadius: '1.875rem', background: `${currentPhase.color}15`, display: "flex", alignItems: "center", justifyContent: "center" }}>{currentPhase.icon}</div>
+      <div style={{ background: "white", borderRadius: '1.875rem', padding: mob ? "1.5rem" : "2.5rem", marginBottom: "2rem", borderTop: `4px solid ${currentPhase.color}` }}>
+        <div style={{ display: "flex", flexDirection: mob ? "column" : "row", gap: mob ? "0.75rem" : "1.25rem", alignItems: mob ? "flex-start" : "center", marginBottom: "1.25rem" }}>
+          <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
+            <div style={{ fontFamily: F.headline, fontSize: "2rem", fontWeight: 900, letterSpacing: "calc(1em / 50)", width: 56, height: 56, borderRadius: '1.875rem', background: `${currentPhase.color}12`, display: "flex", alignItems: "center", justifyContent: "center", color: currentPhase.color }}>{currentPhase.icon}</div>
             <div>
-              <div style={{ fontFamily: F.body, fontSize: 13, color: currentPhase.color, fontWeight: 700 }}>PHASE {currentPhase.num}</div>
-              <h3 style={{ fontSize: mob ? 20 : 24, fontWeight: 800, margin: 0, fontFamily: F.headline }}>{currentPhase.title}</h3>
+              <div style={{ fontFamily: F.body, fontSize: '0.72rem', fontWeight: 500, letterSpacing: '0.12em', textTransform: 'uppercase', color: currentPhase.color }}>Phase {currentPhase.num}</div>
+              <h3 style={{ fontFamily: F.headline, fontSize: mob ? "1.25rem" : "1.5rem", fontWeight: 900, lineHeight: "90%", letterSpacing: "calc(1em / 50)", textTransform: "uppercase", margin: 0 }}>{currentPhase.title}</h3>
             </div>
           </div>
-          <div style={{ marginLeft: mob ? 0 : "auto", background: `${currentPhase.color}12`, color: currentPhase.color, padding: "6px 14px", borderRadius: 8, fontSize: 12, fontWeight: 700 }}>
+          <div style={{ marginLeft: mob ? 0 : "auto", fontFamily: F.body, fontSize: '0.72rem', fontWeight: 500, letterSpacing: '0.12em', textTransform: 'uppercase', background: `${currentPhase.color}10`, color: currentPhase.color, padding: "0.6rem 1rem", borderRadius: '2rem' }}>
             {currentPhase.subtitle}
           </div>
         </div>
-        <p style={{ fontSize: mob ? 13 : 15, lineHeight: 1.7, color: C.black, marginBottom: 20, maxWidth: 800 }}>{currentPhase.overview}</p>
+        <p style={{ fontFamily: F.body, fontSize: "0.875rem", letterSpacing: "0.05em", lineHeight: 1.5, color: C.black, marginBottom: "1.25rem", maxWidth: "50rem" }}>{currentPhase.overview}</p>
 
-        <div style={{ display: "grid", gridTemplateColumns: mob ? "1fr" : "1fr 1fr", gap: 12 }}>
+        <div style={{ display: "grid", gridTemplateColumns: mob ? "1fr" : "1fr 1fr", gap: "1rem" }}>
           {currentPhase.methods.map((m, i) => (
             <div key={i} style={{
-              background: "#FAFAFA", borderRadius: '1.875rem', padding: mob ? "14px" : "18px", border: "1px solid #EAEAEA",
-              transition: "all 0.2s",
+              background: "#FAFAFA", borderRadius: '1.875rem', padding: mob ? "1rem" : "1.25rem", border: "1px solid #EAEAEA",
             }}>
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 8 }}>
-                <h4 style={{ fontSize: mob ? 13 : 14, fontWeight: 800, margin: 0, fontFamily: F.headline, color: C.black, flex: 1 }}>{m.name}</h4>
-                <div style={{ background: `${currentPhase.color}15`, color: currentPhase.color, padding: "2px 8px", borderRadius: 4, fontSize: 9, fontWeight: 700, flexShrink: 0, marginLeft: 8 }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "0.5rem" }}>
+                <h4 style={{ fontFamily: F.headline, fontSize: mob ? "0.875rem" : "1rem", fontWeight: 900, letterSpacing: "calc(1em / 50)", textTransform: "uppercase", margin: 0, color: C.black, flex: 1 }}>{m.name}</h4>
+                <div style={{ fontFamily: F.body, fontSize: '0.625rem', fontWeight: 500, letterSpacing: '0.12em', textTransform: 'uppercase', background: `${currentPhase.color}10`, color: currentPhase.color, padding: "0.25rem 0.5rem", borderRadius: '2rem', flexShrink: 0, marginLeft: "0.5rem" }}>
                   {m.standard}
                 </div>
               </div>
-              <p style={{ fontSize: 12, lineHeight: 1.6, color: C.black, margin: 0 }}>{m.desc}</p>
+              <p style={{ fontFamily: F.body, fontSize: "0.875rem", letterSpacing: "0.05em", lineHeight: 1.5, color: C.black, margin: 0 }}>{m.desc}</p>
             </div>
           ))}
         </div>
       </div>
 
       {/* Design Principles */}
-      <div style={{ marginBottom: 24 }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 16 }}>
+      <div style={{ marginBottom: "2rem" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "1rem" }}>
           <div style={{ width: 4, height: 28, background: C.red, borderRadius: 2 }} />
-          <h3 style={{ fontSize: mob ? 18 : 22, fontWeight: 800, margin: 0, fontFamily: F.headline }}>Core Design Principles</h3>
-          <span style={{ fontSize: 11, color: C.muted, fontWeight: 500 }}>International best practice</span>
+          <h3 style={{ fontFamily: F.headline, fontSize: mob ? "1.125rem" : "clamp(1.25rem, 2vw, 1.5rem)", fontWeight: 900, lineHeight: "90%", letterSpacing: "calc(1em / 50)", textTransform: "uppercase", margin: 0 }}>Core Design Principles</h3>
+          <span style={{ fontFamily: F.body, fontSize: '0.72rem', fontWeight: 500, letterSpacing: '0.12em', textTransform: 'uppercase', color: C.muted }}>International best practice</span>
         </div>
-        <div style={{ display: "grid", gridTemplateColumns: mob ? "1fr" : "1fr 1fr", gap: 10 }}>
+        <div style={{ display: "grid", gridTemplateColumns: mob ? "1fr" : "1fr 1fr", gap: "0.75rem" }}>
           {designPrinciples.map((p, i) => (
             <div key={i} onClick={() => setExpandedPrinciple(expandedPrinciple === i ? null : i)} style={{
-              background: expandedPrinciple === i ? "#FFF8F6" : "white", borderRadius: '1.875rem', padding: mob ? "14px" : "18px",
+              background: expandedPrinciple === i ? "#FFF8F6" : "white", borderRadius: '1.875rem', padding: mob ? "1rem" : "1.25rem",
               border: expandedPrinciple === i ? `2px solid ${C.red}` : "2px solid #EAEAEA",
-              cursor: "pointer", transition: "all 0.2s",
+              cursor: "pointer", transition: "0.2s ease-in-out",
             }}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                 <div style={{ flex: 1 }}>
-                  <div style={{ fontSize: mob ? 14 : 15, fontWeight: 800, fontFamily: F.headline, color: C.black }}>{p.title}</div>
-                  <div style={{ fontSize: 11, color: C.muted, marginTop: 2 }}>{p.author}</div>
+                  <div style={{ fontFamily: F.headline, fontSize: mob ? "0.875rem" : "1rem", fontWeight: 900, letterSpacing: "calc(1em / 50)", textTransform: "uppercase", color: C.black }}>{p.title}</div>
+                  <div style={{ fontFamily: F.body, fontSize: "0.875rem", letterSpacing: "0.05em", color: C.muted, marginTop: "0.25rem" }}>{p.author}</div>
                 </div>
-                <span style={{ fontSize: 12, color: C.muted, marginLeft: 8 }}>{expandedPrinciple === i ? "▲" : "▼"}</span>
+                <span style={{ fontSize: "0.75rem", color: C.muted, marginLeft: "0.5rem" }}>{expandedPrinciple === i ? "▲" : "▼"}</span>
               </div>
               {expandedPrinciple === i && (
-                <div style={{ marginTop: 12, paddingTop: 12, borderTop: "1px solid #F0F0F0" }}>
-                  <p style={{ fontSize: 13, lineHeight: 1.7, color: C.black, margin: "0 0 10px" }}>{p.body}</p>
-                  <div style={{ background: `${C.red}10`, color: C.red, padding: "8px 12px", borderRadius: 8, fontSize: 12, fontWeight: 700 }}>
+                <div style={{ marginTop: "0.75rem", paddingTop: "0.75rem", borderTop: "1px solid #F0F0F0" }}>
+                  <p style={{ fontFamily: F.body, fontSize: "0.875rem", letterSpacing: "0.05em", lineHeight: 1.5, color: C.black, margin: "0 0 0.75rem" }}>{p.body}</p>
+                  <div style={{ fontFamily: F.body, fontSize: '0.72rem', fontWeight: 500, letterSpacing: '0.12em', textTransform: 'uppercase', background: "rgba(255,26,26,0.08)", color: C.red, padding: "0.6rem 1rem", borderRadius: '2rem' }}>
                     {p.metric}
                   </div>
                 </div>
@@ -754,34 +753,32 @@ function RouteDesignMethodology() {
 
       {/* KPI Framework */}
       <div>
-        <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 16 }}>
+        <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "1rem" }}>
           <div style={{ width: 4, height: 28, background: C.blue, borderRadius: 2 }} />
-          <h3 style={{ fontSize: mob ? 18 : 22, fontWeight: 800, margin: 0, fontFamily: F.headline }}>Performance KPI Framework</h3>
-          <span style={{ fontSize: 11, color: C.muted, fontWeight: 500 }}>UITP / World Bank benchmarks</span>
+          <h3 style={{ fontFamily: F.headline, fontSize: mob ? "1.125rem" : "clamp(1.25rem, 2vw, 1.5rem)", fontWeight: 900, lineHeight: "90%", letterSpacing: "calc(1em / 50)", textTransform: "uppercase", margin: 0 }}>Performance KPI Framework</h3>
+          <span style={{ fontFamily: F.body, fontSize: '0.72rem', fontWeight: 500, letterSpacing: '0.12em', textTransform: 'uppercase', color: C.muted }}>UITP / World Bank benchmarks</span>
         </div>
-        <div style={{ display: "grid", gridTemplateColumns: mob ? "1fr" : "1fr 1fr", gap: 10 }}>
+        <div style={{ display: "grid", gridTemplateColumns: mob ? "1fr" : "1fr 1fr", gap: "0.75rem" }}>
           {kpis.map((k, i) => (
             <div key={i} onClick={() => setExpandedKpi(expandedKpi === i ? null : i)} style={{
-              background: expandedKpi === i ? "#F0F4FF" : "white", borderRadius: '1.875rem', padding: mob ? "14px" : "18px",
+              background: expandedKpi === i ? "#F0F4FF" : "white", borderRadius: '1.875rem', padding: mob ? "1rem" : "1.25rem",
               border: expandedKpi === i ? `2px solid ${C.blue}` : "2px solid #EAEAEA",
-              cursor: "pointer", transition: "all 0.2s",
+              cursor: "pointer", transition: "0.2s ease-in-out",
             }}>
               <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
                 <div style={{ flex: 1 }}>
-                  <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-                    <div style={{ fontSize: mob ? 13 : 14, fontWeight: 800, fontFamily: F.headline }}>{k.name}</div>
-                  </div>
-                  <div style={{ display: "flex", gap: 8, marginTop: 4, alignItems: "center", flexWrap: "wrap" }}>
-                    <span style={{ background: "#E8F0FE", color: C.blue, padding: "2px 8px", borderRadius: 4, fontSize: 10, fontWeight: 700 }}>{k.category}</span>
-                    <span style={{ fontSize: 11, fontWeight: 700, color: C.green }}>Target: {k.target}</span>
+                  <div style={{ fontFamily: F.headline, fontSize: mob ? "0.875rem" : "1rem", fontWeight: 900, letterSpacing: "calc(1em / 50)", textTransform: "uppercase" }}>{k.name}</div>
+                  <div style={{ display: "flex", gap: "0.5rem", marginTop: "0.25rem", alignItems: "center", flexWrap: "wrap" }}>
+                    <span style={{ fontFamily: F.body, fontSize: '0.625rem', fontWeight: 500, letterSpacing: '0.12em', textTransform: 'uppercase', background: "#E8F0FE", color: C.blue, padding: "0.25rem 0.5rem", borderRadius: '2rem' }}>{k.category}</span>
+                    <span style={{ fontFamily: F.body, fontSize: '0.72rem', fontWeight: 500, letterSpacing: '0.12em', textTransform: 'uppercase', color: C.green }}>Target: {k.target}</span>
                   </div>
                 </div>
-                <span style={{ fontSize: 12, color: C.muted, marginLeft: 8 }}>{expandedKpi === i ? "▲" : "▼"}</span>
+                <span style={{ fontSize: "0.75rem", color: C.muted, marginLeft: "0.5rem" }}>{expandedKpi === i ? "▲" : "▼"}</span>
               </div>
               {expandedKpi === i && (
-                <div style={{ marginTop: 12, paddingTop: 12, borderTop: "1px solid #F0F0F0" }}>
-                  <p style={{ fontSize: 13, lineHeight: 1.7, color: C.black, margin: "0 0 8px" }}>{k.desc}</p>
-                  <div style={{ fontSize: 11, color: C.muted, fontStyle: "italic" }}>Benchmark: {k.benchmark}</div>
+                <div style={{ marginTop: "0.75rem", paddingTop: "0.75rem", borderTop: "1px solid #F0F0F0" }}>
+                  <p style={{ fontFamily: F.body, fontSize: "0.875rem", letterSpacing: "0.05em", lineHeight: 1.5, color: C.black, margin: "0 0 0.5rem" }}>{k.desc}</p>
+                  <div style={{ fontFamily: F.body, fontSize: "0.875rem", letterSpacing: "0.05em", color: C.muted, fontStyle: "italic" }}>Benchmark: {k.benchmark}</div>
                 </div>
               )}
             </div>
@@ -836,16 +833,17 @@ export default function YangoCityTransit() {
     <div style={{ fontFamily: F.body, color: C.black, overflowX: "hidden" }}>
       {/* Fonts loaded via index.html font-face declarations */}
 
-      {/* NAV */}
-      <nav style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 100, background: "rgba(26,26,26,0.95)", backdropFilter: "blur(12px)", borderBottom: "1px solid rgba(255,255,255,0.08)" }}>
-        <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 24px", display: "flex", alignItems: "center", justifyContent: "space-between", height: 60 }}>
+      {/* NAV — Yango Tech gradient overlay pattern */}
+      <nav style={{ position: "fixed", top: 0, left: 0, right: 0, zIndex: 1000, padding: "1.25rem 1.87rem" }}>
+        <div style={{ position: "absolute", inset: 0, background: "linear-gradient(180deg, rgba(0,0,0,0.5) 0%, transparent 100%)", pointerEvents: "none", zIndex: -1 }} />
+        <div style={{ maxWidth: "116rem", margin: "0 auto", display: "flex", alignItems: "center", justifyContent: "space-between" }}>
           <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
-            <img src="https://avatars.mds.yandex.net/get-lpc/14837328/21641dca-3288-4eeb-8d99-81f8cb31a763/orig" alt="Yango Tech" style={{ height: 26, width: "auto", filter: "invert(1)" }} />
+            <img src="https://avatars.mds.yandex.net/get-lpc/14837328/21641dca-3288-4eeb-8d99-81f8cb31a763/orig" alt="Yango Tech" style={{ height: 30, width: "auto" }} />
             {!mob && <>
               <span style={{ color: "rgba(255,255,255,0.3)", margin: "0 4px" }}>|</span>
-              <span style={{ color: "rgba(255,255,255,0.7)", fontWeight: 500, fontSize: '0.72rem', letterSpacing: '0.12em', textTransform: 'uppercase' }}>City Transit</span>
+              <span style={{ color: C.white, fontWeight: 500, fontSize: '0.72rem', letterSpacing: '0.12em', textTransform: 'uppercase' }}>City Transit</span>
             </>}
-            <span style={{ color: C.red, fontWeight: 500, fontSize: '0.72rem', letterSpacing: '0.12em', textTransform: 'uppercase', background: "rgba(255,26,26,0.15)", padding: "4px 10px", borderRadius: '2rem' }}>Rwanda</span>
+            <span style={{ color: C.red, fontWeight: 500, fontSize: '0.72rem', letterSpacing: '0.12em', textTransform: 'uppercase', background: "rgba(255,26,26,0.15)", padding: "0.6rem 1rem", borderRadius: '2rem', backdropFilter: "blur(5px)" }}>RWANDA</span>
           </div>
           {mob ? (
             <button onClick={() => setMenuOpen(!menuOpen)} aria-label="Toggle menu" style={{
@@ -855,65 +853,76 @@ export default function YangoCityTransit() {
               {menuOpen ? "✕" : "☰"}
             </button>
           ) : (
-            <div style={{ display: "flex", gap: 24 }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", listStyle: "none" }}>
               {navItems.map((n, i) => (
-                <a key={i} href={n.href} onClick={(e) => handleNav(n.href, e)} style={{ color: "rgba(255,255,255,0.6)", textDecoration: "none", fontSize: 13, fontWeight: 500, transition: "color 0.2s" }}
-                  onMouseEnter={e => e.target.style.color = "white"} onMouseLeave={e => e.target.style.color = "rgba(255,255,255,0.6)"}>{n.label}</a>
+                <a key={i} href={n.href} onClick={(e) => handleNav(n.href, e)} style={{
+                  padding: "1.1rem 1rem", fontSize: '0.72rem', fontWeight: 500, letterSpacing: '0.12em',
+                  textTransform: 'uppercase', textDecoration: "none", color: C.white,
+                  transition: "0.2s ease-in-out",
+                }}
+                  onMouseEnter={e => e.target.style.opacity = "1"} onMouseLeave={e => e.target.style.opacity = "0.7"}>{n.label}</a>
               ))}
+              <a href="https://tech.yango.com/" target="_blank" rel="noopener noreferrer" style={{
+                display: "inline-flex", alignItems: "center", justifyContent: "center", gap: "0.5rem",
+                padding: "1rem 2rem", background: C.dark, color: C.white, borderRadius: "2rem",
+                fontFamily: F.body, fontWeight: 500, fontSize: "0.875rem", letterSpacing: "0.15em",
+                textTransform: "uppercase", textDecoration: "none", transition: "0.2s ease-in-out",
+              }}
+                onMouseEnter={e => e.currentTarget.style.background = C.red}
+                onMouseLeave={e => e.currentTarget.style.background = C.dark}
+              >Talk to an expert</a>
             </div>
           )}
         </div>
         {/* Mobile menu dropdown */}
         {mob && menuOpen && (
-          <div style={{ background: "rgba(26,26,26,0.98)", padding: "8px 24px 16px", borderTop: "1px solid rgba(255,255,255,0.08)" }}>
+          <div style={{ background: "rgba(0,0,0,0.85)", backdropFilter: "blur(10px)", padding: "1.25rem 1.87rem", borderRadius: "0 0 2.5rem 2.5rem", marginTop: "0.5rem" }}>
             {navItems.map((n, i) => (
               <a key={i} href={n.href} onClick={(e) => handleNav(n.href, e)} style={{
-                display: "block", color: "rgba(255,255,255,0.7)", textDecoration: "none", fontSize: 15, fontWeight: 500,
-                padding: "12px 0", borderBottom: i < navItems.length - 1 ? "1px solid rgba(255,255,255,0.06)" : "none",
+                display: "block", color: C.white, textDecoration: "none", fontSize: '0.72rem', fontWeight: 500,
+                letterSpacing: '0.12em', textTransform: 'uppercase',
+                padding: "1rem 0", borderBottom: i < navItems.length - 1 ? "1px solid rgba(255,255,255,0.08)" : "none",
               }}>{n.label}</a>
             ))}
           </div>
         )}
       </nav>
 
-      {/* HERO */}
-      <section id="overview" style={{ background: C.black, minHeight: "100vh", position: "relative", display: "flex", alignItems: "center", overflow: "hidden", paddingTop: 60 }}>
-        <div style={{ position: "absolute", inset: 0, overflow: "hidden" }}>
-          <div style={{ position: "absolute", top: "-10%", right: "-5%", width: 700, height: 700, borderRadius: "50%", background: `radial-gradient(circle, ${C.red}15 0%, transparent 70%)` }}/>
-          <div style={{ position: "absolute", bottom: "-20%", left: "-10%", width: 500, height: 500, borderRadius: "50%", background: `radial-gradient(circle, ${C.red}08 0%, transparent 70%)` }}/>
-          <svg width="100%" height="100%" style={{ position: "absolute", opacity: 0.03 }}>
-            {Array.from({length:20}).map((_,i) => <line key={`h${i}`} x1="0" y1={i*60} x2="100%" y2={i*60} stroke="white" strokeWidth="1"/>)}
-            {Array.from({length:30}).map((_,i) => <line key={`v${i}`} x1={i*60} y1="0" x2={i*60} y2="100%" stroke="white" strokeWidth="1"/>)}
-          </svg>
+      {/* HERO — dark bg, white text, Yango style */}
+      <section id="overview" style={{ background: "#000", minHeight: "100vh", position: "relative", display: "flex", alignItems: "center", overflow: "hidden", paddingTop: "6rem", color: C.white }}>
+        <div style={{ position: "absolute", inset: 0, zIndex: 0 }}>
+          <div style={{ width: "100%", height: "100%", background: "radial-gradient(ellipse at 25% 50%, rgba(255,26,26,0.15) 0%, transparent 60%), radial-gradient(ellipse at 75% 30%, rgba(255,26,26,0.08) 0%, transparent 50%), #000" }} />
         </div>
-        <div style={{ maxWidth: 1200, margin: "0 auto", padding: mob ? "40px 20px" : "0 24px", position: "relative", zIndex: 1, width: "100%" }}>
-          <div style={{ display: "flex", flexDirection: mob ? "column" : "row", alignItems: mob ? "flex-start" : "center", gap: mob ? 32 : 60 }}>
+        <div style={{ maxWidth: "116rem", margin: "0 auto", padding: mob ? "2.5rem 1.25rem" : "0 1.87rem", position: "relative", zIndex: 1, width: "100%" }}>
+          <div style={{ display: "flex", flexDirection: mob ? "column" : "row", alignItems: mob ? "flex-start" : "center", gap: mob ? "2rem" : "3.75rem" }}>
             <div style={{ flex: 1 }}>
-              <div style={{ display: "inline-block", background: `${C.red}20`, border: `1px solid ${C.red}40`, color: C.red, padding: "6px 16px", borderRadius: '1.875rem', fontSize: mob ? 11 : 13, fontWeight: 600, marginBottom: mob ? 16 : 24 }}>
+              <div style={{ display: "inline-block", background: "rgba(255,26,26,0.12)", border: "1px solid rgba(255,26,26,0.25)", color: C.red, padding: "0.6rem 1rem", borderRadius: '2rem', fontSize: '0.72rem', fontWeight: 500, letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: mob ? "1rem" : "1.5rem" }}>
                 SMART MOBILITY FOR KIGALI & RWANDA
               </div>
-              <h1 style={{ fontFamily: F.headline, fontSize: mob ? 32 : 56, fontWeight: 900, lineHeight: 1.05, color: "white", margin: "0 0 20px", letterSpacing: "-0.03em" }}>
+              <h1 style={{ fontFamily: F.headline, fontSize: mob ? "clamp(2.5rem, 8vw, 3.5rem)" : "clamp(3rem, 5vw, 6.25rem)", fontWeight: 900, lineHeight: "85%", color: "white", margin: "0 0 2rem", letterSpacing: "calc(1em / 50)", maxWidth: "50rem", textTransform: "uppercase" }}>
                 Accelerate Kigali's<br/><span style={{ color: C.red }}>smart mobility.</span>
               </h1>
-              <p style={{ fontSize: mob ? 15 : 19, lineHeight: 1.6, color: "rgba(255,255,255,0.6)", maxWidth: 500, margin: "0 0 28px" }}>
+              <p style={{ fontFamily: F.body, fontSize: mob ? "0.875rem" : "1rem", lineHeight: 1.5, letterSpacing: "0.05em", color: "rgba(245,245,245,0.6)", maxWidth: "36rem", margin: "0 0 2rem" }}>
                 Kigali already leads Africa in smart city innovation. Yango City Transit takes your transport system to the next level — upgrading from Tap & Go cards to a full AI-powered platform with real-time optimization, BRT readiness, and electric bus integration.
               </p>
-              <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
-                <a href="#platform" style={{ background: C.red, color: "white", padding: mob ? "12px 24px" : "14px 32px", borderRadius: '1.25rem', fontWeight: 700, fontSize: mob ? 14 : 15, textDecoration: "none", minHeight: 44, display: "inline-flex", alignItems: "center" }}>Explore Platform →</a>
-                <a href="#impact" style={{ background: "rgba(255,255,255,0.08)", color: "white", border: "1px solid rgba(255,255,255,0.15)", padding: mob ? "12px 24px" : "14px 32px", borderRadius: '1.25rem', fontWeight: 600, fontSize: mob ? 14 : 15, textDecoration: "none", minHeight: 44, display: "inline-flex", alignItems: "center" }}>See Impact</a>
+              <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap", marginTop: "3rem" }}>
+                <a href="#platform" style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", gap: "0.5rem", padding: "1.25rem 2.5rem", background: C.red, color: "white", borderRadius: "2rem", fontFamily: F.body, fontWeight: 500, fontSize: "0.875rem", letterSpacing: "0.15em", textTransform: "uppercase", textDecoration: "none", transition: "0.2s ease-in-out" }}
+                  onMouseEnter={e => { e.currentTarget.style.background = C.black; }} onMouseLeave={e => { e.currentTarget.style.background = C.red; }}>Explore Platform</a>
+                <a href="#impact" style={{ display: "inline-flex", alignItems: "center", justifyContent: "center", gap: "0.5rem", padding: "1.25rem 2.5rem", background: "transparent", color: "white", border: "1px solid rgba(255,255,255,0.3)", borderRadius: "2rem", fontFamily: F.body, fontWeight: 500, fontSize: "0.875rem", letterSpacing: "0.15em", textTransform: "uppercase", textDecoration: "none", transition: "0.2s ease-in-out" }}
+                  onMouseEnter={e => { e.currentTarget.style.borderColor = C.red; e.currentTarget.style.color = C.red; }} onMouseLeave={e => { e.currentTarget.style.borderColor = "rgba(255,255,255,0.3)"; e.currentTarget.style.color = "white"; }}>See Impact</a>
               </div>
             </div>
             <div style={{ flex: mob ? "unset" : 0.8, width: mob ? "100%" : "auto" }}>
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: mob ? 8 : 12 }}>
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "2rem" }}>
                 {[
                   { val: "98%", label: "4G Population Coverage" },
                   { val: "500+", label: "Buses in Kigali" },
                   { val: "180K", label: "Daily Passengers at Nyabugogo" },
                   { val: "30+", label: "Countries We Operate In" },
                 ].map((s, i) => (
-                  <div key={i} style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: mob ? 12 : 16, padding: mob ? "16px 14px" : "24px 20px" }}>
-                    <div style={{ fontSize: mob ? 22 : 28, fontWeight: 900, color: "white", fontFamily: F.headline }}>{s.val}</div>
-                    <div style={{ fontSize: mob ? 11 : 13, color: "rgba(255,255,255,0.5)", marginTop: 4 }}>{s.label}</div>
+                  <div key={i} style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: '1.875rem', padding: mob ? "1.25rem" : "2rem 1.5rem" }}>
+                    <div style={{ fontSize: mob ? "1.5rem" : "2rem", fontWeight: 900, color: "white", fontFamily: F.headline, lineHeight: "90%", letterSpacing: "calc(1em / 50)" }}>{s.val}</div>
+                    <div style={{ fontSize: '0.72rem', fontWeight: 500, letterSpacing: '0.12em', textTransform: 'uppercase', color: "rgba(255,255,255,0.5)", marginTop: "0.75rem" }}>{s.label}</div>
                   </div>
                 ))}
               </div>
@@ -924,22 +933,22 @@ export default function YangoCityTransit() {
 
       {/* THREE PILLARS */}
       <Section bg={C.body} id="pillars">
-        <div style={{ textAlign: "center", marginBottom: mob ? 28 : 48 }}>
-          <h2 style={{ fontFamily: F.headline, fontSize: mob ? 26 : 40, fontWeight: 900, margin: "0 0 12px" }}>One platform. <span style={{ color: C.red }}>Three transformations.</span></h2>
-          <p style={{ fontSize: mob ? 14 : 17, color: C.muted, maxWidth: 600, margin: "0 auto" }}>Connects passengers, operators, and city authorities on a single intelligent transport system.</p>
+        <div style={{ textAlign: "center", marginBottom: mob ? "1.75rem" : "4rem" }}>
+          <h2 style={{ fontFamily: F.headline, fontSize: mob ? "clamp(1.5rem, 4vw, 2rem)" : "clamp(2rem, 3.5vw, 3.85rem)", fontWeight: 900, lineHeight: "90%", letterSpacing: "calc(1em / 50)", textTransform: "uppercase", margin: "0 0 1rem" }}>One platform. <span style={{ color: C.red }}>Three transformations.</span></h2>
+          <p style={{ fontFamily: F.body, fontSize: "0.875rem", letterSpacing: "0.05em", color: C.muted, maxWidth: "36rem", margin: "0 auto", lineHeight: 1.5 }}>Connects passengers, operators, and city authorities on a single intelligent transport system.</p>
         </div>
-        <div style={{ display: "grid", gridTemplateColumns: mob ? "1fr" : "1fr 1fr 1fr", gap: 20 }}>
+        <div style={{ display: "grid", gridTemplateColumns: mob ? "1fr" : "repeat(3, 1fr)", gap: "2rem" }}>
           {[
             { title: "For Citizens", num: "01", color: C.green, items: ["Upgrade from Tap & Go to full real-time tracking", "Pay via MTN MoMo, Airtel Money, or smart card", "Multi-modal trips: bus + moto-taxi + walking", "Know exactly when your bus arrives — no more waiting", "Seamless transfers at Nyabugogo & Kicukiro hubs"] },
             { title: "For Carriers", num: "02", color: C.blue, items: ["GPS navigation for Kigali's hilly terrain", "Digital fare collection replaces cash completely", "Real-time fleet monitoring for all 18+ operators", "RURA-ready compliance and reporting built in", "AI optimization ready for BRT dedicated lanes"] },
             { title: "For the City", num: "03", color: C.red, items: ["Full analytics aligned with Vision 2050 targets", "Data-driven route planning for 80% coverage goal", "Subsidy-free operations supported by efficiency gains", "Real-time dashboards for City of Kigali & MININFRA", "Electric bus fleet integration & BRT corridor planning"] },
           ].map((p, i) => (
-            <div key={i} style={{ background: "white", borderRadius: '1.875rem', padding: "36px 28px", borderTop: `4px solid ${p.color}` }}>
-              <div style={{ fontFamily: F.body, fontSize: 32, fontWeight: 900, color: p.color, opacity: 0.15, marginBottom: 8 }}>{p.num}</div>
-              <h3 style={{ fontSize: 22, fontWeight: 800, margin: "0 0 16px", fontFamily: F.headline }}>{p.title}</h3>
+            <div key={i} style={{ background: "white", borderRadius: '1.875rem', padding: "2.5rem 2rem", borderTop: `4px solid ${p.color}` }}>
+              <div style={{ fontFamily: F.body, fontSize: "2rem", fontWeight: 900, color: C.black, opacity: 0.06, marginBottom: "0.5rem" }}>{p.num}</div>
+              <h3 style={{ fontFamily: F.headline, fontSize: "clamp(1.5rem, 2.5vw, 2rem)", fontWeight: 900, lineHeight: "90%", letterSpacing: "calc(1em / 50)", textTransform: "uppercase", margin: "0 0 1rem" }}>{p.title}</h3>
               {p.items.map((item, j) => (
-                <div key={j} style={{ display: "flex", alignItems: "flex-start", gap: 10, marginBottom: 12, fontSize: 14, lineHeight: 1.5, color: C.black }}>
-                  <span style={{ color: p.color, fontWeight: 700, fontSize: 16, flexShrink: 0 }}>✓</span>{item}
+                <div key={j} style={{ display: "flex", alignItems: "flex-start", gap: "0.625rem", marginBottom: "0.75rem", fontFamily: F.body, fontSize: "0.875rem", lineHeight: 1.5, letterSpacing: "0.05em", color: C.black }}>
+                  <span style={{ color: p.color, fontWeight: 700, fontSize: "1rem", flexShrink: 0 }}>→</span>{item}
                 </div>
               ))}
             </div>
@@ -949,43 +958,43 @@ export default function YangoCityTransit() {
 
       {/* INTERACTIVE DEMOS */}
       <Section bg="white" id="passengers">
-        <div style={{ textAlign: "center", marginBottom: mob ? 24 : 40 }}>
-          <h2 style={{ fontFamily: F.headline, fontSize: mob ? 26 : 40, fontWeight: 900, margin: "0 0 12px" }}>See it in <span style={{ color: C.red }}>action.</span></h2>
-          <p style={{ fontSize: mob ? 14 : 17, color: C.muted }}>Interactive mockups — tap through every interface.</p>
+        <div style={{ textAlign: "center", marginBottom: mob ? "1.5rem" : "4rem" }}>
+          <h2 style={{ fontFamily: F.headline, fontSize: mob ? "clamp(1.5rem, 4vw, 2rem)" : "clamp(2rem, 3.5vw, 3.85rem)", fontWeight: 900, lineHeight: "90%", letterSpacing: "calc(1em / 50)", textTransform: "uppercase", margin: "0 0 1rem" }}>See it in <span style={{ color: C.red }}>action.</span></h2>
+          <p style={{ fontFamily: F.body, fontSize: "0.875rem", letterSpacing: "0.05em", color: C.muted, lineHeight: 1.5 }}>Interactive mockups — tap through every interface.</p>
         </div>
-        <div style={{ display: "flex", justifyContent: "center", gap: 8, marginBottom: mob ? 24 : 40, flexWrap: "wrap" }}>
+        <div style={{ display: "flex", justifyContent: "center", gap: "0.5rem", marginBottom: mob ? "1.5rem" : "3rem", flexWrap: "wrap" }}>
           {tabs.map((t, i) => (
             <button key={i} onClick={() => setActiveTab(i)} style={{
-              padding: mob ? "10px 14px" : "12px 24px", borderRadius: '1.5rem', border: "none",
-              background: activeTab === i ? C.black : "#F0F0F0", color: activeTab === i ? "white" : C.black,
-              fontWeight: 700, fontSize: mob ? 12 : 14, cursor: "pointer", transition: "all 0.3s", fontFamily: F.headline,
-              minHeight: 44,
+              padding: "1rem 2rem", borderRadius: '2rem', border: "none",
+              background: activeTab === i ? C.dark : "#F0F0F0", color: activeTab === i ? "white" : C.black,
+              fontFamily: F.body, fontWeight: 500, fontSize: '0.72rem', letterSpacing: '0.12em', textTransform: 'uppercase',
+              cursor: "pointer", transition: "0.2s ease-in-out", minHeight: 44, whiteSpace: "nowrap",
             }}>{t.title}</button>
           ))}
         </div>
         <div style={{ display: "flex", justifyContent: "center", alignItems: "flex-start", gap: mob ? 20 : 40 }}>
           {activeTab === 0 && (
-            <div style={{ display: "flex", flexDirection: mob ? "column" : "row", alignItems: "center", gap: mob ? 24 : 60 }}>
+            <div style={{ display: "flex", flexDirection: mob ? "column" : "row", alignItems: "center", gap: mob ? "1.5rem" : "3.75rem" }}>
               <PhoneMockup label="Passenger App"><PassengerApp/></PhoneMockup>
-              <div style={{ maxWidth: mob ? "100%" : 400 }}>
-                <h3 style={{ fontSize: mob ? 20 : 26, fontWeight: 800, marginBottom: 16, fontFamily: F.headline }}>Passengers know exactly when the bus arrives</h3>
-                <p style={{ fontSize: mob ? 13 : 15, lineHeight: 1.7, color: C.black, marginBottom: 20 }}>Kigali's Tap & Go system was a great start. Yango Transit takes it further — real-time GPS tracking of every bus, predictive arrival times, and seamless mobile money integration with MTN MoMo and Airtel Money.</p>
+              <div style={{ maxWidth: mob ? "100%" : "25rem" }}>
+                <h3 style={{ fontFamily: F.headline, fontSize: "clamp(1.5rem, 2.5vw, 2rem)", fontWeight: 900, lineHeight: "90%", letterSpacing: "calc(1em / 50)", textTransform: "uppercase", marginBottom: "1rem" }}>Passengers know exactly when the bus arrives</h3>
+                <p style={{ fontFamily: F.body, fontSize: "0.875rem", lineHeight: 1.5, letterSpacing: "0.05em", color: C.black, marginBottom: "1.25rem" }}>Kigali's Tap & Go system was a great start. Yango Transit takes it further — real-time GPS tracking of every bus, predictive arrival times, and seamless mobile money integration with MTN MoMo and Airtel Money.</p>
                 {["Real-time arrival predictions at every Kigali stop", "Pay via MTN MoMo, Airtel Money, or Safaribus card", "Multi-modal planner: bus + moto-taxi + walking routes", "Kinyarwanda, English & French interface support"].map((f, i) => (
-                  <div key={i} style={{ display: "flex", gap: 10, marginBottom: 10, fontSize: 14, color: C.black }}>
-                    <span style={{ background: "#FFF0ED", color: C.red, width: 24, height: 24, borderRadius: 6, display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 700, fontSize: 12, flexShrink: 0 }}>{i+1}</span>{f}
+                  <div key={i} style={{ display: "flex", gap: "0.625rem", marginBottom: "0.625rem", fontFamily: F.body, fontSize: "0.875rem", letterSpacing: "0.05em", color: C.black }}>
+                    <span style={{ background: "#FFF0ED", color: C.red, width: 24, height: 24, borderRadius: '1rem', display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 700, fontSize: "0.72rem", flexShrink: 0 }}>{i+1}</span>{f}
                   </div>
                 ))}
               </div>
             </div>
           )}
           {activeTab === 1 && (
-            <div style={{ display: "flex", flexDirection: mob ? "column-reverse" : "row", alignItems: "center", gap: mob ? 24 : 60 }}>
-              <div style={{ maxWidth: mob ? "100%" : 400 }}>
-                <h3 style={{ fontSize: mob ? 20 : 26, fontWeight: 800, marginBottom: 16, fontFamily: F.headline }}>Drivers navigate, the app handles ticketing</h3>
-                <p style={{ fontSize: mob ? 13 : 15, lineHeight: 1.7, color: C.black, marginBottom: 20 }}>With 18+ bus operators in Kigali, standardized digital tools are essential. Yango Transit gives every driver navigation, scheduling, and automated fare collection — ready for BRT corridors.</p>
+            <div style={{ display: "flex", flexDirection: mob ? "column-reverse" : "row", alignItems: "center", gap: mob ? "1.5rem" : "3.75rem" }}>
+              <div style={{ maxWidth: mob ? "100%" : "25rem" }}>
+                <h3 style={{ fontFamily: F.headline, fontSize: "clamp(1.5rem, 2.5vw, 2rem)", fontWeight: 900, lineHeight: "90%", letterSpacing: "calc(1em / 50)", textTransform: "uppercase", marginBottom: "1rem" }}>Drivers navigate, the app handles ticketing</h3>
+                <p style={{ fontFamily: F.body, fontSize: "0.875rem", lineHeight: 1.5, letterSpacing: "0.05em", color: C.black, marginBottom: "1.25rem" }}>With 18+ bus operators in Kigali, standardized digital tools are essential. Yango Transit gives every driver navigation, scheduling, and automated fare collection — ready for BRT corridors.</p>
                 {["Turn-by-turn route navigation with live traffic", "Automatic passenger counting via sensors", "Schedule adherence alerts & announcements", "Digital trip logging — no paper manifests"].map((f, i) => (
-                  <div key={i} style={{ display: "flex", gap: 10, marginBottom: 10, fontSize: 14, color: C.black }}>
-                    <span style={{ background: "#E8F0FE", color: C.blue, width: 24, height: 24, borderRadius: 6, display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 700, fontSize: 12, flexShrink: 0 }}>{i+1}</span>{f}
+                  <div key={i} style={{ display: "flex", gap: "0.625rem", marginBottom: "0.625rem", fontFamily: F.body, fontSize: "0.875rem", letterSpacing: "0.05em", color: C.black }}>
+                    <span style={{ background: "#E8F0FE", color: C.blue, width: 24, height: 24, borderRadius: '1rem', display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 700, fontSize: "0.72rem", flexShrink: 0 }}>{i+1}</span>{f}
                   </div>
                 ))}
               </div>
@@ -993,25 +1002,25 @@ export default function YangoCityTransit() {
             </div>
           )}
           {activeTab === 2 && (
-            <div style={{ display: "flex", flexDirection: mob ? "column" : "row", alignItems: "center", gap: mob ? 24 : 40 }}>
+            <div style={{ display: "flex", flexDirection: mob ? "column" : "row", alignItems: "center", gap: mob ? "1.5rem" : "2.5rem" }}>
               <PhoneMockup label="Operator Dashboard"><OperatorDashboard/></PhoneMockup>
-              <div style={{ maxWidth: mob ? "100%" : 420 }}>
-                <h3 style={{ fontSize: mob ? 20 : 26, fontWeight: 800, marginBottom: 16, fontFamily: F.headline }}>Create & optimize routes with AI insights</h3>
-                <p style={{ fontSize: mob ? 13 : 15, lineHeight: 1.7, color: C.black, marginBottom: 20 }}>Whether you're managing a fleet of 20 buses or planning the entire Kigali network, operators get AI insights aligned with RURA standards and City of Kigali transport targets.</p>
+              <div style={{ maxWidth: mob ? "100%" : "26rem" }}>
+                <h3 style={{ fontFamily: F.headline, fontSize: "clamp(1.5rem, 2.5vw, 2rem)", fontWeight: 900, lineHeight: "90%", letterSpacing: "calc(1em / 50)", textTransform: "uppercase", marginBottom: "1rem" }}>Create & optimize routes with AI insights</h3>
+                <p style={{ fontFamily: F.body, fontSize: "0.875rem", lineHeight: 1.5, letterSpacing: "0.05em", color: C.black, marginBottom: "1.25rem" }}>Whether you're managing a fleet of 20 buses or planning the entire Kigali network, operators get AI insights aligned with RURA standards and City of Kigali transport targets.</p>
                 {["AI detects low-ridership periods and suggests changes", "Overcrowding alerts with express bus recommendations", "Underserved area detection → new route proposals", "One-click route changes or simulate-first mode", "Dynamic adjustments based on real-time demand"].map((f, i) => (
-                  <div key={i} style={{ display: "flex", gap: 10, marginBottom: 10, fontSize: 14, color: C.black }}>
-                    <span style={{ background: "#FFF0ED", color: C.red, width: 24, height: 24, borderRadius: 6, display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 700, fontSize: 12, flexShrink: 0 }}>{i+1}</span>{f}
+                  <div key={i} style={{ display: "flex", gap: "0.625rem", marginBottom: "0.625rem", fontFamily: F.body, fontSize: "0.875rem", letterSpacing: "0.05em", color: C.black }}>
+                    <span style={{ background: "#FFF0ED", color: C.red, width: 24, height: 24, borderRadius: '1rem', display: "flex", alignItems: "center", justifyContent: "center", fontWeight: 700, fontSize: "0.72rem", flexShrink: 0 }}>{i+1}</span>{f}
                   </div>
                 ))}
               </div>
             </div>
           )}
           {activeTab === 3 && (
-            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: 30 }}>
+            <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "2rem" }}>
               <TabletMockup label="City Operations Dashboard"><CityDashboard/></TabletMockup>
-              <div style={{ maxWidth: 700, textAlign: "center" }}>
-                <h3 style={{ fontSize: mob ? 20 : 26, fontWeight: 800, marginBottom: 12, fontFamily: F.headline }}>Full transparency. Zero fraud. Taxable revenue.</h3>
-                <p style={{ fontSize: mob ? 13 : 15, lineHeight: 1.7, color: C.black }}>Every fare digitally recorded, every bus GPS-tracked, every route optimized. Drivers and fleet operators cannot cheat or skim. Transport quality is controlled through measurable metrics.</p>
+              <div style={{ maxWidth: "44rem", textAlign: "center" }}>
+                <h3 style={{ fontFamily: F.headline, fontSize: "clamp(1.5rem, 2.5vw, 2rem)", fontWeight: 900, lineHeight: "90%", letterSpacing: "calc(1em / 50)", textTransform: "uppercase", marginBottom: "1rem" }}>Full transparency. Zero fraud. Taxable revenue.</h3>
+                <p style={{ fontFamily: F.body, fontSize: "0.875rem", lineHeight: 1.5, letterSpacing: "0.05em", color: C.black }}>Every fare digitally recorded, every bus GPS-tracked, every route optimized. Drivers and fleet operators cannot cheat or skim. Transport quality is controlled through measurable metrics.</p>
               </div>
             </div>
           )}
@@ -1020,9 +1029,9 @@ export default function YangoCityTransit() {
 
       {/* ANALYTICS */}
       <Section bg="white" id="analytics">
-        <div style={{ textAlign: "center", marginBottom: mob ? 28 : 48 }}>
-          <h2 style={{ fontFamily: F.headline, fontSize: mob ? 26 : 40, fontWeight: 900, margin: "0 0 12px" }}>Data-driven <span style={{ color: C.red }}>decisions.</span></h2>
-          <p style={{ fontSize: mob ? 14 : 17, color: C.muted, maxWidth: 600, margin: "0 auto" }}>AI analytics aligned with Rwanda's Transport Sector Strategic Plan 2024–2029 and Vision 2050.</p>
+        <div style={{ textAlign: "center", marginBottom: mob ? "1.75rem" : "4rem" }}>
+          <h2 style={{ fontFamily: F.headline, fontSize: mob ? "clamp(1.5rem, 4vw, 2rem)" : "clamp(2rem, 3.5vw, 3.85rem)", fontWeight: 900, lineHeight: "90%", letterSpacing: "calc(1em / 50)", textTransform: "uppercase", margin: "0 0 1rem" }}>Data-driven <span style={{ color: C.red }}>decisions.</span></h2>
+          <p style={{ fontFamily: F.body, fontSize: "0.875rem", letterSpacing: "0.05em", color: C.muted, maxWidth: "36rem", margin: "0 auto", lineHeight: 1.5 }}>AI analytics aligned with Rwanda's Transport Sector Strategic Plan 2024–2029 and Vision 2050.</p>
         </div>
         <SpeedMapDemo/>
         <FareEvasionDemo/>
@@ -1034,16 +1043,16 @@ export default function YangoCityTransit() {
         <RouteDesignMethodology />
       </Section>
 
-      {/* ANTI-FRAUD */}
-      <Section bg={C.black} id="transparency" style={{ color: "white" }}>
-        <div style={{ display: "flex", flexDirection: mob ? "column" : "row", gap: mob ? 28 : 60, alignItems: mob ? "flex-start" : "center" }}>
+      {/* ANTI-FRAUD — dark section */}
+      <Section bg="#000" id="transparency" style={{ color: C.white }}>
+        <div style={{ display: "flex", flexDirection: mob ? "column" : "row", gap: mob ? "1.75rem" : "3.75rem", alignItems: mob ? "flex-start" : "center" }}>
           <div style={{ flex: 1 }}>
-            <div style={{ color: C.red, fontSize: 13, fontWeight: 700, letterSpacing: "0.1em", marginBottom: 12 }}>TRANSPARENCY & CONTROL</div>
-            <h2 style={{ fontFamily: F.headline, fontSize: mob ? 26 : 38, fontWeight: 900, color: "white", margin: "0 0 20px" }}>Every fare captured.<br/>Every bus tracked.<br/>Every route optimized.</h2>
-            <p style={{ fontSize: mob ? 14 : 16, lineHeight: 1.7, color: "rgba(255,255,255,0.6)" }}>Rwanda's government ended transport subsidies in March 2024, making operational efficiency critical for every operator. Yango City Transit maximizes revenue capture while keeping fares affordable through AI-optimized routes and schedules.</p>
+            <div style={{ fontFamily: F.body, color: C.red, fontSize: '0.72rem', fontWeight: 500, letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: "1rem" }}>Transparency & Control</div>
+            <h2 style={{ fontFamily: F.headline, fontSize: mob ? "clamp(1.5rem, 4vw, 2rem)" : "clamp(2rem, 3.5vw, 3.85rem)", fontWeight: 900, lineHeight: "90%", letterSpacing: "calc(1em / 50)", textTransform: "uppercase", color: "white", margin: "0 0 2rem" }}>Every fare captured.<br/>Every bus tracked.<br/>Every route optimized.</h2>
+            <p style={{ fontFamily: F.body, fontSize: "0.875rem", lineHeight: 1.5, letterSpacing: "0.05em", color: "rgba(245,245,245,0.6)" }}>Rwanda's government ended transport subsidies in March 2024, making operational efficiency critical for every operator. Yango City Transit maximizes revenue capture while keeping fares affordable through AI-optimized routes and schedules.</p>
           </div>
           <div style={{ flex: 1, width: "100%" }}>
-            <div style={{ display: "grid", gridTemplateColumns: mob ? "1fr" : "1fr 1fr", gap: 12 }}>
+            <div style={{ display: "grid", gridTemplateColumns: mob ? "1fr" : "1fr 1fr", gap: "1rem" }}>
               {[
                 { title: "Digital Fare Collection", desc: "Every payment logged with timestamp, route, vehicle ID." },
                 { title: "GPS Fleet Tracking", desc: "Real-time location. No ghost buses, no route deviations." },
@@ -1052,9 +1061,9 @@ export default function YangoCityTransit() {
                 { title: "Inspector Tools", desc: "AI-powered routing targets high-evasion areas automatically." },
                 { title: "Fraud Prevention", desc: "Tamper-proof records. Cannot manipulate counts or fares." },
               ].map((f, i) => (
-                <div key={i} style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: '1.875rem', padding: "20px 16px" }}>
-                  <div style={{ fontSize: 14, fontWeight: 600, color: "white", marginBottom: 6 }}>{f.title}</div>
-                  <div style={{ fontSize: 12, lineHeight: 1.5, color: "rgba(255,255,255,0.5)" }}>{f.desc}</div>
+                <div key={i} style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: '1.875rem', padding: "1.5rem" }}>
+                  <div style={{ fontFamily: F.body, fontSize: "0.875rem", fontWeight: 500, color: "white", marginBottom: "0.375rem", letterSpacing: "0.05em" }}>{f.title}</div>
+                  <div style={{ fontFamily: F.body, fontSize: "0.875rem", lineHeight: 1.5, letterSpacing: "0.05em", color: "rgba(245,245,245,0.5)" }}>{f.desc}</div>
                 </div>
               ))}
             </div>
@@ -1064,22 +1073,22 @@ export default function YangoCityTransit() {
 
       {/* PLATFORM */}
       <Section bg={C.body} id="platform">
-        <div style={{ textAlign: "center", marginBottom: mob ? 28 : 48 }}>
-          <h2 style={{ fontFamily: F.headline, fontSize: mob ? 26 : 40, fontWeight: 900, margin: "0 0 12px" }}>Integrated <span style={{ color: C.red }}>platform</span> architecture</h2>
-          <p style={{ fontSize: mob ? 14 : 17, color: C.muted, maxWidth: 600, margin: "0 auto" }}>Four modules working as one integrated system.</p>
+        <div style={{ textAlign: "center", marginBottom: mob ? "1.75rem" : "4rem" }}>
+          <h2 style={{ fontFamily: F.headline, fontSize: mob ? "clamp(1.5rem, 4vw, 2rem)" : "clamp(2rem, 3.5vw, 3.85rem)", fontWeight: 900, lineHeight: "90%", letterSpacing: "calc(1em / 50)", textTransform: "uppercase", margin: "0 0 1rem" }}>Integrated <span style={{ color: C.red }}>platform</span> architecture</h2>
+          <p style={{ fontFamily: F.body, fontSize: "0.875rem", letterSpacing: "0.05em", color: C.muted, maxWidth: "36rem", margin: "0 auto", lineHeight: 1.5 }}>Four modules working as one integrated system.</p>
         </div>
-        <div style={{ display: "grid", gridTemplateColumns: mob ? "1fr" : "1fr 1fr", gap: 20, maxWidth: 900, margin: "0 auto" }}>
+        <div style={{ display: "grid", gridTemplateColumns: mob ? "1fr" : "1fr 1fr", gap: "2rem", maxWidth: "56rem", margin: "0 auto" }}>
           {[
             { num: "01", title: "Analytics & Optimization", color: C.red, items: ["Origin-destination trip matrix", "Route optimization based on real demand", "Decision support for transport engineers", "Accessibility, speed & accident mapping"] },
             { num: "02", title: "Central Dispatching", color: C.blue, items: ["Operational control of all carriers", "Real-time schedule monitoring", "Dynamic route adjustments", "Fleet allocation optimization"] },
             { num: "03", title: "On-Board Equipment", color: C.green, items: ["Passenger counting sensors", "Driver behavior monitoring", "Road infrastructure condition control", "GPS tracking and telemetry"] },
             { num: "04", title: "Inspection & Revenue Control", color: C.amber, items: ["AI-powered inspector route planning", "Fare evasion heat mapping", "Revenue leakage detection", "Automated compliance reporting"] },
           ].map((m, i) => (
-            <div key={i} style={{ background: "white", borderRadius: '1.875rem', padding: "28px 24px", borderLeft: `4px solid ${m.color}` }}>
-              <div style={{ fontFamily: F.body, fontSize: 32, fontWeight: 700, color: m.color, opacity: 0.3, marginBottom: 8 }}>{m.num}</div>
-              <h3 style={{ fontSize: 20, fontWeight: 800, margin: "0 0 14px", fontFamily: F.headline }}>{m.title}</h3>
+            <div key={i} style={{ background: "white", borderRadius: '1.875rem', padding: "2rem", borderLeft: `4px solid ${m.color}` }}>
+              <div style={{ fontFamily: F.body, fontSize: "2rem", fontWeight: 900, color: C.black, opacity: 0.06, marginBottom: "0.5rem" }}>{m.num}</div>
+              <h3 style={{ fontFamily: F.headline, fontSize: "clamp(1.25rem, 2vw, 1.5rem)", fontWeight: 900, lineHeight: "90%", letterSpacing: "calc(1em / 50)", textTransform: "uppercase", margin: "0 0 1rem" }}>{m.title}</h3>
               {m.items.map((item, j) => (
-                <div key={j} style={{ fontSize: 13, color: C.black, marginBottom: 8, display: "flex", gap: 8 }}>
+                <div key={j} style={{ fontFamily: F.body, fontSize: "0.875rem", letterSpacing: "0.05em", color: C.black, marginBottom: "0.5rem", display: "flex", gap: "0.5rem", lineHeight: 1.5 }}>
                   <span style={{ color: m.color, fontWeight: 700 }}>→</span> {item}
                 </div>
               ))}
@@ -1090,51 +1099,51 @@ export default function YangoCityTransit() {
 
       {/* IMPACT */}
       <Section bg="white" id="impact">
-        <div style={{ textAlign: "center", marginBottom: mob ? 28 : 48 }}>
-          <h2 style={{ fontFamily: F.headline, fontSize: mob ? 26 : 40, fontWeight: 900, margin: "0 0 12px" }}>Proven <span style={{ color: C.red }}>impact</span></h2>
-          <p style={{ fontSize: mob ? 14 : 17, color: C.muted, maxWidth: 600, margin: "0 auto" }}>Proven results from live deployments — ready to scale across Kigali and Rwanda's secondary cities.</p>
+        <div style={{ textAlign: "center", marginBottom: mob ? "1.75rem" : "4rem" }}>
+          <h2 style={{ fontFamily: F.headline, fontSize: mob ? "clamp(1.5rem, 4vw, 2rem)" : "clamp(2rem, 3.5vw, 3.85rem)", fontWeight: 900, lineHeight: "90%", letterSpacing: "calc(1em / 50)", textTransform: "uppercase", margin: "0 0 1rem" }}>Proven <span style={{ color: C.red }}>impact</span></h2>
+          <p style={{ fontFamily: F.body, fontSize: "0.875rem", letterSpacing: "0.05em", color: C.muted, maxWidth: "36rem", margin: "0 auto", lineHeight: 1.5 }}>Proven results from live deployments — ready to scale across Kigali and Rwanda's secondary cities.</p>
         </div>
-        <div style={{ display: "grid", gridTemplateColumns: mob ? "1fr 1fr" : "repeat(4, 1fr)", gap: mob ? 12 : 20, marginBottom: mob ? 28 : 48 }}>
+        <div style={{ display: "grid", gridTemplateColumns: mob ? "1fr 1fr" : "repeat(4, 1fr)", gap: "2rem", marginBottom: mob ? "1.75rem" : "4rem" }}>
           {[
             { value: 30, suffix: "%", label: "Increase in Fare Revenue", desc: "Potential for Kigali through AI-optimized operations" },
             { value: 115, prefix: "+$", suffix: "M", label: "Additional Revenue / Year", desc: "Scalable across Kigali and secondary cities" },
             { value: 40, suffix: "%", label: "Faster Decision Making", desc: "With real-time data gathering & analysis" },
             { value: 15, suffix: "%", label: "Travel Time Reduction", desc: "Through optimized routing & scheduling" },
           ].map((m, i) => (
-            <div key={i} style={{ background: C.body, borderRadius: '1.875rem', padding: mob ? "20px 12px" : "32px 20px", textAlign: "center", position: "relative", overflow: "hidden" }}>
+            <div key={i} style={{ background: C.body, borderRadius: '1.875rem', padding: mob ? "1.5rem 1rem" : "2.5rem 1.5rem", textAlign: "center", position: "relative", overflow: "hidden" }}>
               <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 3, background: C.red }}/>
-              <div style={{ fontFamily: F.headline, fontSize: mob ? 32 : 48, fontWeight: 900, color: C.red, lineHeight: 1 }}>
+              <div style={{ fontFamily: F.headline, fontSize: mob ? "2rem" : "clamp(2rem, 3.5vw, 3.85rem)", fontWeight: 900, color: C.red, lineHeight: "90%", letterSpacing: "calc(1em / 50)" }}>
                 <Counter end={m.value} prefix={m.prefix || "+"} suffix={m.suffix}/>
               </div>
-              <div style={{ fontSize: 15, fontWeight: 700, color: C.black, marginTop: 8, marginBottom: 6 }}>{m.label}</div>
-              <div style={{ fontSize: 12, color: C.muted, lineHeight: 1.4 }}>{m.desc}</div>
+              <div style={{ fontFamily: F.body, fontSize: '0.72rem', fontWeight: 500, letterSpacing: '0.12em', textTransform: 'uppercase', color: C.black, marginTop: "0.75rem", marginBottom: "0.375rem" }}>{m.label}</div>
+              <div style={{ fontFamily: F.body, fontSize: "0.875rem", letterSpacing: "0.05em", color: C.muted, lineHeight: 1.5 }}>{m.desc}</div>
             </div>
           ))}
         </div>
-        <div style={{ background: C.black, borderRadius: '1.875rem', padding: mob ? "24px 20px" : "40px 36px", display: "flex", flexDirection: mob ? "column" : "row", gap: mob ? 24 : 48 }}>
+        <div style={{ background: C.black, borderRadius: '1.875rem', padding: mob ? "2rem" : "3rem", display: "flex", flexDirection: mob ? "column" : "row", gap: mob ? "1.5rem" : "3rem", color: C.white }}>
           <div style={{ flex: 1 }}>
-            <div style={{ color: C.red, fontSize: 12, fontWeight: 700, letterSpacing: "0.1em", marginBottom: 8 }}>CASE STUDY</div>
-            <h3 style={{ fontSize: 28, fontWeight: 800, color: "white", margin: "0 0 16px", fontFamily: F.headline }}>Yerevan, Armenia</h3>
-            <p style={{ fontSize: 14, lineHeight: 1.6, color: "rgba(255,255,255,0.6)", marginBottom: 20 }}>
+            <div style={{ fontFamily: F.body, color: C.red, fontSize: '0.72rem', fontWeight: 500, letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: "0.75rem" }}>Case Study</div>
+            <h3 style={{ fontFamily: F.headline, fontSize: "clamp(1.5rem, 2.5vw, 2rem)", fontWeight: 900, lineHeight: "90%", letterSpacing: "calc(1em / 50)", textTransform: "uppercase", color: "white", margin: "0 0 1rem" }}>Yerevan, Armenia</h3>
+            <p style={{ fontFamily: F.body, fontSize: "0.875rem", lineHeight: 1.5, letterSpacing: "0.05em", color: "rgba(245,245,245,0.6)", marginBottom: "1.25rem" }}>
               Full transport analytics deployment including speed mapping, accessibility analysis, route optimization, and fare evasion tracking for a city of 1.1 million residents.
             </p>
             {["Speed mapping identified bottlenecks at 10–15 km/h", "Accessibility gaps found in 6+ underserved districts", "Dedicated bus lane recommendations for major avenues", "Road safety analysis with targeted interventions", "AI-powered inspector routing for fare evasion hotspots"].map((item, j) => (
-              <div key={j} style={{ fontSize: 13, color: "rgba(255,255,255,0.5)", marginBottom: 8, display: "flex", gap: 8 }}>
-                <span style={{ color: C.red }}>▸</span> {item}
+              <div key={j} style={{ fontFamily: F.body, fontSize: "0.875rem", letterSpacing: "0.05em", color: "rgba(245,245,245,0.5)", marginBottom: "0.5rem", display: "flex", gap: "0.5rem" }}>
+                <span style={{ color: C.red }}>→</span> {item}
               </div>
             ))}
           </div>
-          <div style={{ flex: 0.6, display: "flex", flexDirection: "column", gap: 12 }}>
-            <div style={{ background: "rgba(252,63,29,0.1)", border: "1px solid rgba(252,63,29,0.25)", borderRadius: '1.875rem', padding: "24px 20px", textAlign: "center" }}>
-              <div style={{ fontSize: 42, fontWeight: 900, color: C.red, fontFamily: F.headline, lineHeight: 1 }}>~+$115M</div>
-              <div style={{ fontSize: 13, color: "rgba(255,255,255,0.6)", marginTop: 6 }}>estimated additional revenue per year</div>
+          <div style={{ flex: 0.6, display: "flex", flexDirection: "column", gap: "1rem" }}>
+            <div style={{ background: "rgba(255,26,26,0.1)", border: "1px solid rgba(255,26,26,0.25)", borderRadius: '1.875rem', padding: "2rem 1.5rem", textAlign: "center" }}>
+              <div style={{ fontFamily: F.headline, fontSize: "clamp(2rem, 3vw, 2.5rem)", fontWeight: 900, color: C.red, lineHeight: "90%", letterSpacing: "calc(1em / 50)" }}>~+$115M</div>
+              <div style={{ fontFamily: F.body, fontSize: "0.875rem", letterSpacing: "0.05em", color: "rgba(245,245,245,0.6)", marginTop: "0.5rem" }}>estimated additional revenue per year</div>
             </div>
-            <div style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: '1.875rem', padding: "24px 20px", textAlign: "center" }}>
-              <div style={{ fontSize: 42, fontWeight: 900, color: "white", fontFamily: F.headline, lineHeight: 1 }}>+30%</div>
-              <div style={{ fontSize: 13, color: "rgba(255,255,255,0.6)", marginTop: 6 }}>growth in paid passenger trips</div>
+            <div style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: '1.875rem', padding: "2rem 1.5rem", textAlign: "center" }}>
+              <div style={{ fontFamily: F.headline, fontSize: "clamp(2rem, 3vw, 2.5rem)", fontWeight: 900, color: "white", lineHeight: "90%", letterSpacing: "calc(1em / 50)" }}>+30%</div>
+              <div style={{ fontFamily: F.body, fontSize: "0.875rem", letterSpacing: "0.05em", color: "rgba(245,245,245,0.6)", marginTop: "0.5rem" }}>growth in paid passenger trips</div>
             </div>
-            <div style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: '1.875rem', padding: "16px 20px", textAlign: "center" }}>
-              <div style={{ fontSize: 11, color: "rgba(255,255,255,0.35)", lineHeight: 1.4 }}>Preliminary estimate based on route optimization, schedule improvements, and more efficient fare inspection</div>
+            <div style={{ background: "rgba(255,255,255,0.05)", border: "1px solid rgba(255,255,255,0.08)", borderRadius: '1.875rem', padding: "1rem 1.5rem", textAlign: "center" }}>
+              <div style={{ fontFamily: F.body, fontSize: "0.875rem", letterSpacing: "0.05em", color: "rgba(245,245,245,0.35)", lineHeight: 1.5 }}>Preliminary estimate based on route optimization, schedule improvements, and more efficient fare inspection</div>
             </div>
           </div>
         </div>
@@ -1142,11 +1151,11 @@ export default function YangoCityTransit() {
 
       {/* IMPLEMENTATION + PPP */}
       <Section bg={C.body}>
-        <div style={{ textAlign: "center", marginBottom: mob ? 28 : 48 }}>
-          <h2 style={{ fontFamily: F.headline, fontSize: mob ? 26 : 40, fontWeight: 900, margin: "0 0 12px" }}>How we <span style={{ color: C.red }}>deliver</span></h2>
-          <p style={{ fontSize: mob ? 14 : 17, color: C.muted, maxWidth: 600, margin: "0 auto" }}>Flexible partnership models designed for government and transport authorities.</p>
+        <div style={{ textAlign: "center", marginBottom: mob ? "1.75rem" : "4rem" }}>
+          <h2 style={{ fontFamily: F.headline, fontSize: mob ? "clamp(1.5rem, 4vw, 2rem)" : "clamp(2rem, 3.5vw, 3.85rem)", fontWeight: 900, lineHeight: "90%", letterSpacing: "calc(1em / 50)", textTransform: "uppercase", margin: "0 0 1rem" }}>How we <span style={{ color: C.red }}>deliver</span></h2>
+          <p style={{ fontFamily: F.body, fontSize: "0.875rem", letterSpacing: "0.05em", color: C.muted, maxWidth: "36rem", margin: "0 auto", lineHeight: 1.5 }}>Flexible partnership models designed for government and transport authorities.</p>
         </div>
-        <div style={{ display: "flex", flexDirection: mob ? "column" : "row", gap: mob ? 20 : 0, maxWidth: 900, margin: "0 auto", position: "relative" }}>
+        <div style={{ display: "flex", flexDirection: mob ? "column" : "row", gap: mob ? "1.25rem" : 0, maxWidth: "56rem", margin: "0 auto", position: "relative" }}>
           {!mob && <div style={{ position: "absolute", top: 32, left: "10%", right: "10%", height: 3, background: C.border, zIndex: 0 }}/>}
           {[
             { month: "Month 1–2", title: "Assessment & Design", desc: "City mapping, demand analysis, system architecture" },
@@ -1156,24 +1165,23 @@ export default function YangoCityTransit() {
           ].map((s, i) => (
             <div key={i} style={{ flex: 1, textAlign: "center", position: "relative", zIndex: 1 }}>
               <div style={{
-                width: 64, height: 64, borderRadius: "50%", margin: "0 auto 16px",
+                width: 64, height: 64, borderRadius: "50%", margin: "0 auto 1rem",
                 background: i === 3 ? C.red : "white", border: `3px solid ${i === 3 ? C.red : C.border}`,
                 display: "flex", alignItems: "center", justifyContent: "center",
-                fontWeight: 900, fontSize: 20, color: i === 3 ? "white" : C.black,
-                fontFamily: F.headline,
+                fontFamily: F.headline, fontWeight: 900, fontSize: "1.25rem", letterSpacing: "calc(1em / 50)", color: i === 3 ? "white" : C.black,
               }}>{i+1}</div>
-              <div style={{ fontSize: 12, color: C.red, fontWeight: 700, marginBottom: 6 }}>{s.month}</div>
-              <div style={{ fontSize: 16, fontWeight: 800, marginBottom: 6, fontFamily: F.headline }}>{s.title}</div>
-              <div style={{ fontSize: 13, color: C.muted, lineHeight: 1.4, padding: "0 8px" }}>{s.desc}</div>
+              <div style={{ fontFamily: F.body, fontSize: '0.72rem', fontWeight: 500, letterSpacing: '0.12em', textTransform: 'uppercase', color: C.red, marginBottom: "0.375rem" }}>{s.month}</div>
+              <div style={{ fontFamily: F.headline, fontSize: "1rem", fontWeight: 900, letterSpacing: "calc(1em / 50)", textTransform: "uppercase", marginBottom: "0.375rem" }}>{s.title}</div>
+              <div style={{ fontFamily: F.body, fontSize: "0.875rem", letterSpacing: "0.05em", color: C.muted, lineHeight: 1.5, padding: "0 0.5rem" }}>{s.desc}</div>
             </div>
           ))}
         </div>
-        <div style={{ marginTop: mob ? 28 : 48, background: "white", borderRadius: '1.875rem', padding: mob ? "20px 16px" : "32px 36px", maxWidth: 800, margin: `${mob ? 28 : 48}px auto 0`, border: `2px solid ${C.red}20` }}>
-          <div style={{ display: "flex", flexDirection: mob ? "column" : "row", gap: mob ? 16 : 32, alignItems: mob ? "flex-start" : "center" }}>
-            <div style={{ fontFamily: F.headline, fontSize: mob ? 28 : 36, fontWeight: 900, color: C.red, flexShrink: 0 }}>PPP</div>
+        <div style={{ marginTop: mob ? "1.75rem" : "4rem", background: "white", borderRadius: '1.875rem', padding: mob ? "1.5rem" : "2.5rem", maxWidth: "50rem", marginLeft: "auto", marginRight: "auto", border: `2px solid rgba(255,26,26,0.12)` }}>
+          <div style={{ display: "flex", flexDirection: mob ? "column" : "row", gap: mob ? "1rem" : "2rem", alignItems: mob ? "flex-start" : "center" }}>
+            <div style={{ fontFamily: F.headline, fontSize: mob ? "1.75rem" : "2.5rem", fontWeight: 900, lineHeight: "90%", letterSpacing: "calc(1em / 50)", color: C.red, flexShrink: 0 }}>PPP</div>
             <div>
-              <div style={{ fontSize: 18, fontWeight: 800, color: C.black, marginBottom: 6, fontFamily: F.headline }}>Open to Public-Private Partnership Models</div>
-              <p style={{ fontSize: 14, color: C.black, lineHeight: 1.7, margin: 0 }}>
+              <div style={{ fontFamily: F.headline, fontSize: "clamp(1rem, 2vw, 1.25rem)", fontWeight: 900, lineHeight: "90%", letterSpacing: "calc(1em / 50)", textTransform: "uppercase", color: C.black, marginBottom: "0.5rem" }}>Open to Public-Private Partnership Models</div>
+              <p style={{ fontFamily: F.body, fontSize: "0.875rem", letterSpacing: "0.05em", color: C.black, lineHeight: 1.5, margin: 0 }}>
                 Rwanda pioneered Africa's most successful e-government PPP with Irembo's 25-year partnership model. Yango Tech is ready to bring the same approach to transport — partnering with MININFRA, City of Kigali, RURA, and RTDA through structures that complement the World Bank's $100M RUMI project and JICA's intelligent transport system investment. We align with Rwanda's proven PPP frameworks.
               </p>
             </div>
@@ -1183,11 +1191,11 @@ export default function YangoCityTransit() {
 
       {/* TECH BACKBONE */}
       <Section bg="white">
-        <div style={{ textAlign: "center", marginBottom: mob ? 28 : 48 }}>
-          <h2 style={{ fontFamily: F.headline, fontSize: mob ? 26 : 40, fontWeight: 900, margin: "0 0 12px" }}>Built on <span style={{ color: C.red }}>proven technology</span></h2>
-          <p style={{ fontSize: mob ? 14 : 17, color: C.muted, maxWidth: 600, margin: "0 auto" }}>Battle-tested infrastructure powering ride-hailing, logistics, and navigation for millions daily.</p>
+        <div style={{ textAlign: "center", marginBottom: mob ? "1.75rem" : "4rem" }}>
+          <h2 style={{ fontFamily: F.headline, fontSize: mob ? "clamp(1.5rem, 4vw, 2rem)" : "clamp(2rem, 3.5vw, 3.85rem)", fontWeight: 900, lineHeight: "90%", letterSpacing: "calc(1em / 50)", textTransform: "uppercase", margin: "0 0 1rem" }}>Built on <span style={{ color: C.red }}>proven technology</span></h2>
+          <p style={{ fontFamily: F.body, fontSize: "0.875rem", letterSpacing: "0.05em", color: C.muted, maxWidth: "36rem", margin: "0 auto", lineHeight: 1.5 }}>Battle-tested infrastructure powering ride-hailing, logistics, and navigation for millions daily.</p>
         </div>
-        <div style={{ display: "grid", gridTemplateColumns: mob ? "1fr" : "repeat(3, 1fr)", gap: 16 }}>
+        <div style={{ display: "grid", gridTemplateColumns: mob ? "1fr" : "repeat(3, 1fr)", gap: "2rem" }}>
           {[
             { title: "Yango Maps", desc: "HD mapping with 25% better geocoding and 16% better routing than competitors. On-premise available.", stat: "~30% lower cost" },
             { title: "RouteQ Dispatch", desc: "AI-powered route optimization handling 1M+ daily orders in peak. Proven 15% efficiency boost.", stat: "430+ clients" },
@@ -1196,39 +1204,74 @@ export default function YangoCityTransit() {
             { title: "White-Label Apps", desc: "Production-ready passenger, driver, and operator apps. Customizable branding. iOS, Android, web.", stat: "Rapid deployment" },
             { title: "On-Premise Security", desc: "All systems deployable on-premise for full data sovereignty. No external cloud dependency.", stat: "Full control" },
           ].map((t, i) => (
-            <div key={i} style={{ background: C.body, borderRadius: '1.875rem', padding: "24px 20px", transition: "transform 0.2s, box-shadow 0.2s", cursor: "default" }}
-              onMouseEnter={e => { e.currentTarget.style.transform = "translateY(-4px)"; }}
-              onMouseLeave={e => { e.currentTarget.style.transform = "translateY(0)"; }}>
-              <h4 style={{ fontSize: 17, fontWeight: 900, margin: "0 0 8px", fontFamily: F.headline, textTransform: 'uppercase', letterSpacing: 'calc(1em / 50)' }}>{t.title}</h4>
-              <p style={{ fontSize: 13, color: C.black, lineHeight: 1.5, margin: "0 0 12px" }}>{t.desc}</p>
-              <div style={{ fontSize: 12, fontWeight: 700, color: C.red, background: "#FFF0ED", display: "inline-block", padding: "4px 10px", borderRadius: 6 }}>{t.stat}</div>
+            <div key={i} style={{ background: C.body, borderRadius: '1.875rem', padding: "2rem" }}>
+              <h4 style={{ fontFamily: F.headline, fontSize: "clamp(1rem, 1.5vw, 1.25rem)", fontWeight: 900, lineHeight: "90%", letterSpacing: "calc(1em / 50)", textTransform: 'uppercase', margin: "0 0 0.75rem" }}>{t.title}</h4>
+              <p style={{ fontFamily: F.body, fontSize: "0.875rem", letterSpacing: "0.05em", color: C.black, lineHeight: 1.5, margin: "0 0 1rem" }}>{t.desc}</p>
+              <div style={{ fontFamily: F.body, fontSize: '0.72rem', fontWeight: 500, letterSpacing: '0.12em', textTransform: 'uppercase', color: C.red, background: "rgba(255,26,26,0.08)", display: "inline-block", padding: "0.6rem 1rem", borderRadius: '2rem' }}>{t.stat}</div>
             </div>
           ))}
         </div>
       </Section>
 
       {/* CTA */}
-      <section style={{ background: C.red, padding: mob ? "48px 0" : "80px 0", textAlign: "center" }}>
-        <div style={{ maxWidth: 700, margin: "0 auto", padding: "0 24px" }}>
-          <h2 style={{ fontFamily: F.headline, fontSize: mob ? 28 : 44, fontWeight: 900, color: "white", margin: "0 0 16px" }}>Ready to accelerate Rwanda's smart mobility?</h2>
-          <p style={{ fontSize: mob ? 15 : 18, color: "rgba(255,255,255,0.85)", lineHeight: 1.6, margin: "0 0 32px" }}>Let's discuss how Yango City Transit can complement Kigali's existing smart city investments and scale Rwanda's transport vision. We start with a free assessment.</p>
+      <section style={{ background: C.red, padding: mob ? "3rem 0" : "6rem 0", textAlign: "center" }}>
+        <div style={{ maxWidth: "44rem", margin: "0 auto", padding: "0 1.87rem" }}>
+          <h2 style={{ fontFamily: F.headline, fontSize: mob ? "clamp(1.5rem, 5vw, 2rem)" : "clamp(2rem, 4vw, 3.85rem)", fontWeight: 900, lineHeight: "90%", letterSpacing: "calc(1em / 50)", textTransform: "uppercase", color: "white", margin: "0 0 1.5rem" }}>Ready to accelerate Rwanda's smart mobility?</h2>
+          <p style={{ fontFamily: F.body, fontSize: "0.875rem", letterSpacing: "0.05em", color: "rgba(255,255,255,0.85)", lineHeight: 1.5, margin: "0 0 2.5rem" }}>Let's discuss how Yango City Transit can complement Kigali's existing smart city investments and scale Rwanda's transport vision. We start with a free assessment.</p>
           <a href="https://tech.yango.com/" target="_blank" rel="noopener noreferrer" style={{
             display: "inline-flex", alignItems: "center", justifyContent: "center",
-            background: "white", color: C.red, padding: mob ? "14px 32px" : "16px 48px", borderRadius: '1.5rem', fontWeight: 800,
-            fontSize: mob ? 15 : 17, textDecoration: "none", fontFamily: F.headline, cursor: "pointer",
-            minHeight: 48,
-          }}>Get in Touch →</a>
+            background: "white", color: C.black, padding: "1.25rem 2.5rem", borderRadius: '2rem',
+            fontFamily: F.body, fontWeight: 500, fontSize: "0.875rem", letterSpacing: "0.15em", textTransform: "uppercase",
+            textDecoration: "none", cursor: "pointer", transition: "0.2s ease-in-out",
+          }}
+            onMouseEnter={e => { e.currentTarget.style.background = C.black; e.currentTarget.style.color = "white"; }}
+            onMouseLeave={e => { e.currentTarget.style.background = "white"; e.currentTarget.style.color = C.black; }}
+          >Talk to an expert</a>
         </div>
       </section>
 
-      {/* FOOTER */}
-      <footer style={{ background: C.black, padding: "40px 0 24px", textAlign: "center" }}>
-        <div style={{ maxWidth: 1200, margin: "0 auto", padding: "0 24px" }}>
-          <div style={{ marginBottom: 16 }}>
-            <img src="https://avatars.mds.yandex.net/get-lpc/14837328/21641dca-3288-4eeb-8d99-81f8cb31a763/orig" alt="Yango Tech" style={{ height: 26, width: "auto", filter: "invert(1)" }} />
+      {/* FOOTER — Yango Tech footer pattern with columns */}
+      <footer style={{ background: C.black, color: C.white, padding: "4rem 0 2rem" }}>
+        <div style={{ maxWidth: "116rem", margin: "0 auto", padding: "0 1.87rem" }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", flexWrap: "wrap", gap: "2rem" }}>
+            <a href="/">
+              <img src="https://avatars.mds.yandex.net/get-lpc/14837328/21641dca-3288-4eeb-8d99-81f8cb31a763/orig" alt="Yango Tech" style={{ height: 30, width: "auto", filter: "invert(1)" }} />
+            </a>
+            <div style={{ display: "flex", gap: "3.75rem", flexWrap: "wrap" }}>
+              <div>
+                <p style={{ fontFamily: F.body, fontSize: '0.72rem', fontWeight: 500, letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: "1rem", opacity: 0.5 }}>Platform</p>
+                <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: "0.75rem" }}>
+                  {["Analytics & Optimization", "Central Dispatching", "On-Board Equipment", "Revenue Control"].map((item, i) => (
+                    <li key={i}><a href="#platform" style={{ fontFamily: F.body, fontSize: "0.78rem", letterSpacing: "0.05em", color: C.white, textDecoration: "none", transition: "opacity 0.2s ease-in-out" }}
+                      onMouseEnter={e => e.target.style.opacity = "0.5"} onMouseLeave={e => e.target.style.opacity = "1"}>{item}</a></li>
+                  ))}
+                </ul>
+              </div>
+              <div>
+                <p style={{ fontFamily: F.body, fontSize: '0.72rem', fontWeight: 500, letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: "1rem", opacity: 0.5 }}>Solutions</p>
+                <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: "0.75rem" }}>
+                  {["For Passengers", "For Operators", "For Government", "Route Design"].map((item, i) => (
+                    <li key={i}><a href={`#${["passengers","operators","government","methodology"][i]}`} style={{ fontFamily: F.body, fontSize: "0.78rem", letterSpacing: "0.05em", color: C.white, textDecoration: "none", transition: "opacity 0.2s ease-in-out" }}
+                      onMouseEnter={e => e.target.style.opacity = "0.5"} onMouseLeave={e => e.target.style.opacity = "1"}>{item}</a></li>
+                  ))}
+                </ul>
+              </div>
+              <div>
+                <p style={{ fontFamily: F.body, fontSize: '0.72rem', fontWeight: 500, letterSpacing: '0.12em', textTransform: 'uppercase', marginBottom: "1rem", opacity: 0.5 }}>Company</p>
+                <ul style={{ listStyle: "none", display: "flex", flexDirection: "column", gap: "0.75rem" }}>
+                  {["About Yango Tech", "Careers", "Contact"].map((item, i) => (
+                    <li key={i}><a href="https://tech.yango.com/" target="_blank" rel="noopener noreferrer" style={{ fontFamily: F.body, fontSize: "0.78rem", letterSpacing: "0.05em", color: C.white, textDecoration: "none", transition: "opacity 0.2s ease-in-out" }}
+                      onMouseEnter={e => e.target.style.opacity = "0.5"} onMouseLeave={e => e.target.style.opacity = "1"}>{item}</a></li>
+                  ))}
+                </ul>
+              </div>
+            </div>
           </div>
-          <p style={{ fontSize: 13, color: "rgba(255,255,255,0.4)", margin: 0 }}>30+ countries · 26,000+ engineers · 300,000 vehicles on platform · Ready for Rwanda</p>
-          <div style={{ marginTop: 20, paddingTop: 20, borderTop: "1px solid rgba(255,255,255,0.08)", fontSize: 12, color: "rgba(255,255,255,0.25)" }}>© 2025 Yango Tech. All rights reserved.</div>
+          <div style={{ display: "flex", flexWrap: "wrap", gap: "1rem 3.75rem", marginTop: "3rem", paddingTop: "2rem", borderTop: "1px solid rgba(255,255,255,0.1)" }}>
+            <span style={{ fontFamily: F.body, fontSize: '0.72rem', fontWeight: 500, letterSpacing: '0.12em', textTransform: 'uppercase', opacity: 0.5 }}>© 2026 Yango Tech</span>
+            <a href="https://tech.yango.com/" target="_blank" rel="noopener noreferrer" style={{ fontFamily: F.body, fontSize: '0.72rem', fontWeight: 500, letterSpacing: '0.12em', textTransform: 'uppercase', color: C.white, textDecoration: "none" }}>Privacy Policy</a>
+            <a href="https://tech.yango.com/" target="_blank" rel="noopener noreferrer" style={{ fontFamily: F.body, fontSize: '0.72rem', fontWeight: 500, letterSpacing: '0.12em', textTransform: 'uppercase', color: C.white, textDecoration: "none" }}>Terms of Service</a>
+          </div>
         </div>
       </footer>
     </div>
