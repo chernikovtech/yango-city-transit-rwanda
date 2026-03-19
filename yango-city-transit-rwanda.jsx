@@ -66,14 +66,19 @@ function PhoneMockup({ children, label }) {
   return (
     <div style={{ textAlign: "center" }}>
       <div style={{
-        width: 270, margin: "0 auto", background: C.black,
-        borderRadius: 32, padding: "12px 8px",
+        width: 280, margin: "0 auto", background: "#1A1A1A",
+        borderRadius: 38, padding: "14px 10px",
+        boxShadow: "0 25px 60px rgba(0,0,0,0.25), 0 0 0 1px rgba(255,255,255,0.05) inset",
       }}>
-        <div style={{ width: 60, height: 6, background: "#444", borderRadius: 3, margin: "0 auto 8px" }} />
-        <div style={{ background: C.white, borderRadius: 24, overflow: "hidden", minHeight: 460 }}>{children}</div>
-        <div style={{ width: 40, height: 5, background: "#555", borderRadius: 3, margin: "10px auto 0" }} />
+        {/* Dynamic Island */}
+        <div style={{ width: 72, height: 22, background: C.black, borderRadius: 11, margin: "0 auto 6px", display: "flex", alignItems: "center", justifyContent: "center", gap: 6 }}>
+          <div style={{ width: 8, height: 8, borderRadius: 4, background: "#0D0D0D", border: "1px solid #222" }} />
+        </div>
+        <div style={{ background: C.white, borderRadius: 26, overflow: "hidden", minHeight: 490 }}>{children}</div>
+        {/* Bottom bar */}
+        <div style={{ width: 100, height: 4, background: "#444", borderRadius: 2, margin: "8px auto 2px" }} />
       </div>
-      {label && <div style={{ marginTop: 16, fontSize: 14, fontWeight: 600, color: C.black }}>{label}</div>}
+      {label && <div style={{ marginTop: 18, fontSize: 14, fontWeight: 700, color: C.black, fontFamily: F.headline }}>{label}</div>}
     </div>
   );
 }
@@ -82,12 +87,16 @@ function TabletMockup({ children, label }) {
   return (
     <div style={{ textAlign: "center" }}>
       <div style={{
-        width: "100%", maxWidth: 580, margin: "0 auto", background: C.black,
-        borderRadius: '1.875rem', padding: "14px 10px",
+        width: "100%", maxWidth: 620, margin: "0 auto", background: "#1A1A1A",
+        borderRadius: '2rem', padding: "16px 14px",
+        boxShadow: "0 25px 60px rgba(0,0,0,0.2), 0 0 0 1px rgba(255,255,255,0.05) inset",
       }}>
+        {/* Camera dot */}
+        <div style={{ width: 6, height: 6, borderRadius: 3, background: "#333", margin: "0 auto 8px" }} />
         <div style={{ background: C.white, borderRadius: '1.5rem', overflow: "hidden", minHeight: 360 }}>{children}</div>
+        <div style={{ height: 6 }} />
       </div>
-      {label && <div style={{ marginTop: 16, fontSize: 14, fontWeight: 600, color: C.black }}>{label}</div>}
+      {label && <div style={{ marginTop: 18, fontSize: 14, fontWeight: 700, color: C.black, fontFamily: F.headline }}>{label}</div>}
     </div>
   );
 }
@@ -95,70 +104,149 @@ function TabletMockup({ children, label }) {
 function PassengerApp() {
   const [sel, setSel] = useState(null);
   const [paid, setPaid] = useState(null);
+  const [tab, setTab] = useState(0);
   const stops = [
-    { name: "Nyabugogo Hub", time: "2 min", buses: ["Route 14", "Route 7"], fare: "RWF 300" },
-    { name: "Kicukiro Center", time: "8 min", buses: ["Route 14"], fare: "RWF 300" },
-    { name: "UR Remera Campus", time: "15 min", buses: ["Route 14", "Route 22"], fare: "RWF 500" },
+    { name: "Nyabugogo Hub", time: "2", buses: ["14", "7"], fare: "RWF 300", dist: "350m", occ: 72 },
+    { name: "Kicukiro Center", time: "8", buses: ["14"], fare: "RWF 300", dist: "1.2km", occ: 45 },
+    { name: "UR Remera Campus", time: "15", buses: ["14", "22"], fare: "RWF 500", dist: "2.8km", occ: 88 },
   ];
   return (
-    <div style={{ fontSize: 13, fontFamily: F.body }}>
-      <div style={{ background: C.red, color: C.white, padding: "10px 14px 8px", display: "flex", justifyContent: "space-between" }}>
-        <span style={{ fontWeight: 700, fontSize: 15 }}>Yango Transit</span>
-        <span style={{ fontSize: 11, opacity: 0.9 }}>9:41 AM</span>
-      </div>
-      <div style={{ background: "#E8F4E8", height: 155, position: "relative", overflow: "hidden" }}>
-        <svg width="100%" height="100%" style={{ position: "absolute" }}>
-          <defs><pattern id="pg" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0L0 0 0 40" fill="none" stroke="#cde0cd" strokeWidth="1"/></pattern></defs>
-          <rect width="100%" height="100%" fill="url(#pg)"/>
-          <path d="M30 140Q80 100 130 80T230 30" stroke={C.red} strokeWidth="3" fill="none" strokeDasharray="6,3"/>
-          <circle cx="75" cy="108" r="12" fill={C.red}/><text x="75" y="113" textAnchor="middle" fill="white" fontSize="9" fontWeight="700">BUS</text>
-          <circle cx="30" cy="140" r="6" fill={C.red} stroke="white" strokeWidth="2"/>
-          <circle cx="130" cy="80" r="5" fill="#666" stroke="white" strokeWidth="2"/>
-          <circle cx="230" cy="30" r="5" fill="#666" stroke="white" strokeWidth="2"/>
-        </svg>
-        <div style={{ position: "absolute", bottom: 8, left: 8, background: "rgba(255,255,255,0.95)", borderRadius: 8, padding: "5px 10px", fontSize: 11, fontWeight: 600 }}>
-          <span style={{ display: 'inline-block', width: 8, height: 8, borderRadius: '50%', background: C.red, marginRight: 6 }} />Route 14 — <span style={{ color: C.red }}>Live</span>
+    <div style={{ fontSize: 13, fontFamily: F.body, background: "#FAFAFA" }}>
+      {/* Status bar */}
+      <div style={{ background: C.black, color: C.white, padding: "6px 16px", display: "flex", justifyContent: "space-between", fontSize: 10, fontWeight: 500 }}>
+        <span>9:41</span>
+        <div style={{ display: "flex", gap: 4, alignItems: "center" }}>
+          <div style={{ width: 14, height: 8, border: "1px solid white", borderRadius: 2, position: "relative" }}><div style={{ position: "absolute", left: 1, top: 1, bottom: 1, width: "70%", background: C.green, borderRadius: 1 }}/></div>
         </div>
       </div>
-      <div style={{ padding: "10px 14px" }}>
-        <div style={{ fontWeight: 700, fontSize: 14, marginBottom: 8, color: C.black }}>Nearby Stops</div>
+      {/* App header */}
+      <div style={{ background: C.white, padding: "12px 16px 0" }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 12 }}>
+          <div>
+            <div style={{ fontFamily: F.headline, fontWeight: 900, fontSize: 17, color: C.black, letterSpacing: "-0.02em" }}>Yango Transit</div>
+            <div style={{ fontSize: 10, color: C.muted, marginTop: 1 }}>Kigali, Rwanda</div>
+          </div>
+          <div style={{ width: 32, height: 32, borderRadius: 16, background: C.red, display: "flex", alignItems: "center", justifyContent: "center" }}>
+            <div style={{ width: 12, height: 12, borderRadius: 6, border: "2px solid white" }}/>
+          </div>
+        </div>
+        {/* Search bar */}
+        <div style={{ background: "#F3F3F3", borderRadius: 12, padding: "9px 12px", display: "flex", alignItems: "center", gap: 8, marginBottom: 10 }}>
+          <div style={{ width: 14, height: 14, borderRadius: 7, border: `2px solid ${C.muted}`, flexShrink: 0 }}/>
+          <span style={{ fontSize: 12, color: C.muted }}>Where are you going?</span>
+        </div>
+        {/* Tabs */}
+        <div style={{ display: "flex", gap: 0, borderBottom: "1.5px solid #ECECEC" }}>
+          {["Nearby", "Routes", "Saved"].map((t, i) => (
+            <div key={i} onClick={() => setTab(i)} style={{
+              flex: 1, textAlign: "center", padding: "8px 0 6px", fontSize: 11, fontWeight: 600, cursor: "pointer",
+              color: tab === i ? C.red : C.muted,
+              borderBottom: tab === i ? `2.5px solid ${C.red}` : "2.5px solid transparent",
+              marginBottom: "-1.5px", transition: "all 0.2s",
+            }}>{t}</div>
+          ))}
+        </div>
+      </div>
+      {/* Live map strip */}
+      <div style={{ background: "#DCE8DC", height: 100, position: "relative", overflow: "hidden" }}>
+        <svg width="100%" height="100%" style={{ position: "absolute" }}>
+          <defs>
+            <pattern id="pg" width="30" height="30" patternUnits="userSpaceOnUse"><path d="M30 0L0 0 0 30" fill="none" stroke="#c8d8c8" strokeWidth="0.5"/></pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#pg)"/>
+          {/* Roads */}
+          <path d="M0 65L270 40" stroke="#b8c8b8" strokeWidth="6" fill="none"/>
+          <path d="M60 0L100 100" stroke="#b8c8b8" strokeWidth="4" fill="none"/>
+          <path d="M180 0L160 100" stroke="#b8c8b8" strokeWidth="4" fill="none"/>
+          {/* Route path */}
+          <path d="M30 80Q80 60 130 50T230 25" stroke={C.red} strokeWidth="3" fill="none" strokeLinecap="round"/>
+          {/* Bus pulse */}
+          <circle cx="85" cy="57" r="16" fill={C.red} opacity="0.12"><animate attributeName="r" values="12;20;12" dur="2s" repeatCount="indefinite"/></circle>
+          <circle cx="85" cy="57" r="10" fill={C.red}/>
+          <rect x="80" y="53" width="10" height="7" rx="1.5" fill="white"/>
+          <circle cx="82" cy="62" r="1.5" fill="white"/><circle cx="88" cy="62" r="1.5" fill="white"/>
+          {/* Stops */}
+          <circle cx="30" cy="80" r="5" fill="white" stroke={C.red} strokeWidth="2"/>
+          <circle cx="130" cy="50" r="4" fill="white" stroke="#999" strokeWidth="1.5"/>
+          <circle cx="230" cy="25" r="4" fill="white" stroke="#999" strokeWidth="1.5"/>
+        </svg>
+        <div style={{ position: "absolute", top: 8, right: 8, background: "rgba(255,255,255,0.95)", borderRadius: 10, padding: "4px 10px", fontSize: 10, fontWeight: 700, display: "flex", alignItems: "center", gap: 5 }}>
+          <span style={{ width: 6, height: 6, borderRadius: 3, background: C.green, display: "inline-block" }}/>
+          <span>Live</span>
+        </div>
+      </div>
+      {/* Stops list */}
+      <div style={{ padding: "10px 14px 6px" }}>
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 8 }}>
+          <span style={{ fontWeight: 700, fontSize: 13, color: C.black }}>Nearby Stops</span>
+          <span style={{ fontSize: 10, color: C.red, fontWeight: 600 }}>See all</span>
+        </div>
         {stops.map((s, i) => (
           <div key={i} onClick={() => { setSel(i === sel ? null : i); setPaid(null); }} style={{
-            padding: "9px 12px", marginBottom: 5, borderRadius: '1.25rem',
-            background: sel === i ? "#FFF0ED" : "#F5F5F5",
-            border: sel === i ? `2px solid ${C.red}` : "2px solid transparent",
+            padding: "10px 12px", marginBottom: 6, borderRadius: 14,
+            background: sel === i ? "#FFF0ED" : C.white,
+            border: sel === i ? `1.5px solid ${C.red}` : "1.5px solid transparent",
             cursor: "pointer", transition: "all 0.2s",
           }}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-              <div>
-                <div style={{ fontWeight: 600, fontSize: 13 }}>{s.name}</div>
-                <div style={{ fontSize: 11, color: C.muted, marginTop: 1 }}>{s.buses.join(" · ")}</div>
+              <div style={{ display: "flex", gap: 10, alignItems: "center" }}>
+                <div style={{ width: 36, height: 36, borderRadius: 10, background: i === 0 ? C.red : "#F0F0F0", display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                  <div style={{ width: 14, height: 10, borderRadius: 3, border: `2px solid ${i === 0 ? "white" : C.muted}` }}/>
+                </div>
+                <div>
+                  <div style={{ fontWeight: 700, fontSize: 13, color: C.black }}>{s.name}</div>
+                  <div style={{ fontSize: 10, color: C.muted, marginTop: 2 }}>
+                    {s.dist} · Routes {s.buses.join(", ")}
+                  </div>
+                </div>
               </div>
-              <div style={{
-                background: i === 0 ? C.green : "#EEE", color: i === 0 ? "white" : C.black,
-                padding: "3px 10px", borderRadius: '1.5rem', fontSize: 12, fontWeight: 700,
-              }}>{s.time}</div>
+              <div style={{ textAlign: "right" }}>
+                <div style={{ fontWeight: 800, fontSize: 16, color: i === 0 ? C.red : C.black, lineHeight: 1 }}>{s.time}</div>
+                <div style={{ fontSize: 9, color: C.muted }}>min</div>
+              </div>
+            </div>
+            {/* Occupancy bar */}
+            <div style={{ marginTop: 6, display: "flex", alignItems: "center", gap: 6 }}>
+              <div style={{ flex: 1, height: 3, background: "#ECECEC", borderRadius: 2, overflow: "hidden" }}>
+                <div style={{ width: `${s.occ}%`, height: "100%", borderRadius: 2, background: s.occ > 80 ? C.red : s.occ > 60 ? C.amber : C.green }}/>
+              </div>
+              <span style={{ fontSize: 9, color: C.muted, fontWeight: 600 }}>{s.occ}% full</span>
             </div>
             {sel === i && (
-              <div style={{ marginTop: 8, paddingTop: 8, borderTop: "1px solid #E0E0E0" }}>
+              <div style={{ marginTop: 10, paddingTop: 10, borderTop: "1px solid #F0E0E0" }}>
                 {paid === i ? (
-                  <div style={{ background: "#E8F8E8", color: C.green, padding: "10px", borderRadius: 8, textAlign: "center", fontWeight: 700, fontSize: 13 }}>
-                    ✓ Fare Paid — {s.fare} · Ticket #YT-{Math.floor(Math.random()*9000+1000)}
+                  <div style={{ background: C.black, color: C.white, padding: "12px", borderRadius: 12, textAlign: "center" }}>
+                    <div style={{ fontWeight: 800, fontSize: 14, marginBottom: 2 }}>Ticket Confirmed</div>
+                    <div style={{ fontSize: 11, opacity: 0.7 }}>{s.fare} · #YT-{Math.floor(Math.random()*9000+1000)}</div>
                   </div>
                 ) : (
-                  <div style={{ display: "flex", gap: 8 }}>
+                  <div style={{ display: "flex", gap: 6 }}>
                     <div onClick={(e) => { e.stopPropagation(); setPaid(i); }} style={{
-                      flex: 1, background: C.red, color: "white", padding: "8px 0", borderRadius: 8,
-                      textAlign: "center", fontWeight: 600, fontSize: 12, cursor: "pointer",
+                      flex: 2, background: C.red, color: "white", padding: "10px 0", borderRadius: 10,
+                      textAlign: "center", fontWeight: 700, fontSize: 13, cursor: "pointer",
                     }}>Pay {s.fare}</div>
                     <div onClick={(e) => e.stopPropagation()} style={{
-                      flex: 1, background: C.black, color: "white", padding: "8px 0", borderRadius: 8,
+                      flex: 1, background: "#F0F0F0", color: C.black, padding: "10px 0", borderRadius: 10,
                       textAlign: "center", fontWeight: 600, fontSize: 12, cursor: "pointer",
-                    }}>Set Alert</div>
+                    }}>Alert</div>
                   </div>
                 )}
               </div>
             )}
+          </div>
+        ))}
+      </div>
+      {/* Bottom nav */}
+      <div style={{ display: "flex", borderTop: "1px solid #ECECEC", background: C.white }}>
+        {[
+          { label: "Home", active: true },
+          { label: "Trips", active: false },
+          { label: "Wallet", active: false },
+          { label: "Profile", active: false },
+        ].map((n, i) => (
+          <div key={i} style={{ flex: 1, textAlign: "center", padding: "8px 0 6px" }}>
+            <div style={{ width: 18, height: 18, borderRadius: i === 0 ? 4 : 9, background: n.active ? C.red : "#DDD", margin: "0 auto 3px", opacity: n.active ? 1 : 0.4 }}/>
+            <div style={{ fontSize: 9, fontWeight: 600, color: n.active ? C.red : C.muted }}>{n.label}</div>
           </div>
         ))}
       </div>
@@ -168,46 +256,109 @@ function PassengerApp() {
 
 function DriverApp() {
   const [announcing, setAnnouncing] = useState(false);
+  const progress = 62; // % of route completed
+  const stopsLeft = [
+    { name: "Downtown Station", eta: "2:30" },
+    { name: "Market Square", eta: "5:10" },
+    { name: "Northern Terminal", eta: "8:45" },
+  ];
   return (
-    <div style={{ fontSize: 13, fontFamily: F.body }}>
-      <div style={{ background: C.black, color: C.white, padding: "10px 14px 8px", display: "flex", justifyContent: "space-between" }}>
-        <span style={{ fontWeight: 700, fontSize: 15 }}>Driver Console</span>
-        <span style={{ fontSize: 11, color: C.green }}>● Online</span>
-      </div>
-      <div style={{ background: "#1E1E2E", height: 165, position: "relative", overflow: "hidden" }}>
+    <div style={{ fontSize: 13, fontFamily: F.body, background: "#0D0D14" }}>
+      {/* Dark nav map area */}
+      <div style={{ height: 215, position: "relative", overflow: "hidden", background: "#12121E" }}>
         <svg width="100%" height="100%" style={{ position: "absolute" }}>
-          <defs><pattern id="dg" width="50" height="50" patternUnits="userSpaceOnUse"><path d="M50 0L0 0 0 50" fill="none" stroke="#2a2a3e" strokeWidth="1"/></pattern></defs>
+          <defs>
+            <pattern id="dg" width="40" height="40" patternUnits="userSpaceOnUse"><path d="M40 0L0 0 0 40" fill="none" stroke="#1a1a2a" strokeWidth="0.5"/></pattern>
+            <linearGradient id="routeGrad" x1="0" y1="1" x2="1" y2="0"><stop offset="0%" stopColor={C.green}/><stop offset="100%" stopColor={C.blue}/></linearGradient>
+          </defs>
           <rect width="100%" height="100%" fill="url(#dg)"/>
-          <path d="M20 150L130 90L240 40" stroke="#4A90D9" strokeWidth="4" fill="none"/>
-          <polygon points="235,35 245,40 235,45" fill="#4A90D9"/>
-          <circle cx="20" cy="150" r="8" fill={C.green}/><circle cx="130" cy="90" r="6" fill={C.amber} stroke="white" strokeWidth="1.5"/>
-          <circle cx="240" cy="40" r="6" fill={C.red} stroke="white" strokeWidth="1.5"/>
+          {/* Roads */}
+          <path d="M0 160L270 50" stroke="#1e1e30" strokeWidth="12" fill="none" strokeLinecap="round"/>
+          <path d="M80 0L120 215" stroke="#1e1e30" strokeWidth="8" fill="none"/>
+          <path d="M200 0L170 215" stroke="#1e1e30" strokeWidth="8" fill="none"/>
+          {/* Active route */}
+          <path d="M25 185L100 130L170 90L245 35" stroke="url(#routeGrad)" strokeWidth="4" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
+          {/* Completed segment highlight */}
+          <path d="M25 185L100 130" stroke={C.green} strokeWidth="4" fill="none" strokeLinecap="round" opacity="0.8"/>
+          {/* Stops */}
+          <circle cx="25" cy="185" r="6" fill={C.green} opacity="0.4"/><circle cx="25" cy="185" r="3" fill={C.green}/>
+          <circle cx="170" cy="90" r="5" fill="#333" stroke="#555" strokeWidth="1.5"/>
+          <circle cx="245" cy="35" r="5" fill="#333" stroke={C.red} strokeWidth="1.5"/>
+          {/* Bus position with glow */}
+          <circle cx="100" cy="130" r="18" fill={C.green} opacity="0.08"><animate attributeName="r" values="14;22;14" dur="2s" repeatCount="indefinite"/></circle>
+          <circle cx="100" cy="130" r="11" fill={C.green}/>
+          <path d="M94 127h12v5a2 2 0 01-2 2h-8a2 2 0 01-2-2z" fill="white" opacity="0.9"/>
+          <circle cx="96" cy="135" r="1.5" fill="white" opacity="0.7"/><circle cx="104" cy="135" r="1.5" fill="white" opacity="0.7"/>
         </svg>
-        <div style={{ position: "absolute", top: 10, left: 10, right: 10, background: "rgba(0,0,0,0.7)", borderRadius: '1.25rem', padding: "8px 12px", color: "white" }}>
-          <div style={{ fontSize: 18, fontWeight: 700 }}>↗ 280m</div>
-          <div style={{ fontSize: 11, opacity: 0.8 }}>Turn right onto Main Ave · Next stop in 3 min</div>
+        {/* Turn instruction */}
+        <div style={{ position: "absolute", top: 0, left: 0, right: 0, background: "linear-gradient(to bottom, rgba(0,0,0,0.8), transparent)", padding: "10px 14px 30px" }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 10 }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
+              <span style={{ fontFamily: F.headline, fontWeight: 900, fontSize: 13, color: "white" }}>DRIVER</span>
+              <span style={{ width: 6, height: 6, borderRadius: 3, background: C.green, display: "inline-block" }}/>
+            </div>
+            <span style={{ fontSize: 10, color: "rgba(255,255,255,0.5)" }}>9:41</span>
+          </div>
+          <div style={{ background: "rgba(255,255,255,0.08)", borderRadius: 14, padding: "12px 14px", backdropFilter: "blur(8px)" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+              <div style={{ width: 36, height: 36, borderRadius: 10, background: "rgba(255,255,255,0.1)", display: "flex", alignItems: "center", justifyContent: "center", fontSize: 20, color: "white", fontWeight: 900 }}>↗</div>
+              <div>
+                <div style={{ fontSize: 18, fontWeight: 900, color: "white", lineHeight: 1 }}>280m</div>
+                <div style={{ fontSize: 11, color: "rgba(255,255,255,0.6)", marginTop: 2 }}>Turn right onto KN 5 Ave</div>
+              </div>
+            </div>
+          </div>
+        </div>
+        {/* Route progress bar */}
+        <div style={{ position: "absolute", bottom: 0, left: 0, right: 0, height: 4, background: "rgba(255,255,255,0.06)" }}>
+          <div style={{ width: `${progress}%`, height: "100%", background: C.green, transition: "width 0.5s" }}/>
         </div>
       </div>
-      <div style={{ padding: "10px 14px" }}>
-        <div style={{ display: "flex", justifyContent: "space-between", padding: "9px 12px", background: "#F5F5F5", borderRadius: '1.25rem', marginBottom: 8 }}>
-          <div><div style={{ fontSize: 11, color: C.muted }}>Route</div><div style={{ fontWeight: 700, fontSize: 13 }}>Route 14 — North</div></div>
-          <div style={{ textAlign: "right" }}><div style={{ fontSize: 11, color: C.muted }}>Passengers</div><div style={{ fontWeight: 700, color: C.red }}>34 / 55</div></div>
+      {/* Info panel */}
+      <div style={{ background: C.white, borderRadius: "16px 16px 0 0", marginTop: -12, position: "relative", padding: "14px 14px 8px" }}>
+        {/* Grab handle */}
+        <div style={{ width: 32, height: 4, background: "#DDD", borderRadius: 2, margin: "0 auto 12px" }}/>
+        {/* Route info */}
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 10 }}>
+          <div>
+            <div style={{ fontWeight: 800, fontSize: 15, color: C.black, fontFamily: F.headline }}>Route 14 North</div>
+            <div style={{ fontSize: 10, color: C.muted, marginTop: 1 }}>Nyabugogo → Northern Terminal</div>
+          </div>
+          <div style={{ textAlign: "right" }}>
+            <div style={{ fontWeight: 800, fontSize: 20, color: C.red, lineHeight: 1 }}>34<span style={{ fontSize: 12, color: C.muted, fontWeight: 500 }}>/55</span></div>
+            <div style={{ fontSize: 9, color: C.muted }}>passengers</div>
+          </div>
         </div>
-        <div style={{ display: "flex", gap: 5 }}>
-          {[{ label: "On Time", val: "✓", bg: "#E8F8E8", c: C.green }, { label: "Next Stop", val: "2:30", bg: "#FFF3E0", c: C.amber }, { label: "Fares Paid", val: "98%", bg: "#E8F0FE", c: C.blue }].map((m, i) => (
-            <div key={i} style={{ flex: 1, background: m.bg, borderRadius: '1.25rem', padding: "9px 6px", textAlign: "center" }}>
-              <div style={{ fontSize: 17, fontWeight: 700, color: m.c }}>{m.val}</div>
-              <div style={{ fontSize: 9, color: C.black, marginTop: 2 }}>{m.label}</div>
+        {/* KPI strip */}
+        <div style={{ display: "flex", gap: 4, marginBottom: 10 }}>
+          {[{ label: "Status", val: "On Time", c: C.green }, { label: "Next Stop", val: "2:30", c: C.amber }, { label: "Fares", val: "98%", c: C.blue }].map((m, i) => (
+            <div key={i} style={{ flex: 1, borderRadius: 10, padding: "8px 4px", textAlign: "center", background: "#F8F8F8" }}>
+              <div style={{ fontSize: 15, fontWeight: 800, color: m.c }}>{m.val}</div>
+              <div style={{ fontSize: 8, color: C.muted, marginTop: 1, fontWeight: 500 }}>{m.label}</div>
             </div>
           ))}
         </div>
+        {/* Upcoming stops */}
+        <div style={{ fontSize: 10, fontWeight: 700, color: C.muted, marginBottom: 6, textTransform: "uppercase", letterSpacing: "0.08em" }}>Upcoming</div>
+        {stopsLeft.map((s, i) => (
+          <div key={i} style={{ display: "flex", alignItems: "center", gap: 8, marginBottom: 4 }}>
+            <div style={{ width: 2, height: i === stopsLeft.length - 1 ? 6 : 22, background: i === 0 ? C.green : "#E0E0E0", borderRadius: 1, flexShrink: 0, marginLeft: 4 }}/>
+            <div style={{ width: 8, height: 8, borderRadius: 4, border: `2px solid ${i === 0 ? C.green : "#CCC"}`, flexShrink: 0 }}/>
+            <div style={{ flex: 1, fontSize: 11, fontWeight: i === 0 ? 700 : 400, color: i === 0 ? C.black : C.muted }}>{s.name}</div>
+            <span style={{ fontSize: 10, color: C.muted, fontWeight: 600 }}>{s.eta}</span>
+          </div>
+        ))}
+        {/* Actions */}
         <div style={{ marginTop: 8, display: "flex", gap: 6 }}>
           <div onClick={() => { setAnnouncing(true); setTimeout(() => setAnnouncing(false), 2000); }}
-            style={{ flex: 1, padding: "10px", borderRadius: '1.25rem', textAlign: "center", fontWeight: 600, fontSize: 12, background: announcing ? C.green : C.black, color: "white", cursor: "pointer", transition: "all 0.3s" }}>
+            style={{ flex: 1, padding: "11px", borderRadius: 12, textAlign: "center", fontWeight: 700, fontSize: 12, background: announcing ? C.green : C.red, color: "white", cursor: "pointer", transition: "all 0.3s" }}>
             {announcing ? "Announced" : "Announce Stop"}
           </div>
-          <div style={{ flex: 1, padding: "10px", borderRadius: '1.25rem', textAlign: "center", fontWeight: 600, fontSize: 12, background: "#F5F5F5", color: C.black, cursor: "pointer" }}>
-            Report Issue
+          <div style={{ width: 44, height: 44, borderRadius: 12, background: "#F0F0F0", display: "flex", alignItems: "center", justifyContent: "center", cursor: "pointer", flexShrink: 0 }}>
+            <div style={{ width: 16, height: 16, border: `2px solid ${C.muted}`, borderRadius: 3, position: "relative" }}>
+              <div style={{ position: "absolute", top: 2, left: 5, width: 2, height: 6, background: C.muted, borderRadius: 1 }}/>
+              <div style={{ position: "absolute", top: 8, left: 5, width: 2, height: 2, background: C.muted, borderRadius: 1 }}/>
+            </div>
           </div>
         </div>
       </div>
@@ -219,85 +370,114 @@ function OperatorDashboard() {
   const [aiTip, setAiTip] = useState(null);
   const [applied, setApplied] = useState({});
   const tips = [
-    { id: 0, route: "Route 7", insight: "Low ridership 10PM–6AM", suggestion: "Reduce frequency to 30-min intervals after 10PM", saving: "Save 2 vehicles nightly", icon: "—" },
-    { id: 1, route: "Route 14", insight: "Overcrowding 7–9AM peak", suggestion: "Add 3 express buses during morning peak", saving: "+18% capacity", icon: "+" },
-    { id: 2, route: "New Route", insight: "Underserved district detected", suggestion: "Create Route 31: Industrial Zone → Central Station via Market", saving: "Serve 12K residents", icon: "*" },
+    { id: 0, route: "Route 7", insight: "Low ridership 10PM–6AM", suggestion: "Reduce frequency to 30-min intervals after 10PM", saving: "Save 2 vehicles nightly", severity: "low", color: C.amber },
+    { id: 1, route: "Route 14", insight: "Overcrowding 7–9AM peak", suggestion: "Add 3 express buses during morning peak", saving: "+18% capacity", severity: "high", color: C.red },
+    { id: 2, route: "New Route", insight: "Underserved district detected", suggestion: "Create Route 31: Industrial Zone → Central Station via Market", saving: "Serve 12K residents", severity: "new", color: C.blue },
   ];
+  // Sparkline data
+  const spark = [32, 35, 28, 42, 55, 48, 52, 60, 58, 63, 61, 68];
+  const sparkMax = Math.max(...spark);
   return (
-    <div style={{ fontSize: 12, fontFamily: F.body }}>
-      <div style={{ background: C.black, color: "white", padding: "8px 14px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-          <span style={{ fontWeight: 800, fontSize: 11 }}>YANGO TECH</span>
-          <span style={{ color: "rgba(255,255,255,0.3)" }}>|</span>
-          <span style={{ fontWeight: 600, fontSize: 12, color: "rgba(255,255,255,0.8)" }}>Operator</span>
+    <div style={{ fontSize: 12, fontFamily: F.body, background: "#FAFAFA" }}>
+      {/* Header */}
+      <div style={{ background: C.black, color: "white", padding: "10px 14px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+          <div style={{ width: 24, height: 24, borderRadius: 6, background: C.red, display: "flex", alignItems: "center", justifyContent: "center" }}>
+            <div style={{ width: 10, height: 10, border: "2px solid white", borderRadius: 2 }}/>
+          </div>
+          <div>
+            <div style={{ fontFamily: F.headline, fontWeight: 900, fontSize: 12, letterSpacing: "0.04em" }}>OPERATOR</div>
+            <div style={{ fontSize: 9, color: "rgba(255,255,255,0.4)" }}>Fleet Management</div>
+          </div>
         </div>
-        <span style={{ fontSize: 10, color: C.green }}>● Live Data</span>
-      </div>
-      <div style={{ background: "#E8F4E8", height: 85, position: "relative", overflow: "hidden" }}>
-        <svg width="100%" height="100%">
-          <defs><pattern id="og" width="25" height="25" patternUnits="userSpaceOnUse"><path d="M25 0L0 0 0 25" fill="none" stroke="#cde0cd" strokeWidth="0.5"/></pattern></defs>
-          <rect width="100%" height="100%" fill="url(#og)"/>
-          <path d="M10 70Q100 30 200 50T400 20" stroke={C.red} strokeWidth="2" fill="none" opacity="0.5"/>
-          <path d="M20 20Q120 60 280 30T520 60" stroke={C.blue} strokeWidth="2" fill="none" opacity="0.5"/>
-          <path d="M40 80Q200 10 350 50" stroke={C.green} strokeWidth="1.5" fill="none" opacity="0.5" strokeDasharray="4,4"/>
-          {[[60,55],[150,38],[250,42],[340,28],[420,45],[90,25],[310,55]].map(([x,y],i) => (
-            <circle key={i} cx={x} cy={y} r="3" fill={[C.red,C.blue,C.green][i%3]} opacity="0.8"/>
-          ))}
-        </svg>
-        <div style={{ position: "absolute", bottom: 4, left: 6, fontSize: 9, background: "rgba(255,255,255,0.9)", padding: "2px 6px", borderRadius: 3, fontWeight: 600 }}>
-          28 routes · 342 vehicles active
+        <div style={{ display: "flex", alignItems: "center", gap: 4 }}>
+          <span style={{ width: 6, height: 6, borderRadius: 3, background: C.green }}/>
+          <span style={{ fontSize: 9, color: "rgba(255,255,255,0.6)" }}>Live</span>
         </div>
       </div>
-      <div style={{ padding: "8px 12px" }}>
-        <div style={{ display: "flex", gap: 4, marginBottom: 8 }}>
-          {[{ l: "Fleet Util.", v: "87%", c: C.green }, { l: "On-Time", v: "94%", c: C.blue }, { l: "Revenue", v: "+8%", c: C.red }].map((k, i) => (
-            <div key={i} style={{ flex: 1, background: "#F5F5F5", borderRadius: 6, padding: "6px 4px", textAlign: "center", borderTop: `2px solid ${k.c}` }}>
-              <div style={{ fontSize: 14, fontWeight: 800, color: k.c }}>{k.v}</div>
-              <div style={{ fontSize: 8, color: C.muted }}>{k.l}</div>
+      {/* KPI cards */}
+      <div style={{ padding: "10px 12px 0" }}>
+        <div style={{ display: "flex", gap: 5, marginBottom: 10 }}>
+          {[
+            { l: "Fleet Active", v: "87%", delta: "+3%", c: C.green },
+            { l: "On-Time Rate", v: "94%", delta: "+1.2%", c: C.blue },
+            { l: "Revenue", v: "+8%", delta: "RWF 48M", c: C.red },
+          ].map((k, i) => (
+            <div key={i} style={{ flex: 1, background: C.white, borderRadius: 10, padding: "8px 6px", textAlign: "center", position: "relative", overflow: "hidden" }}>
+              <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 2.5, background: k.c }}/>
+              <div style={{ fontSize: 18, fontWeight: 900, color: C.black, lineHeight: 1.2 }}>{k.v}</div>
+              <div style={{ fontSize: 8, color: C.muted, marginTop: 1 }}>{k.l}</div>
+              <div style={{ fontSize: 8, color: k.c, fontWeight: 700, marginTop: 2 }}>{k.delta}</div>
             </div>
           ))}
         </div>
-        <div style={{ fontSize: 11, fontWeight: 700, marginBottom: 6, display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-          <span>AI Route Insights</span>
-          <span style={{ fontSize: 9, color: C.red, fontWeight: 600 }}>Real-time</span>
+        {/* Mini sparkline chart */}
+        <div style={{ background: C.white, borderRadius: 10, padding: "10px 10px 6px", marginBottom: 10 }}>
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 6 }}>
+            <span style={{ fontSize: 10, fontWeight: 700, color: C.black }}>Ridership Trend</span>
+            <span style={{ fontSize: 8, color: C.muted }}>Last 12h</span>
+          </div>
+          <svg width="100%" height="36" viewBox="0 0 240 36" preserveAspectRatio="none">
+            <defs><linearGradient id="sparkFill" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stopColor={C.red} stopOpacity="0.15"/><stop offset="100%" stopColor={C.red} stopOpacity="0"/></linearGradient></defs>
+            <path d={`M0 36 ${spark.map((v, i) => `L${(i/(spark.length-1))*240} ${36 - (v/sparkMax)*32}`).join(" ")} L240 36Z`} fill="url(#sparkFill)"/>
+            <path d={spark.map((v, i) => `${i === 0 ? "M" : "L"}${(i/(spark.length-1))*240} ${36 - (v/sparkMax)*32}`).join(" ")} stroke={C.red} strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
+            <circle cx="240" cy={36 - (spark[spark.length-1]/sparkMax)*32} r="3" fill={C.red}/>
+          </svg>
+        </div>
+        {/* AI insights */}
+        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 6 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 5 }}>
+            <div style={{ width: 16, height: 16, borderRadius: 4, background: "#FFF0ED", display: "flex", alignItems: "center", justifyContent: "center" }}>
+              <div style={{ width: 6, height: 6, borderRadius: 3, background: C.red }}/>
+            </div>
+            <span style={{ fontSize: 11, fontWeight: 800, color: C.black }}>AI Insights</span>
+          </div>
+          <span style={{ fontSize: 8, color: C.red, fontWeight: 700, background: "#FFF0ED", padding: "2px 6px", borderRadius: 4 }}>{tips.length} new</span>
         </div>
         {tips.map((t) => (
           <div key={t.id} style={{
-            marginBottom: 5, borderRadius: 8, overflow: "hidden",
-            border: aiTip === t.id ? `1.5px solid ${C.red}` : "1.5px solid #E8E8E8",
+            marginBottom: 5, borderRadius: 10, overflow: "hidden",
+            background: C.white,
+            border: aiTip === t.id ? `1.5px solid ${t.color}` : "1.5px solid transparent",
             transition: "all 0.2s",
           }}>
             <div onClick={() => setAiTip(aiTip === t.id ? null : t.id)} style={{
-              padding: "7px 10px", background: aiTip === t.id ? "#FFF8F6" : "white",
+              padding: "8px 10px",
               cursor: "pointer", display: "flex", justifyContent: "space-between", alignItems: "center",
             }}>
-              <div style={{ display: "flex", gap: 6, alignItems: "center" }}>
-                <span style={{ fontSize: 14 }}>{t.icon}</span>
+              <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
+                <div style={{ width: 28, height: 28, borderRadius: 8, background: `${t.color}15`, display: "flex", alignItems: "center", justifyContent: "center", flexShrink: 0 }}>
+                  <div style={{ width: 8, height: 8, borderRadius: 4, background: t.color }}/>
+                </div>
                 <div>
-                  <div style={{ fontWeight: 700, fontSize: 11 }}>{t.route}</div>
-                  <div style={{ fontSize: 9, color: C.muted }}>{t.insight}</div>
+                  <div style={{ fontWeight: 700, fontSize: 11, color: C.black }}>{t.route}</div>
+                  <div style={{ fontSize: 9, color: C.muted, marginTop: 1 }}>{t.insight}</div>
                 </div>
               </div>
-              <span style={{ fontSize: 10, color: C.muted }}>{aiTip === t.id ? "▲" : "▼"}</span>
+              <svg width="10" height="6" viewBox="0 0 10 6" style={{ transition: "transform 0.2s", transform: aiTip === t.id ? "rotate(180deg)" : "rotate(0)" }}>
+                <path d="M1 1L5 5L9 1" stroke={C.muted} strokeWidth="1.5" fill="none" strokeLinecap="round"/>
+              </svg>
             </div>
             {aiTip === t.id && (
-              <div style={{ padding: "8px 10px", background: "#FAFAFA", borderTop: "1px solid #F0F0F0" }}>
-                <div style={{ fontSize: 10, color: C.black, marginBottom: 4, lineHeight: 1.4 }}>
-                  <strong>AI Suggestion:</strong> {t.suggestion}
+              <div style={{ padding: "0 10px 10px", background: "#FAFAFF" }}>
+                <div style={{ fontSize: 10, color: C.black, marginBottom: 6, lineHeight: 1.5, padding: "8px 10px", background: "#F5F5F5", borderRadius: 8 }}>
+                  {t.suggestion}
                 </div>
-                <div style={{ fontSize: 9, color: C.green, fontWeight: 600, marginBottom: 6 }}>Impact: {t.saving}</div>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 6 }}>
+                  <span style={{ fontSize: 9, color: t.color, fontWeight: 700 }}>Impact: {t.saving}</span>
+                </div>
                 {applied[t.id] ? (
-                  <div style={{ background: "#E8F8E8", color: C.green, padding: "6px", borderRadius: 6, textAlign: "center", fontWeight: 700, fontSize: 10 }}>✓ Applied to schedule</div>
+                  <div style={{ background: C.black, color: C.white, padding: "8px", borderRadius: 8, textAlign: "center", fontWeight: 700, fontSize: 10 }}>Applied</div>
                 ) : (
                   <div style={{ display: "flex", gap: 4 }}>
                     <div onClick={(e) => { e.stopPropagation(); setApplied(p => ({...p, [t.id]: true})); }} style={{
-                      flex: 1, background: C.red, color: "white", padding: "6px", borderRadius: 6,
+                      flex: 1, background: C.red, color: "white", padding: "8px", borderRadius: 8,
                       textAlign: "center", fontWeight: 700, fontSize: 10, cursor: "pointer",
-                    }}>Apply Change</div>
+                    }}>Apply</div>
                     <div onClick={(e) => e.stopPropagation()} style={{
-                      flex: 1, background: "#F0F0F0", color: C.black, padding: "6px", borderRadius: 6,
+                      flex: 1, background: "#F0F0F0", color: C.black, padding: "8px", borderRadius: 8,
                       textAlign: "center", fontWeight: 600, fontSize: 10, cursor: "pointer",
-                    }}>Simulate First</div>
+                    }}>Simulate</div>
                   </div>
                 )}
               </div>
@@ -310,52 +490,120 @@ function OperatorDashboard() {
 }
 
 function CityDashboard() {
+  const revData = [32, 35, 38, 42, 40, 45, 48];
+  const ridData = [120, 135, 128, 155, 162, 148, 170]; // thousands
+  const revMax = Math.max(...revData);
+  const ridMax = Math.max(...ridData);
   return (
-    <div style={{ fontSize: 12, fontFamily: F.body }}>
-      <div style={{ background: C.black, color: "white", padding: "9px 16px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-        <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-          <span style={{ fontWeight: 800, fontSize: 11 }}>YANGO TECH</span>
-          <span style={{ color: "rgba(255,255,255,0.3)" }}>|</span>
-          <span style={{ fontWeight: 600, fontSize: 12, color: "rgba(255,255,255,0.8)" }}>City Operations</span>
+    <div style={{ fontSize: 12, fontFamily: F.body, background: "#FAFAFA" }}>
+      {/* Header bar */}
+      <div style={{ background: C.black, color: "white", padding: "10px 18px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+        <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
+          <div style={{ width: 26, height: 26, borderRadius: 7, background: C.red, display: "flex", alignItems: "center", justifyContent: "center" }}>
+            <div style={{ width: 10, height: 10, border: "2px solid white", borderRadius: 2 }}/>
+          </div>
+          <div>
+            <div style={{ fontFamily: F.headline, fontWeight: 900, fontSize: 13, letterSpacing: "0.02em" }}>CITY OPERATIONS</div>
+            <div style={{ fontSize: 9, color: "rgba(255,255,255,0.4)" }}>Kigali Transport Authority</div>
+          </div>
         </div>
-        <span style={{ fontSize: 10, color: C.green }}>● Live</span>
+        <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 4 }}>
+            <span style={{ width: 6, height: 6, borderRadius: 3, background: C.green }}>
+              <span style={{ display: "block", width: 6, height: 6, borderRadius: 3, background: C.green, animation: "none" }}/>
+            </span>
+            <span style={{ fontSize: 9, color: "rgba(255,255,255,0.6)" }}>Live</span>
+          </div>
+          <div style={{ width: 28, height: 28, borderRadius: 14, background: "rgba(255,255,255,0.08)", display: "flex", alignItems: "center", justifyContent: "center" }}>
+            <div style={{ width: 8, height: 8, borderRadius: 4, border: "1.5px solid rgba(255,255,255,0.4)" }}/>
+          </div>
+        </div>
       </div>
-      <div style={{ padding: "10px 14px" }}>
-        <div style={{ display: "flex", gap: 6, marginBottom: 10 }}>
+      <div style={{ padding: "12px 16px" }}>
+        {/* KPI row */}
+        <div style={{ display: "grid", gridTemplateColumns: "repeat(4, 1fr)", gap: 6, marginBottom: 12 }}>
           {[
-            { l: "Active Buses", v: "342", t: "+12", c: C.green },
-            { l: "Revenue Today", v: "RWF 48M", t: "+8%", c: C.green },
-            { l: "On-Time", v: "94.2%", t: "+2.1%", c: C.blue },
-            { l: "Evasion", v: "3.1%", t: "−1.4%", c: C.red },
+            { l: "Active Fleet", v: "342", delta: "+12", c: C.green },
+            { l: "Revenue", v: "48M", unit: "RWF", delta: "+8%", c: C.green },
+            { l: "Punctuality", v: "94.2", unit: "%", delta: "+2.1%", c: C.blue },
+            { l: "Evasion", v: "3.1", unit: "%", delta: "−1.4%", c: C.red },
           ].map((k, i) => (
-            <div key={i} style={{ flex: 1, background: "#F8F8F8", borderRadius: 8, padding: "7px 5px", textAlign: "center", borderTop: `3px solid ${k.c}` }}>
-              <div style={{ fontSize: 14, fontWeight: 800, color: C.black }}>{k.v}</div>
-              <div style={{ fontSize: 7, color: C.muted, marginTop: 1 }}>{k.l}</div>
-              <div style={{ fontSize: 8, color: k.c, fontWeight: 600 }}>{k.t}</div>
+            <div key={i} style={{ background: C.white, borderRadius: 10, padding: "10px 8px", textAlign: "center", position: "relative", overflow: "hidden" }}>
+              <div style={{ position: "absolute", top: 0, left: 0, right: 0, height: 2.5, background: k.c }}/>
+              <div style={{ display: "flex", alignItems: "baseline", justifyContent: "center", gap: 1 }}>
+                <span style={{ fontSize: 18, fontWeight: 900, color: C.black, lineHeight: 1 }}>{k.v}</span>
+                {k.unit && <span style={{ fontSize: 9, color: C.muted, fontWeight: 500 }}>{k.unit}</span>}
+              </div>
+              <div style={{ fontSize: 8, color: C.muted, marginTop: 2 }}>{k.l}</div>
+              <div style={{ fontSize: 8, color: k.c, fontWeight: 700, marginTop: 2 }}>{k.delta}</div>
             </div>
           ))}
         </div>
-        <div style={{ background: "#E8F4E8", height: 105, borderRadius: '1.25rem', position: "relative", overflow: "hidden", marginBottom: 10 }}>
+        {/* Fleet map mini */}
+        <div style={{ background: "#E2EDE2", height: 90, borderRadius: 12, position: "relative", overflow: "hidden", marginBottom: 12 }}>
           <svg width="100%" height="100%">
-            <defs><pattern id="cg" width="30" height="30" patternUnits="userSpaceOnUse"><path d="M30 0L0 0 0 30" fill="none" stroke="#cde0cd" strokeWidth="0.5"/></pattern></defs>
+            <defs><pattern id="cg" width="25" height="25" patternUnits="userSpaceOnUse"><path d="M25 0L0 0 0 25" fill="none" stroke="#c8d8c8" strokeWidth="0.3"/></pattern></defs>
             <rect width="100%" height="100%" fill="url(#cg)"/>
-            <path d="M20 90Q100 40 200 25T400 50" stroke={C.red} strokeWidth="2" fill="none" opacity="0.5"/>
-            <path d="M50 15Q150 70 300 90T500 35" stroke={C.blue} strokeWidth="2" fill="none" opacity="0.5"/>
-            {[[80,55],[200,30],[150,60],[300,65],[100,38],[250,48],[350,55]].map(([x,y],i) => (
-              <circle key={i} cx={x} cy={y} r="3.5" fill={[C.red,C.green,C.blue][i%3]} opacity="0.85"/>
+            {/* Kigali-like road structure */}
+            <path d="M0 45L580 45" stroke="#b8c8b8" strokeWidth="3" fill="none"/>
+            <path d="M140 0L140 90" stroke="#b8c8b8" strokeWidth="2" fill="none"/>
+            <path d="M290 0L290 90" stroke="#b8c8b8" strokeWidth="2" fill="none"/>
+            <path d="M430 0L430 90" stroke="#b8c8b8" strokeWidth="2" fill="none"/>
+            {/* Active bus dots */}
+            {[[45,30],[95,55],[140,42],[180,25],[230,60],[280,35],[310,50],[370,28],[420,62],[460,40],[510,48],[160,70],[340,15],[70,42],[250,45],[500,30],[390,55],[120,20]].map(([x,y],i) => (
+              <circle key={i} cx={x} cy={y} r="2.5" fill={C.red} opacity={0.6 + Math.random() * 0.4}/>
             ))}
+            {/* Routes */}
+            <path d="M30 70Q150 20 300 40T550 25" stroke={C.red} strokeWidth="1.5" fill="none" opacity="0.3"/>
+            <path d="M20 20Q200 65 400 30T570 65" stroke={C.blue} strokeWidth="1.5" fill="none" opacity="0.3"/>
           </svg>
-          <div style={{ position: "absolute", bottom: 5, right: 8, fontSize: 8, background: "rgba(255,255,255,0.9)", padding: "2px 6px", borderRadius: 3, fontWeight: 600 }}>342 active · 28 routes</div>
+          <div style={{ position: "absolute", top: 8, left: 10, display: "flex", alignItems: "center", gap: 6 }}>
+            <span style={{ fontSize: 9, fontWeight: 700, color: C.black, background: "rgba(255,255,255,0.9)", padding: "2px 8px", borderRadius: 6 }}>342 buses · 28 routes</span>
+          </div>
         </div>
-        <div>
-          <div style={{ fontSize: 10, fontWeight: 700, marginBottom: 4 }}>Weekly Fare Revenue ($K)</div>
-          <div style={{ display: "flex", alignItems: "flex-end", gap: 3, height: 50 }}>
-            {[32,35,38,42,40,45,48].map((v,i) => (
-              <div key={i} style={{ flex: 1, textAlign: "center" }}>
-                <div style={{ height: v * 1, background: i === 6 ? C.red : "#DDD", borderRadius: "3px 3px 0 0" }}/>
-                <div style={{ fontSize: 7, color: C.muted, marginTop: 1 }}>{["M","T","W","T","F","S","S"][i]}</div>
-              </div>
-            ))}
+        {/* Charts row */}
+        <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 8 }}>
+          {/* Revenue chart */}
+          <div style={{ background: C.white, borderRadius: 10, padding: "10px" }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 6 }}>
+              <span style={{ fontSize: 9, fontWeight: 700, color: C.black }}>Revenue</span>
+              <span style={{ fontSize: 8, color: C.green, fontWeight: 600 }}>+8%</span>
+            </div>
+            <div style={{ display: "flex", alignItems: "flex-end", gap: 3, height: 40 }}>
+              {revData.map((v, i) => (
+                <div key={i} style={{ flex: 1, textAlign: "center" }}>
+                  <div style={{
+                    height: (v / revMax) * 36,
+                    background: i === revData.length - 1 ? C.red : "#E8E8E8",
+                    borderRadius: "3px 3px 0 0",
+                    transition: "height 0.3s",
+                  }}/>
+                </div>
+              ))}
+            </div>
+            <div style={{ display: "flex", gap: 3, marginTop: 3 }}>
+              {["M","T","W","T","F","S","S"].map((d, i) => (
+                <div key={i} style={{ flex: 1, textAlign: "center", fontSize: 7, color: C.muted }}>{d}</div>
+              ))}
+            </div>
+          </div>
+          {/* Ridership chart */}
+          <div style={{ background: C.white, borderRadius: 10, padding: "10px" }}>
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: 6 }}>
+              <span style={{ fontSize: 9, fontWeight: 700, color: C.black }}>Ridership</span>
+              <span style={{ fontSize: 8, color: C.blue, fontWeight: 600 }}>170K</span>
+            </div>
+            <svg width="100%" height="40" viewBox="0 0 140 40" preserveAspectRatio="none">
+              <defs><linearGradient id="ridFill" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stopColor={C.blue} stopOpacity="0.12"/><stop offset="100%" stopColor={C.blue} stopOpacity="0"/></linearGradient></defs>
+              <path d={`M0 40 ${ridData.map((v, i) => `L${(i/(ridData.length-1))*140} ${40 - (v/ridMax)*36}`).join(" ")} L140 40Z`} fill="url(#ridFill)"/>
+              <path d={ridData.map((v, i) => `${i === 0 ? "M" : "L"}${(i/(ridData.length-1))*140} ${40 - (v/ridMax)*36}`).join(" ")} stroke={C.blue} strokeWidth="2" fill="none" strokeLinecap="round" strokeLinejoin="round"/>
+              <circle cx="140" cy={40 - (ridData[ridData.length-1]/ridMax)*36} r="2.5" fill={C.blue}/>
+            </svg>
+            <div style={{ display: "flex", gap: 3, marginTop: 3 }}>
+              {["M","T","W","T","F","S","S"].map((d, i) => (
+                <div key={i} style={{ flex: 1, textAlign: "center", fontSize: 7, color: C.muted }}>{d}</div>
+              ))}
+            </div>
           </div>
         </div>
       </div>
