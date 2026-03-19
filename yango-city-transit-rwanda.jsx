@@ -614,54 +614,213 @@ function CityDashboard() {
 function SpeedMapDemo() {
   const [selected, setSelected] = useState(null);
   const mob = useIsMobile();
+  // Kigali districts with realistic polygonal shapes matching city geography
+  // Viewbox 0 0 600 400 — Kigali roughly oriented: Gasabo (N/NE), Kicukiro (SE), Nyarugenge (W/center)
   const zones = [
-    { x: 15, y: 20, w: 25, h: 30, speed: "10-12", color: "#FF4444", label: "Nyarugenge / CBD", rec: "BRT dedicated lane priority zone" },
-    { x: 45, y: 15, w: 25, h: 25, speed: "12-15", color: "#FF8800", label: "Kicukiro", rec: "Signal optimization at 22 junctions" },
-    { x: 20, y: 55, w: 30, h: 30, speed: "18-22", color: "#FFCC00", label: "Gasabo District", rec: "Frequency adjustment for peak demand" },
-    { x: 55, y: 45, w: 30, h: 35, speed: "22-30", color: "#44BB44", label: "Nyabugogo Corridor", rec: "Express corridor to secondary cities" },
+    {
+      id: 0,
+      // Nyarugenge CBD — western center, the main business district
+      path: "M120 140 L200 115 L240 145 L255 190 L240 240 L200 260 L155 245 L125 210 L110 175Z",
+      speed: "10-12", color: "#FF4444", label: "Nyarugenge / CBD",
+      rec: "BRT dedicated lane priority zone — average bus speed critically low during 7-9AM and 5-7PM peaks. Recommend bus-only corridor on KN 4 Ave.",
+      routes: 12, buses: 86, congestion: "Severe",
+      labelPos: { x: 182, y: 190 },
+    },
+    {
+      id: 1,
+      // Kicukiro — south/southeast
+      path: "M255 190 L310 160 L385 170 L420 210 L410 280 L370 310 L300 310 L240 285 L240 240Z",
+      speed: "12-15", color: "#FF8800", label: "Kicukiro",
+      rec: "Signal optimization needed at 22 junctions. Install transit signal priority (TSP) to reduce dwell at major intersections along KK 15 Rd.",
+      routes: 8, buses: 64, congestion: "Moderate-High",
+      labelPos: { x: 325, y: 240 },
+    },
+    {
+      id: 2,
+      // Gasabo — large northern/northeastern district
+      path: "M200 115 L240 60 L310 35 L400 45 L460 80 L470 140 L420 170 L385 170 L310 160 L255 190 L240 145Z",
+      speed: "18-22", color: "#FFCC00", label: "Gasabo",
+      rec: "Frequency adjustment for peak demand corridors. Remera-Kimironko axis needs 5-min headways during morning peak vs current 12-min.",
+      routes: 10, buses: 95, congestion: "Moderate",
+      labelPos: { x: 350, y: 110 },
+    },
+    {
+      id: 3,
+      // Nyabugogo corridor — northwest, the main transport hub area
+      path: "M60 90 L120 60 L200 55 L240 60 L200 115 L120 140 L80 130Z",
+      speed: "22-30", color: "#44BB44", label: "Nyabugogo Corridor",
+      rec: "Express corridor to secondary cities performing well. Maintain current BRT-lite operations. Extend express service to Musanze via RN4.",
+      routes: 6, buses: 42, congestion: "Low",
+      labelPos: { x: 150, y: 95 },
+    },
   ];
+
+  // Major roads of Kigali
+  const roads = [
+    // KN 4 Ave (main north-south through CBD)
+    { d: "M170 50 L180 120 L190 200 L185 280", w: 3, label: "KN 4 Ave" },
+    // KK 15 Rd (east-west through Kicukiro)
+    { d: "M200 240 L280 235 L360 230 L420 240", w: 2.5 },
+    // Nyabugogo-Remera highway (diagonal arterial)
+    { d: "M90 100 L150 140 L220 170 L310 165 L400 150", w: 3.5, label: "KN 1 Rd" },
+    // RN4 to north
+    { d: "M140 65 L170 30 L200 10", w: 2 },
+    // Airport road east
+    { d: "M400 150 L460 130 L510 110", w: 2.5 },
+    // Kicukiro south road
+    { d: "M300 250 L340 290 L370 330", w: 2 },
+    // Ring road segments
+    { d: "M80 130 L100 180 L130 230 L180 270", w: 2 },
+    { d: "M430 90 L470 140 L460 200 L430 250", w: 2 },
+    // Minor connecting roads
+    { d: "M220 170 L240 230", w: 1.5 },
+    { d: "M310 80 L330 160", w: 1.5 },
+    { d: "M150 140 L160 200 L180 260", w: 1.5 },
+    { d: "M350 170 L380 220 L400 260", w: 1.5 },
+  ];
+
+  // Key landmarks
+  const landmarks = [
+    { x: 90, y: 95, label: "Nyabugogo Hub" },
+    { x: 310, y: 160, label: "Remera" },
+    { x: 395, y: 155, label: "Kimironko" },
+    { x: 300, y: 260, label: "Kicukiro Centre" },
+    { x: 188, y: 165, label: "Downtown" },
+    { x: 490, y: 115, label: "Airport" },
+    { x: 180, y: 275, label: "Gikondo" },
+  ];
+
+  // Nyabarongo river / wetland (western edge)
+  const waterPath = "M40 60 Q55 100 50 150 Q45 200 60 260 Q70 300 55 350";
+
   return (
     <div style={{ background: "#F8F8F8", borderRadius: '1.875rem', padding: mob ? "16px" : "24px", marginBottom: 20 }}>
-      <h4 style={{ fontSize: mob ? 16 : 18, fontWeight: 800, margin: "0 0 4px", fontFamily: F.headline }}>Public Transport Speed Mapping</h4>
-      <p style={{ fontSize: mob ? 12 : 13, color: C.muted, margin: "0 0 16px" }}>{mob ? "Tap zones to see speed data" : "Hover zones to see speed data and AI recommendations"}</p>
-      <div style={{ display: "flex", flexDirection: mob ? "column" : "row", gap: mob ? 12 : 24, alignItems: "flex-start" }}>
-        <div style={{ flex: 1, width: "100%", position: "relative", background: "#E8F0E8", borderRadius: '1.5rem', height: mob ? 200 : 260, overflow: "hidden" }}>
-          <svg width="100%" height="100%">
-            <defs><pattern id="sm" width="20" height="20" patternUnits="userSpaceOnUse"><path d="M20 0L0 0 0 20" fill="none" stroke="#d0ddd0" strokeWidth="0.5"/></pattern></defs>
-            <rect width="100%" height="100%" fill="url(#sm)"/>
+      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: mob ? 12 : 16, flexWrap: "wrap", gap: 8 }}>
+        <div>
+          <h4 style={{ fontSize: mob ? 16 : 18, fontWeight: 800, margin: "0 0 4px", fontFamily: F.headline }}>Public Transport Speed Mapping</h4>
+          <p style={{ fontSize: mob ? 12 : 13, color: C.muted, margin: 0 }}>{mob ? "Tap districts to explore speed data" : "Hover over Kigali districts to see average bus speeds and AI recommendations"}</p>
+        </div>
+        <div style={{ display: "flex", gap: 10, flexWrap: "wrap" }}>
+          {[{ c: "#FF4444", l: "Critical (<12)" }, { c: "#FF8800", l: "Slow (12-15)" }, { c: "#FFCC00", l: "Moderate (18-22)" }, { c: "#44BB44", l: "Good (22-30)" }].map((leg, i) => (
+            <div key={i} style={{ display: "flex", alignItems: "center", gap: 4, fontSize: 10, color: C.black }}>
+              <div style={{ width: 10, height: 10, borderRadius: 3, background: leg.c, flexShrink: 0 }}/><span>{leg.l}</span>
+            </div>
+          ))}
+        </div>
+      </div>
+      <div style={{ display: "flex", flexDirection: mob ? "column" : "row", gap: mob ? 12 : 20, alignItems: "flex-start" }}>
+        {/* Map */}
+        <div style={{ flex: 1, width: "100%", position: "relative", background: "#EDF2ED", borderRadius: 16, overflow: "hidden" }}>
+          <svg viewBox="0 0 540 380" width="100%" style={{ display: "block" }}>
+            <defs>
+              <pattern id="smGrid" width="20" height="20" patternUnits="userSpaceOnUse">
+                <path d="M20 0L0 0 0 20" fill="none" stroke="#dce5dc" strokeWidth="0.4"/>
+              </pattern>
+              <filter id="zoneShadow" x="-5%" y="-5%" width="110%" height="110%">
+                <feDropShadow dx="0" dy="1" stdDeviation="2" floodOpacity="0.08"/>
+              </filter>
+            </defs>
+            <rect width="540" height="380" fill="url(#smGrid)"/>
+
+            {/* Wetland / river on western edge */}
+            <path d={waterPath} stroke="#a8cce8" strokeWidth="8" fill="none" opacity="0.4" strokeLinecap="round"/>
+            <path d={waterPath} stroke="#7bb8d9" strokeWidth="2.5" fill="none" opacity="0.5" strokeLinecap="round" strokeDasharray="6,4"/>
+
+            {/* District zones */}
             {zones.map((z, i) => (
               <g key={i}
                 onClick={() => setSelected(selected === i ? null : i)}
                 onMouseEnter={() => { if (!mob) setSelected(i); }}
                 onMouseLeave={() => { if (!mob) setSelected(null); }}
                 style={{ cursor: "pointer" }}>
-                <rect x={`${z.x}%`} y={`${z.y}%`} width={`${z.w}%`} height={`${z.h}%`}
-                  fill={z.color} opacity={selected === i ? 0.7 : 0.35} rx="6" stroke={selected === i ? C.black : "none"} strokeWidth="2" style={{ transition: "all 0.3s" }}/>
-                <text x={`${z.x + z.w/2}%`} y={`${z.y + z.h/2}%`} textAnchor="middle" fill={C.black} fontSize="11" fontWeight="700">{z.speed} km/h</text>
+                <path d={z.path}
+                  fill={z.color} opacity={selected === i ? 0.55 : 0.22}
+                  stroke={selected === i ? z.color : "rgba(0,0,0,0.08)"}
+                  strokeWidth={selected === i ? 2.5 : 1}
+                  filter={selected === i ? "url(#zoneShadow)" : "none"}
+                  style={{ transition: "all 0.3s ease" }}/>
               </g>
             ))}
+
+            {/* Roads layer on top of zones */}
+            {roads.map((r, i) => (
+              <g key={i}>
+                <path d={r.d} stroke="rgba(255,255,255,0.7)" strokeWidth={r.w + 1.5} fill="none" strokeLinecap="round" strokeLinejoin="round"/>
+                <path d={r.d} stroke="rgba(180,180,180,0.5)" strokeWidth={r.w} fill="none" strokeLinecap="round" strokeLinejoin="round"/>
+              </g>
+            ))}
+
+            {/* Zone speed labels */}
+            {zones.map((z, i) => (
+              <g key={`label-${i}`}>
+                <rect x={z.labelPos.x - 28} y={z.labelPos.y - 9} width="56" height="18" rx="9" fill={selected === i ? z.color : "rgba(255,255,255,0.85)"} style={{ transition: "all 0.3s" }}/>
+                <text x={z.labelPos.x} y={z.labelPos.y + 4} textAnchor="middle" fill={selected === i ? "white" : C.black} fontSize="10" fontWeight="700" fontFamily={F.body} style={{ pointerEvents: "none" }}>
+                  {z.speed} km/h
+                </text>
+              </g>
+            ))}
+
+            {/* Landmark dots and labels */}
+            {landmarks.map((lm, i) => (
+              <g key={`lm-${i}`} style={{ pointerEvents: "none" }}>
+                <circle cx={lm.x} cy={lm.y} r="3" fill="white" stroke={C.black} strokeWidth="1.2"/>
+                <text x={lm.x} y={lm.y - 7} textAnchor="middle" fill="rgba(0,0,0,0.55)" fontSize="8" fontWeight="600" fontFamily={F.body}>{lm.label}</text>
+              </g>
+            ))}
+
+            {/* Compass */}
+            <g transform="translate(505, 35)">
+              <circle cx="0" cy="0" r="14" fill="rgba(255,255,255,0.8)" stroke="rgba(0,0,0,0.1)" strokeWidth="1"/>
+              <text x="0" y="-3" textAnchor="middle" fill={C.red} fontSize="9" fontWeight="900">N</text>
+              <path d="M0 -9 L0 -5" stroke={C.red} strokeWidth="2" strokeLinecap="round"/>
+              <path d="M0 5 L0 9" stroke="rgba(0,0,0,0.2)" strokeWidth="1" strokeLinecap="round"/>
+            </g>
+
+            {/* Scale bar */}
+            <g transform="translate(20, 360)">
+              <line x1="0" y1="0" x2="60" y2="0" stroke="rgba(0,0,0,0.3)" strokeWidth="1.5"/>
+              <line x1="0" y1="-3" x2="0" y2="3" stroke="rgba(0,0,0,0.3)" strokeWidth="1"/>
+              <line x1="60" y1="-3" x2="60" y2="3" stroke="rgba(0,0,0,0.3)" strokeWidth="1"/>
+              <text x="30" y="12" textAnchor="middle" fill="rgba(0,0,0,0.35)" fontSize="8" fontFamily={F.body}>2 km</text>
+            </g>
           </svg>
         </div>
-        <div style={{ width: mob ? "100%" : 220 }}>
+
+        {/* Info panel */}
+        <div style={{ width: mob ? "100%" : 240, flexShrink: 0 }}>
           {selected !== null ? (
-            <div style={{ background: "white", borderRadius: '1.5rem', padding: "16px", border: `2px solid ${zones[selected].color}` }}>
-              <div style={{ fontSize: 14, fontWeight: 800, marginBottom: 4 }}>{zones[selected].label}</div>
-              <div style={{ fontSize: mob ? 22 : 28, fontWeight: 900, color: zones[selected].color, marginBottom: 4 }}>{zones[selected].speed} <span style={{ fontSize: 14 }}>km/h</span></div>
-              <div style={{ fontSize: 11, color: C.black, lineHeight: 1.4, marginBottom: 8 }}><strong>AI Recommendation:</strong><br/>{zones[selected].rec}</div>
-              <div style={{ height: 3, background: zones[selected].color, borderRadius: 2 }}/>
+            <div style={{ background: "white", borderRadius: 16, padding: mob ? "14px" : "18px", border: `2px solid ${zones[selected].color}` }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: 8 }}>
+                <div style={{ fontSize: 15, fontWeight: 800, fontFamily: F.headline, lineHeight: 1.2 }}>{zones[selected].label}</div>
+                <div style={{ background: zones[selected].color, color: "white", padding: "2px 8px", borderRadius: 6, fontSize: 9, fontWeight: 700, flexShrink: 0 }}>{zones[selected].congestion}</div>
+              </div>
+              <div style={{ fontSize: mob ? 28 : 34, fontWeight: 900, color: zones[selected].color, marginBottom: 2, lineHeight: 1 }}>{zones[selected].speed} <span style={{ fontSize: 14, fontWeight: 600 }}>km/h</span></div>
+              <div style={{ fontSize: 10, color: C.muted, marginBottom: 12 }}>avg. bus speed</div>
+              {/* Stats */}
+              <div style={{ display: "flex", gap: 6, marginBottom: 12 }}>
+                <div style={{ flex: 1, background: "#F8F8F8", borderRadius: 8, padding: "8px", textAlign: "center" }}>
+                  <div style={{ fontSize: 16, fontWeight: 800, color: C.black }}>{zones[selected].routes}</div>
+                  <div style={{ fontSize: 9, color: C.muted }}>routes</div>
+                </div>
+                <div style={{ flex: 1, background: "#F8F8F8", borderRadius: 8, padding: "8px", textAlign: "center" }}>
+                  <div style={{ fontSize: 16, fontWeight: 800, color: C.black }}>{zones[selected].buses}</div>
+                  <div style={{ fontSize: 9, color: C.muted }}>buses</div>
+                </div>
+              </div>
+              <div style={{ fontSize: 10, fontWeight: 700, color: C.black, marginBottom: 4 }}>AI Recommendation</div>
+              <div style={{ fontSize: 11, color: C.black, lineHeight: 1.5, background: "#F8F8F8", borderRadius: 8, padding: "10px" }}>{zones[selected].rec}</div>
+              <div style={{ height: 3, background: zones[selected].color, borderRadius: 2, marginTop: 12 }}/>
             </div>
           ) : (
-            <div style={{ background: "white", borderRadius: '1.5rem', padding: "16px", textAlign: "center", color: C.muted }}>
-              <div style={{ fontSize: 12 }}>{mob ? "Tap a zone to see speed data" : "Select a zone to see speed data"}</div>
+            <div style={{ background: "white", borderRadius: 16, padding: "20px", textAlign: "center", color: C.muted, border: "1.5px dashed #DDD" }}>
+              <svg width="32" height="32" viewBox="0 0 32 32" style={{ margin: "0 auto 8px", display: "block", opacity: 0.3 }}>
+                <circle cx="16" cy="12" r="4" stroke="currentColor" strokeWidth="2" fill="none"/>
+                <path d="M16 18 L16 28 M10 22 L22 22" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+              </svg>
+              <div style={{ fontSize: 12 }}>{mob ? "Tap a district on the map" : "Hover over a district"}</div>
+              <div style={{ fontSize: 10, marginTop: 4 }}>to see speed data and AI insights</div>
             </div>
           )}
-          <div style={{ marginTop: 12, display: "flex", gap: 4, flexWrap: "wrap" }}>
-            {[{ c: "#FF4444", l: "Critical" }, { c: "#FF8800", l: "Slow" }, { c: "#FFCC00", l: "Moderate" }, { c: "#44BB44", l: "Good" }].map((leg, i) => (
-              <div key={i} style={{ display: "flex", alignItems: "center", gap: 4, fontSize: 10, color: C.black }}>
-                <div style={{ width: 10, height: 10, borderRadius: 2, background: leg.c }}/>{leg.l}
-              </div>
-            ))}
-          </div>
         </div>
       </div>
     </div>
