@@ -32,7 +32,7 @@ export function DubaiVideo({ variant = "hero", caption, label, mob = false }) {
       }}
     >
       <video
-        autoPlay={!showControls}
+        autoPlay
         muted
         loop
         playsInline
