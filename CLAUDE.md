@@ -1,8 +1,8 @@
 # Yango City Transit — Rwanda
 
-**Handoff context for Claude Code · last updated 27 April 2026**
+**Country-specific pitch for the Republic of Rwanda · last updated 27 April 2026**
 
-This is the **Rwanda-specific** pitch. There's also a **geo-agnostic Africa version** at `https://github.com/chernikovtech/yango-city-transit-africa` that you should treat as a sibling, not a sequel — see Section 11 for when to use which.
+This is the **Rwanda-specific** pitch. There's also a **geo-agnostic version** called *City Transport by Yango v2* at `https://github.com/chernikovtech/city-transport-by-yango` (live at `https://city-transport.chernikov.tech`) that you should treat as a sibling, not a sequel — see Section 11 for when to use which.
 
 Read this file end-to-end before making changes. It tells you what exists, where it lives, what's done, what's pending, and which pitfalls the previous Claude already hit so you don't repeat them.
 
@@ -268,21 +268,21 @@ curl -sIL https://rwanda-transit.chernikov.tech | head -1
 
 ---
 
-## 11. Relationship to the geo-agnostic Africa version
+## 11. Relationship to the geo-agnostic version
 
-Sister repo: `https://github.com/chernikovtech/yango-city-transit-africa` (also at `/home/claude/work/yango-city-transit-africa/`).
+Sister repo: *City Transport by Yango v2* at `https://github.com/chernikovtech/city-transport-by-yango` (live at `https://city-transport.chernikov.tech`, local at `/home/claude/work/yango-city-transit-africa/`).
 
 **Use the Rwanda version when:**
 - The recipient is a Rwandan minister, civil servant, or partner
 - The audience already knows the Tap & Go, Ecofleet, RUMI context
 - You want concrete numbers tied to Rwanda's actual budget and operators
 
-**Use the Africa version when:**
-- Cold outreach to any other African transport ministry
+**Use the geo-agnostic version when:**
+- Cold outreach to any non-Rwandan transport ministry, anywhere
 - WhatsApp / email blast where customisation isn't justified
 - The recipient is multi-country (AU, AfDB, World Bank, multilateral agency)
 
-**Never** edit one and assume the other will inherit. They diverged at commit `1086b87` on the Africa side; the Rwanda version stayed at `adb1e00`. Keep them as siblings.
+**Never** edit one and assume the other inherits. The geo-agnostic repo (`city-transport-by-yango`) was forked from this Rwanda v2 codebase and then systematically stripped of country-specific content. Treat them as siblings — keep changes scoped to the right repo.
 
 ---
 
@@ -301,7 +301,7 @@ Sister repo: `https://github.com/chernikovtech/yango-city-transit-africa` (also 
 ├── CLAUDE.md                                         ← this file
 └── dist/                                             ← build output (gitignored)
 
-/home/claude/work/yango-city-transit-africa/         ← sibling Africa version (separate repo)
+/home/claude/work/yango-city-transit-africa/         ← sibling: City Transport by Yango v2 (separate repo)
 
 /home/claude/deck/                                    ← deck workspace
 ├── build-deck.js                                     ← Rwanda deck generator
