@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { C, F, useIsMobile } from "../../yango-city-transit-rwanda.jsx";
 import { SubPageHero } from "../components/Layout.jsx";
 import { DubaiVideo } from "../components/DubaiVideo.jsx";
+import { FastVideo } from "../components/FastVideo.jsx";
 
 const TASHKENT_VIDEOS = [
   {
@@ -137,7 +138,7 @@ export default function Platform() {
                 }}
               >
                 <div style={{ background: C.black, padding: 20 }}>
-                  <video
+                  <FastVideo
                     autoPlay
                     muted
                     loop
@@ -146,7 +147,7 @@ export default function Platform() {
                     poster={`https://res.cloudinary.com/dc99897dw/video/upload/so_1,f_jpg,w_${v.width},q_auto/${v.id}.jpg`}
                   >
                     <source src={`https://res.cloudinary.com/dc99897dw/video/upload/f_mp4,q_auto,w_${v.width}/${v.id}.mp4`} type="video/mp4" />
-                  </video>
+                  </FastVideo>
                 </div>
                 <div style={{ padding: "20px 22px", background: "white", color: C.black }}>
                   <div
@@ -225,7 +226,7 @@ export default function Platform() {
               </Link>
             </div>
             <div style={{ background: "#0d0d18", borderRadius: "1rem", overflow: "hidden", border: "1px solid rgba(255,255,255,0.08)" }}>
-              <video
+              <FastVideo
                 autoPlay
                 muted
                 loop
@@ -234,7 +235,7 @@ export default function Platform() {
                 poster="https://res.cloudinary.com/dc99897dw/video/upload/so_1,f_jpg,w_800,q_auto/Screen_Recording_2026-02-12_at_1.11.13_PM_khhntc.jpg"
               >
                 <source src="https://res.cloudinary.com/dc99897dw/video/upload/f_mp4,q_auto,w_800,ac_none/Screen_Recording_2026-02-12_at_1.11.13_PM_khhntc.mp4" type="video/mp4" />
-              </video>
+              </FastVideo>
             </div>
           </div>
         </div>

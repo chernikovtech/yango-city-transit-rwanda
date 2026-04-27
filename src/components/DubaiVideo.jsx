@@ -1,5 +1,6 @@
 import React from "react";
 import { C, F } from "../../yango-city-transit-rwanda.jsx";
+import { FastVideo } from "./FastVideo.jsx";
 
 const DUBAI_BASE = "https://res.cloudinary.com/dc99897dw/video/upload";
 const DUBAI_PUBLIC_ID = "Yango%20Dubai%20Bus%20Integration";
@@ -39,7 +40,7 @@ export function DubaiVideo({ variant = "hero", caption, label, mob = false }) {
         boxShadow: variant === "hero" ? "0 24px 60px rgba(0,0,0,0.4)" : "none",
       }}
     >
-      <video
+      <FastVideo
         autoPlay
         muted
         loop
@@ -55,7 +56,7 @@ export function DubaiVideo({ variant = "hero", caption, label, mob = false }) {
         aria-label={label || "Yango Dubai bus integration — public buses live in the Yango consumer app"}
       >
         <source src={videoUrl} type="video/mp4" />
-      </video>
+      </FastVideo>
 
       {/* Tag overlay — top-left */}
       {variant !== "platform" && (

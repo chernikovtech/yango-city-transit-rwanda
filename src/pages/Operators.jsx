@@ -11,6 +11,7 @@ import {
   SpeedMapDemo,
 } from "../../yango-city-transit-rwanda.jsx";
 import { SubPageHero } from "../components/Layout.jsx";
+import { FastVideo } from "../components/FastVideo.jsx";
 
 const CV_USE_CASES = [
   {
@@ -207,7 +208,7 @@ export default function Operators() {
                   CV-detection feed — depot camera
                 </span>
               </div>
-              <video
+              <FastVideo
                 autoPlay
                 muted
                 loop
@@ -219,7 +220,7 @@ export default function Operators() {
                   src="https://res.cloudinary.com/dc99897dw/video/upload/f_mp4,q_auto,w_800,ac_none/Screen_Recording_2026-02-12_at_1.11.13_PM_khhntc.mp4"
                   type="video/mp4"
                 />
-              </video>
+              </FastVideo>
               <div style={{ padding: "14px 18px", fontFamily: F.body, fontSize: 12, color: "rgba(255,255,255,0.6)", lineHeight: 1.5 }}>
                 Live detection feed — vehicles tagged, counted, audited. Same pipeline applies to passenger crowding, lane discipline, and incident response.
               </div>
