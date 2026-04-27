@@ -16,14 +16,22 @@ const DUBAI_PUBLIC_ID = "Yango%20Dubai%20Bus%20Integration";
  */
 export function DubaiVideo({ variant = "hero", caption, label, mob = false }) {
   const showControls = variant === "platform";
-  const w = variant === "platform" ? 1200 : variant === "inline" ? 800 : 1400;
+  // Original asset is a portrait iPhone screen recording — 880 × 1912 (≈ 9:19.5).
+  // We deliberately keep that ratio so the citizen-app UI is fully visible, and
+  // cap max-width per variant so the portrait video reads as a phone-shaped
+  // element rather than dominating the page on desktop.
+  const w = variant === "platform" ? 800 : variant === "inline" ? 600 : 720;
   const videoUrl = `${DUBAI_BASE}/f_auto,q_auto,w_${w}/${DUBAI_PUBLIC_ID}.mp4`;
   const posterUrl = `${DUBAI_BASE}/so_0,f_jpg,q_auto,w_${w}/${DUBAI_PUBLIC_ID}.jpg`;
+  const maxW = variant === "platform" ? 420 : variant === "inline" ? 340 : 380;
 
   return (
     <div
       style={{
         width: "100%",
+        maxWidth: maxW,
+        margin: "0 auto",
+        aspectRatio: "880 / 1912",
         borderRadius: variant === "hero" ? "1.875rem" : "1.25rem",
         overflow: "hidden",
         background: C.black,
@@ -40,10 +48,9 @@ export function DubaiVideo({ variant = "hero", caption, label, mob = false }) {
         poster={posterUrl}
         style={{
           width: "100%",
-          height: "auto",
+          height: "100%",
           display: "block",
-          aspectRatio: "16 / 9",
-          objectFit: "cover",
+          objectFit: "contain",
         }}
         aria-label={label || "Yango Dubai bus integration — public buses live in the Yango consumer app"}
       >
