@@ -2,7 +2,7 @@
 
 **Country-specific pitch for the Republic of Rwanda · last updated 27 April 2026**
 
-This is the **Rwanda-specific** pitch. There's also a **geo-agnostic version** called *City Transport by Yango v2* at `https://github.com/chernikovtech/city-transport-by-yango` (live at `https://city-transport.chernikov.tech`) that you should treat as a sibling, not a sequel — see Section 11 for when to use which.
+This is the **Rwanda-specific** pitch. There's also a **geo-agnostic version** called *City Transport by Yango v2* at `https://github.com/chernikovtech/city-transport-by-yango` (live at `https://city-transport-v2.chernikov.tech` (canonical) / `https://city-transport.chernikov.tech` (alias)) that you should treat as a sibling, not a sequel — see Section 11 for when to use which.
 
 Read this file end-to-end before making changes. It tells you what exists, where it lives, what's done, what's pending, and which pitfalls the previous Claude already hit so you don't repeat them.
 
@@ -270,7 +270,7 @@ curl -sIL https://rwanda-transit.chernikov.tech | head -1
 
 ## 11. Relationship to the geo-agnostic version
 
-Sister repo: *City Transport by Yango v2* at `https://github.com/chernikovtech/city-transport-by-yango` (live at `https://city-transport.chernikov.tech`, local at `/home/claude/work/yango-city-transit-africa/`).
+Sister repo: *City Transport by Yango v2* at `https://github.com/chernikovtech/city-transport-by-yango` (live at `https://city-transport-v2.chernikov.tech` (canonical) / `https://city-transport.chernikov.tech` (alias), local at `/home/claude/work/yango-city-transit-africa/`).
 
 **Use the Rwanda version when:**
 - The recipient is a Rwandan minister, civil servant, or partner
