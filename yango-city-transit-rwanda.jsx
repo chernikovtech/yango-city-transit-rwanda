@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from "react";
 
-function useIsMobile(breakpoint = 768) {
+export function useIsMobile(breakpoint = 768) {
   const [isMobile, setIsMobile] = useState(false);
   useEffect(() => {
     const check = () => setIsMobile(window.innerWidth < breakpoint);
@@ -11,7 +11,7 @@ function useIsMobile(breakpoint = 768) {
   return isMobile;
 }
 
-const C = {
+export const C = {
   red: "#FF1A1A", black: "#141414", dark: "#232323", mid: "#323232",
   body: "#F5F5F5", white: "#FFFFFF", muted: "#7A7A7A",
   border: "rgba(196,196,196,1)", green: "#2ECC71", blue: "#3498DB",
@@ -19,12 +19,12 @@ const C = {
 };
 
 // Yango Tech font stacks
-const F = {
+export const F = {
   headline: '"Yango Headline", Helvetica, Arial, sans-serif',
   body: '"Yango Group Text", "YS Text", Helvetica, Arial, sans-serif',
 };
 
-function Counter({ end, suffix = "", prefix = "", duration = 2000 }) {
+export function Counter({ end, suffix = "", prefix = "", duration = 2000 }) {
   const [count, setCount] = useState(0);
   const [started, setStarted] = useState(false);
   const ref = useRef(null);
@@ -42,7 +42,7 @@ function Counter({ end, suffix = "", prefix = "", duration = 2000 }) {
   return <span ref={ref}>{prefix}{count}{suffix}</span>;
 }
 
-function Section({ children, bg = C.white, id, style = {} }) {
+export function Section({ children, bg = C.white, id, style = {} }) {
   const [vis, setVis] = useState(false);
   const ref = useRef(null);
   const mob = useIsMobile();
@@ -62,7 +62,7 @@ function Section({ children, bg = C.white, id, style = {} }) {
   );
 }
 
-function PhoneMockup({ children, label }) {
+export function PhoneMockup({ children, label }) {
   return (
     <div style={{ textAlign: "center" }}>
       <div style={{
@@ -83,7 +83,7 @@ function PhoneMockup({ children, label }) {
   );
 }
 
-function TabletMockup({ children, label }) {
+export function TabletMockup({ children, label }) {
   return (
     <div style={{ textAlign: "center" }}>
       <div style={{
@@ -101,7 +101,7 @@ function TabletMockup({ children, label }) {
   );
 }
 
-function PassengerApp() {
+export function PassengerApp() {
   const [sel, setSel] = useState(null);
   const [paid, setPaid] = useState(null);
   const [tab, setTab] = useState(0);
@@ -254,7 +254,7 @@ function PassengerApp() {
   );
 }
 
-function DriverApp() {
+export function DriverApp() {
   const [announcing, setAnnouncing] = useState(false);
   const progress = 62; // % of route completed
   const stopsLeft = [
@@ -366,7 +366,7 @@ function DriverApp() {
   );
 }
 
-function OperatorDashboard() {
+export function OperatorDashboard() {
   const [aiTip, setAiTip] = useState(null);
   const [applied, setApplied] = useState({});
   const tips = [
@@ -489,7 +489,7 @@ function OperatorDashboard() {
   );
 }
 
-function CityDashboard() {
+export function CityDashboard() {
   const revData = [32, 35, 38, 42, 40, 45, 48];
   const ridData = [120, 135, 128, 155, 162, 148, 170]; // thousands
   const revMax = Math.max(...revData);
@@ -611,7 +611,7 @@ function CityDashboard() {
   );
 }
 
-function SpeedMapDemo() {
+export function SpeedMapDemo() {
   const [selected, setSelected] = useState(null);
   const mob = useIsMobile();
   // Kigali districts with realistic polygonal shapes matching city geography
@@ -827,7 +827,7 @@ function SpeedMapDemo() {
   );
 }
 
-function FareEvasionDemo() {
+export function FareEvasionDemo() {
   const [sel, setSel] = useState(null);
   const mob = useIsMobile();
   const districts = [
@@ -867,7 +867,7 @@ function FareEvasionDemo() {
   );
 }
 
-function AccessibilityDemo() {
+export function AccessibilityDemo() {
   const [expanded, setExpanded] = useState(null);
   const mob = useIsMobile();
   const areas = [
@@ -920,7 +920,7 @@ function AccessibilityDemo() {
   );
 }
 
-function RouteDesignMethodology() {
+export function RouteDesignMethodology() {
   const [activeStep, setActiveStep] = useState(0);
   const [expandedPrinciple, setExpandedPrinciple] = useState(null);
   const mob = useIsMobile();
@@ -928,17 +928,18 @@ function RouteDesignMethodology() {
   const steps = [
     {
       num: "01",
-      title: "Install GPS Trackers",
+      title: "Install GPS trackers & load the route network",
       subtitle: "Weeks 1-6",
       color: C.blue,
       icon: "📍",
-      headline: "Every bus reports its position, every second.",
-      body: "We start with the smallest piece of hardware that delivers the most value: a certified GPS tracker on every public bus in Kigali. This unlocks live vehicle tracking, accurate ETAs for citizens, schedule adherence monitoring for MININFRA and Ecofleet, and the raw data feed needed for every downstream analytic.",
+      headline: "Every bus reports its position. Every route is in the system.",
+      body: "We start with two pieces of foundation: a certified GPS tracker on every public bus in Kigali, and the full current route network and timetable loaded into the platform. Together these unlock live vehicle tracking, accurate ETAs in the citizen app, schedule-adherence monitoring for MININFRA and Ecofleet, and the raw data feed for every downstream analytic.",
       outputs: [
         "Live vehicle positions for all 500 Kigali buses",
         "Running-time and dwell-time data by route and time-of-day",
-        "Baseline for schedule reliability and bunching analysis",
+        "Baseline for schedule-reliability and bunching analysis",
         "Foundation for the citizen app's live-arrival predictions",
+        "Complete route catalogue (stops, schedules, fares) live in the citizen app from day one",
       ],
     },
     {
