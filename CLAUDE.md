@@ -1,8 +1,10 @@
 # Yango City Transit — Rwanda
 
-**Country-specific pitch for the Republic of Rwanda · last updated 27 April 2026**
+**Country-specific pitch for the Republic of Rwanda · v3 SHIPPED · last updated 27 April 2026**
 
 This is the **Rwanda-specific** pitch. There's also a **geo-agnostic version** called *City Transport by Yango v2* at `https://github.com/chernikovtech/city-transport-by-yango` (live at `https://city-transport-v2.chernikov.tech` (canonical) / `https://city-transport.chernikov.tech` (alias)) that you should treat as a sibling, not a sequel — see Section 11 for when to use which.
+
+> ⚡ **v3 status:** Live on https://rwanda-transit.chernikov.tech as of commit `638efd8`. The site moved from a single 1,840-line monolith to a React Router v6 app with 7 routes. See **Section 5b** for the full v3 amendment log.
 
 Read this file end-to-end before making changes. It tells you what exists, where it lives, what's done, what's pending, and which pitfalls the previous Claude already hit so you don't repeat them.
 
@@ -76,38 +78,48 @@ const F = {
 
 ---
 
-## 4. Site structure (1,643-line JSX)
+## 4. Site structure (v3 — React Router)
+
+The site is now a **React Router v6 app with 7 routes**. The original 1,840-line monolith remains as a *components library* — every reusable atom is named-exported so the new pages can import them.
 
 ```
-yango-city-transit-rwanda.jsx
-├── Helpers & constants (C, F, useIsMobile)
-├── Interactive mockup components
-│   ├── PhoneMockup, TabletMockup (frames — labelled "· Simulation")
-│   ├── PassengerApp (Nyabugogo, Kicukiro stops, RWF 300 fares)
-│   ├── DriverApp (driver console)
-│   ├── OperatorDashboard
-│   ├── CityDashboard
-│   ├── SpeedMapDemo (Kigali district map — Gasabo, Kicukiro, Nyarugenge)
-│   ├── FareEvasionDemo (Nyabugogo Hub, Kicukiro)
-│   └── AccessibilityDemo (Gikondo Industrial, etc.)
-├── RouteDesignMethodology (4 steps + 6 best-practice principles)
-└── Main YangoCityTransit component
-    ├── Sticky nav (Overview, Passengers, Operators, Government, Methodology, Platform, Impact)
-    ├── Hero (dark) — "Accelerate Kigali's smart mobility"
-    ├── Rwanda alignment strip (dark) — Vision 2050, NST2, RUMI, MININFRA, etc.
-    ├── Three Pillars (white) — Citizens / Carriers / City
-    ├── Passengers section with interactive PassengerApp mockup
-    ├── Operators section with DriverApp + OperatorDashboard mockups
-    ├── Government section with CityDashboard mockup
-    ├── Analytics section (SpeedMap, FareEvasion, Accessibility demos)
-    ├── Route Design Methodology
-    ├── Revenue Control / Fare Evasion methodology (dark)
-    ├── Platform in Action — 4 Tashkent screencasts + 3 production dashboards (dark)
-    ├── Yerevan case study (dark) — +$115M reference
-    ├── Multilateral financing block (replaces PPP block — Natasha asked to drop PPP framing)
-    ├── Final CTA + email form
-    └── Footer
+src/
+├── main.jsx                       ← BrowserRouter wrapper
+├── App.jsx                        ← <Routes> + ScrollToTop
+├── components/
+│   ├── Layout.jsx                 ← sticky Nav, Footer, SubPageHero
+│   ├── DubaiVideo.jsx             ← Cloudinary "Yango Dubai Bus Integration" — 3 variants
+│   └── Tooltip.jsx                ← Asterisk + PaymentMethodsLine (Amendment 4)
+└── pages/
+    ├── Home.jsx                   ← /             — 123-word above-the-fold pitch
+    ├── Citizens.jsx               ← /citizens     — PassengerApp + Dubai inline + payments
+    ├── Operators.jsx              ← /operators    — DriverApp + OperatorDashboard + CV section
+    ├── Government.jsx             ← /government   — CityDashboard + fare evasion + alignment
+    ├── Methodology.jsx            ← /methodology  — wraps RouteDesignMethodology (Step 01 amended)
+    ├── Platform.jsx               ← /platform     — Dubai featured + 4 Tashkent + 3 dashboards + CV
+    └── Impact.jsx                 ← /impact       — Yerevan +$115M + multilateral financing
+
+yango-city-transit-rwanda.jsx      ← legacy monolith — now a NAMED-EXPORT components library:
+                                     C, F, useIsMobile, Section, Counter, PhoneMockup,
+                                     TabletMockup, PassengerApp, DriverApp, OperatorDashboard,
+                                     CityDashboard, SpeedMapDemo, FareEvasionDemo,
+                                     AccessibilityDemo, RouteDesignMethodology
+                                     (the default export YangoCityTransit() is dead code now —
+                                      tree-shaken out by Vite. Don't delete it; it's a useful
+                                      reference for what each section USED to look like.)
 ```
+
+| Route | Page | Primary content |
+|---|---|---|
+| `/` | Home | Hero + Dubai video + 3 pillar summary cards + 1 impact stat + CTA |
+| `/citizens` | Citizens | Dubai inline video, PassengerApp mockup, payment-methods section with Asterisk tooltips, AccessibilityDemo |
+| `/operators` | Operators | DriverApp + OperatorDashboard simulations, **Computer Vision integration** section (Amendment 3) with 6 use cases + CV demo video, SpeedMapDemo |
+| `/government` | Government | CityDashboard mockup, 4-step fare-evasion methodology, frameworks (Vision 2050 / NST2 / RUMI) + delivery partners (MININFRA / Ecofleet / RURA) |
+| `/methodology` | Methodology | The 4-step RouteDesignMethodology — Step 01 now reads "Install GPS trackers & load the route network" |
+| `/platform` | Platform | Dubai featured at top, 4 Tashkent screencasts, CV teaser → /operators, 3 production dashboards |
+| `/impact` | Impact | Yerevan +$115M case, "where the money comes from" breakdown, $430M Rwanda budget + $100M RUMI |
+
+**SPA fallback:** the existing `serve dist -s` flag in `package.json`'s `start` script handles client-side route navigation — direct loads of `/citizens` etc. return the index.html and let the router resolve the path. Verified live: every route plus `/random-bogus-path` returns HTTP 200.
 
 ---
 
@@ -157,6 +169,68 @@ From 5 consulting-grade phases (Household Travel Survey, 2% target, TCRP) to 4 p
 - "Simulation — example of how the final product could look" banner on interactive mockups section
 - "· Simulation" suffix on all 4 device labels
 - "The charts below are mockups" warning on analytics section
+
+---
+
+## 5b. v2 → v3 amendments (applied — for reference)
+
+Driven by direct feedback from Evgeny: the v2 site was content-rich but the main page was too dense for a 60–90 second Minister-level read. v3 restructures the architecture (single page → 7 routes) and applies 5 substantive amendments. **Commit:** `638efd8`. **Live:** https://rwanda-transit.chernikov.tech.
+
+### Architecture
+- React Router v6 added as a runtime dep (`react-router-dom@^6.28.0`)
+- New `src/App.jsx`, `src/main.jsx`, `src/components/`, `src/pages/`
+- The legacy 1,840-line monolith stays in place as a **components library** — every reusable atom (`C`, `F`, `useIsMobile`, mockup components, `RouteDesignMethodology`) is now a named export
+- Default `YangoCityTransit` export in the monolith is now dead code (tree-shaken by Vite)
+- Sticky top nav rebuilt as `Layout.Nav` using `<NavLink>`s; mobile drawer included
+- Every route auto-scrolls to top on navigation (`<ScrollToTop>` in `App.jsx`)
+
+### Amendment 1 — Streamlined main page
+- `Home.jsx` is **123 words above the fold** (target was ≤250)
+- Sequence: hero pill + headline + 1 sentence intro + 4 stat tiles + 2 CTAs → Dubai video block → 3 pillar summary cards → 1 impact stat → final CTA
+- Full v2 content is **redistributed**, not deleted — every section now lives on its matching sub-page
+
+### Amendment 2 — Dubai bus integration video
+- New `<DubaiVideo />` component with 3 variants (`hero`, `inline`, `platform`)
+- Cloudinary public_id `Yango Dubai Bus Integration`, original hash `IMG_6556_idmnhd`
+- Used on: `/` (autoplay loop, no controls — hero proof), `/citizens` (autoplay inline, no controls), `/platform` (controls visible — featured deployment card)
+- All variants use Cloudinary `f_auto, q_auto, w_*` transforms for adaptive payload
+- Caption written fresh (not reused Tashkent boilerplate): "Search a route, pick a bus, see real-time arrival, tap to pay…"
+- Live LIVE IN DUBAI tag overlay on hero/inline variants
+
+### Amendment 3 — Computer Vision integration reframe
+- The screencast previously labelled "Operations Dashboard" (which is *actually* an object-detection feed showing red bounding boxes around vehicles in a depot/wash bay) now lives under its honest name
+- **Title:** "Computer Vision integration"
+- **Tag chip:** "OPERATIONS + SAFETY" (replaces "CARRIERS + CITY")
+- **6 use cases** on `/operators`: depot security & overnight accountability, passenger crowding detection (Nyabugogo, Kicukiro), bus-bay occupancy at terminals, accident & incident detection, lane-discipline monitoring, licence-plate recognition for fare evasion
+- **Driver-behaviour ML** (drowsiness, mobile-phone use) intentionally positioned as an *optional add-on* requiring driver-union and RURA approval — softer than the brief suggested, on political grounds
+- Featured card on `/platform` linking back to `/operators`
+
+### Amendment 4 — Payment-method asterisks + tooltip
+- New `<Asterisk />` component (CSS-only tooltip, hover **and** keyboard focus, 150ms fade-in, max-width 280px, dotted underline, screen-reader friendly via `aria-describedby`)
+- New `<PaymentMethodsLine />` pre-composed line: "Pay via USSD\*, MTN MoMo\*, Airtel Money\*, or QR scan\* — no smartphone required"
+- Tooltip text: *"Payment methods depend on local regulation, telco integrations, and partnership agreements with Tap & Go, MTN, Airtel and BNR. The available methods at launch will be confirmed during the integration phase."*
+- Used in `Citizens.jsx`'s passenger features list and a dedicated payment-methods section
+- Asterisk colour `C.red`, tooltip on `C.black`
+
+### Amendment 5 — Step 01 also loads route network
+- **Title:** *"Install GPS trackers & load the route network"* (was: "Install GPS Trackers")
+- **Subtitle:** *"Every bus reports its position. Every route is in the system."*
+- **Body:** rewritten — explicitly mentions loading current route network and timetable into the platform alongside GPS hardware
+- **5th bullet added** to the outputs list: *"Complete route catalogue (stops, schedules, fares) live in the citizen app from day one"*
+- Edit applied directly inside `RouteDesignMethodology` in the components-library file (`yango-city-transit-rwanda.jsx`) — so it shows up wherever that component is rendered (currently only `/methodology`)
+
+### What did NOT change
+- Yerevan +$115M benchmark number — unchanged, still the headline impact stat
+- Vision 2050 / NST2 / RUMI alignment language — unchanged
+- All Tashkent screencasts and 3 production dashboard images — unchanged
+- Brand tokens (`#FF1A1A` red, Yango Headline / Yango Group Text fonts) — unchanged
+- Cloudinary asset paths — unchanged for everything except the new Dubai video
+
+### Build & deploy verification
+- Local `npm run build`: 282 KB JS → 80 KB gzipped (vs v2's 250 KB → 71 KB — the +30 KB is React Router + the 7 page components)
+- Production smoke test: every route returns HTTP 200, SPA fallback works for arbitrary paths
+- Railway deploy `5c35f605` succeeded at 10:36 UTC on 27 April 2026
+- All 5 amendments verified present in the deployed bundle (string-grep on `/assets/index-D_v1B8C8.js`)
 
 ---
 
