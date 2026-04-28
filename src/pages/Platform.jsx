@@ -154,7 +154,7 @@ export default function Platform() {
               <div
                 key={i}
                 style={{
-                  background: C.body,
+                  background: "white",
                   borderRadius: "1.5rem",
                   overflow: "hidden",
                   border: "1px solid #EAEAEA",
@@ -162,8 +162,8 @@ export default function Platform() {
                   flexDirection: "column",
                 }}
               >
-                {/* Phone-shaped video frame — native portrait ratio, capped width, centred */}
-                <div style={{ background: C.black, padding: mob ? 16 : 22, display: "flex", justifyContent: "center" }}>
+                {/* Phone video — sits on the card, no fake device frame */}
+                <div style={{ padding: mob ? "20px 16px 8px" : "28px 22px 14px", display: "flex", justifyContent: "center" }}>
                   <div
                     style={{
                       width: "100%",
@@ -172,6 +172,7 @@ export default function Platform() {
                       borderRadius: 16,
                       overflow: "hidden",
                       background: "#000",
+                      boxShadow: "0 8px 24px rgba(0,0,0,0.12)",
                     }}
                   >
                     <FastVideo
@@ -186,7 +187,7 @@ export default function Platform() {
                     </FastVideo>
                   </div>
                 </div>
-                <div style={{ padding: "20px 22px", background: "white", color: C.black, flex: 1 }}>
+                <div style={{ padding: mob ? "16px 22px 22px" : "18px 24px 26px", background: "white", color: C.black, flex: 1 }}>
                   <div
                     style={{
                       fontFamily: F.body,
@@ -220,7 +221,7 @@ export default function Platform() {
               gap: 0,
             }}
           >
-            <div style={{ background: C.black, padding: mob ? 14 : 20 }}>
+            <div style={{ padding: mob ? "20px 16px 8px" : "28px 28px", display: "flex", alignItems: "center" }}>
               <div
                 style={{
                   width: "100%",
@@ -228,6 +229,7 @@ export default function Platform() {
                   borderRadius: 12,
                   overflow: "hidden",
                   background: "#000",
+                  boxShadow: "0 8px 24px rgba(0,0,0,0.12)",
                 }}
               >
                 <FastVideo
