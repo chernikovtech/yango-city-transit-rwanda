@@ -208,19 +208,21 @@ export default function Operators() {
                   CV-detection feed — depot camera
                 </span>
               </div>
-              <FastVideo
-                autoPlay
-                muted
-                loop
-                playsInline
-                style={{ width: "100%", display: "block" }}
-                poster="https://res.cloudinary.com/dc99897dw/video/upload/so_1,f_jpg,w_800,q_auto/Screen_Recording_2026-02-12_at_1.11.13_PM_khhntc.jpg"
-              >
-                <source
-                  src="https://res.cloudinary.com/dc99897dw/video/upload/f_mp4,q_auto,w_800,ac_none/Screen_Recording_2026-02-12_at_1.11.13_PM_khhntc.mp4"
-                  type="video/mp4"
-                />
-              </FastVideo>
+              <div style={{ width: "100%", aspectRatio: "1998 / 1080", background: "#000" }}>
+                <FastVideo
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  style={{ width: "100%", height: "100%", display: "block", objectFit: "contain" }}
+                  poster="https://res.cloudinary.com/dc99897dw/video/upload/so_1,f_jpg,w_900,q_auto/Screen_Recording_2026-02-12_at_1.11.13_PM_khhntc.jpg"
+                >
+                  <source
+                    src="https://res.cloudinary.com/dc99897dw/video/upload/f_mp4,q_auto,w_900,ac_none/Screen_Recording_2026-02-12_at_1.11.13_PM_khhntc.mp4"
+                    type="video/mp4"
+                  />
+                </FastVideo>
+              </div>
               <div style={{ padding: "14px 18px", fontFamily: F.body, fontSize: 12, color: "rgba(255,255,255,0.6)", lineHeight: 1.5 }}>
                 Live detection feed — vehicles tagged, counted, audited. Same pipeline applies to passenger crowding, lane discipline, and incident response.
               </div>

@@ -5,36 +5,51 @@ import { SubPageHero } from "../components/Layout.jsx";
 import { DubaiVideo } from "../components/DubaiVideo.jsx";
 import { FastVideo } from "../components/FastVideo.jsx";
 
-const TASHKENT_VIDEOS = [
+// Tashkent videos. Each is tagged with its native orientation so the layout
+// can render portrait (phone screencast) and landscape (CarPlay dash) clips
+// in the right-shaped containers without cropping.
+const TASHKENT_PORTRAIT = [
   {
     id: "IMG_4799_kzkmkx",
+    nativeW: 384,
+    nativeH: 848,
     title: "Citizen App — route planning",
     desc: "Live bus tracking, multi-modal route planner, all-in-one citizen experience.",
     tag: "Live · Tashkent",
-    width: 400,
   },
   {
     id: "IMG_4800_ltvopm",
+    nativeW: 384,
+    nativeH: 848,
     title: "Citizen App — live arrivals",
     desc: "Real-time vehicle position on the map. Tap any bus to see exact arrival countdown.",
     tag: "Live · Tashkent",
-    width: 400,
   },
   {
     id: "iOS_Traffic_Lights_ywbdsj",
+    nativeW: 888,
+    nativeH: 1920,
     title: "Smart traffic signals",
     desc: "Countdown timers for traffic lights — drivers see seconds to next phase, reducing stop-and-go.",
     tag: "Live · Tashkent",
-    width: 400,
-  },
-  {
-    id: "CarPlay_Traffic_Lights_l5uzje",
-    title: "CarPlay & in-vehicle",
-    desc: "Apple CarPlay with live signal countdown — for fleet operators and individual drivers.",
-    tag: "Live · Tashkent",
-    width: 800,
   },
 ];
+
+const TASHKENT_LANDSCAPE = {
+  id: "CarPlay_Traffic_Lights_l5uzje",
+  nativeW: 1378,
+  nativeH: 826,
+  title: "CarPlay & in-vehicle",
+  desc: "Apple CarPlay with live signal countdown — for fleet operators and individual drivers.",
+  tag: "Live · Tashkent",
+};
+
+// CV detection feed — landscape 1998×1080 (~1.85:1)
+const CV_VIDEO = {
+  id: "Screen_Recording_2026-02-12_at_1.11.13_PM_khhntc",
+  nativeW: 1998,
+  nativeH: 1080,
+};
 
 const DASHBOARDS = [
   {
@@ -126,30 +141,52 @@ export default function Platform() {
             Citizen, driver, traffic — every layer.
           </h2>
 
-          <div style={{ display: "grid", gridTemplateColumns: mob ? "1fr" : "1fr 1fr", gap: mob ? 22 : 28 }}>
-            {TASHKENT_VIDEOS.map((v, i) => (
+          {/* Three phone-format clips, each constrained to its native portrait ratio */}
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: mob ? "1fr" : "repeat(3, 1fr)",
+              gap: mob ? 22 : 24,
+              marginBottom: mob ? 22 : 28,
+            }}
+          >
+            {TASHKENT_PORTRAIT.map((v, i) => (
               <div
                 key={i}
                 style={{
-                  background: "#1a1a1a",
+                  background: C.body,
                   borderRadius: "1.5rem",
                   overflow: "hidden",
-                  border: "1px solid rgba(0,0,0,0.06)",
+                  border: "1px solid #EAEAEA",
+                  display: "flex",
+                  flexDirection: "column",
                 }}
               >
-                <div style={{ background: C.black, padding: 20 }}>
-                  <FastVideo
-                    autoPlay
-                    muted
-                    loop
-                    playsInline
-                    style={{ width: "100%", display: "block", borderRadius: 12 }}
-                    poster={`https://res.cloudinary.com/dc99897dw/video/upload/so_1,f_jpg,w_${v.width},q_auto/${v.id}.jpg`}
+                {/* Phone-shaped video frame — native portrait ratio, capped width, centred */}
+                <div style={{ background: C.black, padding: mob ? 16 : 22, display: "flex", justifyContent: "center" }}>
+                  <div
+                    style={{
+                      width: "100%",
+                      maxWidth: 240,
+                      aspectRatio: `${v.nativeW} / ${v.nativeH}`,
+                      borderRadius: 16,
+                      overflow: "hidden",
+                      background: "#000",
+                    }}
                   >
-                    <source src={`https://res.cloudinary.com/dc99897dw/video/upload/f_mp4,q_auto,w_${v.width}/${v.id}.mp4`} type="video/mp4" />
-                  </FastVideo>
+                    <FastVideo
+                      autoPlay
+                      muted
+                      loop
+                      playsInline
+                      style={{ width: "100%", height: "100%", display: "block", objectFit: "contain" }}
+                      poster={`https://res.cloudinary.com/dc99897dw/video/upload/so_1,f_jpg,w_480,q_auto/${v.id}.jpg`}
+                    >
+                      <source src={`https://res.cloudinary.com/dc99897dw/video/upload/f_mp4,q_auto,w_480/${v.id}.mp4`} type="video/mp4" />
+                    </FastVideo>
+                  </div>
                 </div>
-                <div style={{ padding: "20px 22px", background: "white", color: C.black }}>
+                <div style={{ padding: "20px 22px", background: "white", color: C.black, flex: 1 }}>
                   <div
                     style={{
                       fontFamily: F.body,
@@ -170,6 +207,60 @@ export default function Platform() {
               </div>
             ))}
           </div>
+
+          {/* CarPlay clip — landscape, full-width, native 5:3 ratio */}
+          <div
+            style={{
+              background: C.body,
+              borderRadius: "1.5rem",
+              overflow: "hidden",
+              border: "1px solid #EAEAEA",
+              display: "grid",
+              gridTemplateColumns: mob ? "1fr" : "1.6fr 1fr",
+              gap: 0,
+            }}
+          >
+            <div style={{ background: C.black, padding: mob ? 14 : 20 }}>
+              <div
+                style={{
+                  width: "100%",
+                  aspectRatio: `${TASHKENT_LANDSCAPE.nativeW} / ${TASHKENT_LANDSCAPE.nativeH}`,
+                  borderRadius: 12,
+                  overflow: "hidden",
+                  background: "#000",
+                }}
+              >
+                <FastVideo
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  style={{ width: "100%", height: "100%", display: "block", objectFit: "contain" }}
+                  poster={`https://res.cloudinary.com/dc99897dw/video/upload/so_1,f_jpg,w_900,q_auto/${TASHKENT_LANDSCAPE.id}.jpg`}
+                >
+                  <source src={`https://res.cloudinary.com/dc99897dw/video/upload/f_mp4,q_auto,w_900/${TASHKENT_LANDSCAPE.id}.mp4`} type="video/mp4" />
+                </FastVideo>
+              </div>
+            </div>
+            <div style={{ padding: mob ? "20px 22px 24px" : "28px 32px", background: "white", color: C.black, display: "flex", flexDirection: "column", justifyContent: "center" }}>
+              <div
+                style={{
+                  fontFamily: F.body,
+                  fontSize: 10,
+                  fontWeight: 700,
+                  letterSpacing: "0.12em",
+                  color: C.red,
+                  marginBottom: 8,
+                }}
+              >
+                {TASHKENT_LANDSCAPE.tag}
+              </div>
+              <div style={{ fontFamily: F.headline, fontSize: mob ? 18 : 22, fontWeight: 800, marginBottom: 8, letterSpacing: "-0.01em" }}>
+                {TASHKENT_LANDSCAPE.title}
+              </div>
+              <div style={{ fontFamily: F.body, fontSize: 13, color: "#555", lineHeight: 1.55 }}>{TASHKENT_LANDSCAPE.desc}</div>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -183,7 +274,7 @@ export default function Platform() {
               borderRadius: "1.5rem",
               padding: mob ? "26px 24px" : "36px 40px",
               display: "grid",
-              gridTemplateColumns: mob ? "1fr" : "1fr 1fr",
+              gridTemplateColumns: mob ? "1fr" : "1fr 1.2fr",
               gap: mob ? 22 : 40,
               alignItems: "center",
             }}
@@ -225,16 +316,26 @@ export default function Platform() {
                 See use cases on /operators →
               </Link>
             </div>
-            <div style={{ background: "#0d0d18", borderRadius: "1rem", overflow: "hidden", border: "1px solid rgba(255,255,255,0.08)" }}>
+            {/* CV video — landscape, native ratio applied */}
+            <div
+              style={{
+                width: "100%",
+                aspectRatio: `${CV_VIDEO.nativeW} / ${CV_VIDEO.nativeH}`,
+                background: "#0d0d18",
+                borderRadius: "1rem",
+                overflow: "hidden",
+                border: "1px solid rgba(255,255,255,0.08)",
+              }}
+            >
               <FastVideo
                 autoPlay
                 muted
                 loop
                 playsInline
-                style={{ width: "100%", display: "block" }}
-                poster="https://res.cloudinary.com/dc99897dw/video/upload/so_1,f_jpg,w_800,q_auto/Screen_Recording_2026-02-12_at_1.11.13_PM_khhntc.jpg"
+                style={{ width: "100%", height: "100%", display: "block", objectFit: "contain" }}
+                poster={`https://res.cloudinary.com/dc99897dw/video/upload/so_1,f_jpg,w_900,q_auto/${CV_VIDEO.id}.jpg`}
               >
-                <source src="https://res.cloudinary.com/dc99897dw/video/upload/f_mp4,q_auto,w_800,ac_none/Screen_Recording_2026-02-12_at_1.11.13_PM_khhntc.mp4" type="video/mp4" />
+                <source src={`https://res.cloudinary.com/dc99897dw/video/upload/f_mp4,q_auto,w_900,ac_none/${CV_VIDEO.id}.mp4`} type="video/mp4" />
               </FastVideo>
             </div>
           </div>
